@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "minishell.h"
 
 void	cmd_dist(t_tokens *token_lst, int *pipe)
 {

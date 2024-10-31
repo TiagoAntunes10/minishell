@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "minishell.h"
 
 //TODO: Make ft_cd tests
 void	ft_cd(t_tokens *token_lst)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "minishell.h"
 
 char	**clear_arr(char **arr)
 {

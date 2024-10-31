@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "minishell.h"
 
 static void	write_echo(t_tokens *token_lst, int start)
 {

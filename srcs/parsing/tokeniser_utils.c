@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "minishell.h"
 
 unsigned int	mod_strlen(char *str)
 {

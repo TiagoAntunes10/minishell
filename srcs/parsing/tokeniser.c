@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "minishell.h"
 
 static void	infile_record(t_tokens **token_lst, char ***tokens)
 {

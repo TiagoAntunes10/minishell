@@ -1,4 +1,4 @@
-#include "Include/minishell.h"
+#include "minishell.h"
 #include <assert.h>
 
 int	main(void)

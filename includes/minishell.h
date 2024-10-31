@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/20 17:57:46 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:03:30 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include "../libft/ft_printf.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include "colours.h"
 
 typedef struct s_tokens {
 	char			*infile;
