@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_strpbrk.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 21:29:07 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/17 21:56:45 by tialbert         ###   ########.fr       */
+/*   Created: 2024/10/30 17:32:00 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/10/30 17:34:10 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_export(t_tokens *token_lst, int *pipe)
+char	*ft_strpbrk(char const *str, char const *accept)
 {
-	/*if (pipe != NULL)
-	{
-		if (dup2(1, pipe[1]) == -1)
-			//TODO: Write error handling function with errno
-	}*/
+	char const *res;
 
-	close(pipe[1]);
+	res = str + ft_strcspn(str, accept);
+	if (!*res)
+		return (NULL);
+	return ((char *)res);
 }

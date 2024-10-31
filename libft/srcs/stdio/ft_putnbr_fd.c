@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rapcampo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 21:29:07 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/17 21:56:45 by tialbert         ###   ########.fr       */
+/*   Created: 2023/10/10 18:22:33 by rapcampo          #+#    #+#             */
+/*   Updated: 2023/10/15 17:06:11 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_export(t_tokens *token_lst, int *pipe)
+void	ft_putnbr_fd(int n, int fd)
 {
-	/*if (pipe != NULL)
-	{
-		if (dup2(1, pipe[1]) == -1)
-			//TODO: Write error handling function with errno
-	}*/
+	unsigned int	nb;
 
-	close(pipe[1]);
+	nb = n;
+	if (n < 0)
+	{
+		nb = -n;
+		ft_putchar_fd('-', fd);
+	}
+	while (nb >= 10)
+	{
+		ft_putnbr_fd(nb / 10, fd);
+		nb = nb % 10;
+	}
+	ft_putchar_fd(nb + '0', fd);
 }

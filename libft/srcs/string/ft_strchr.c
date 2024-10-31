@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rapcampo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 21:29:07 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/17 21:56:45 by tialbert         ###   ########.fr       */
+/*   Created: 2023/10/10 18:23:45 by rapcampo          #+#    #+#             */
+/*   Updated: 2023/10/12 15:21:33 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_export(t_tokens *token_lst, int *pipe)
+char	*ft_strchr(const char *s, int i)
 {
-	/*if (pipe != NULL)
+	while (*s)
 	{
-		if (dup2(1, pipe[1]) == -1)
-			//TODO: Write error handling function with errno
-	}*/
-
-	close(pipe[1]);
+		if (*s == (unsigned char)i)
+			return ((char *)s);
+		s++;
+	}
+	if ((unsigned char)i == '\0')
+		return ((char *)s);
+	return (NULL);
 }

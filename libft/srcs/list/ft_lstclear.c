@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rapcampo <rapcampo@student.42porto.co      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 21:29:07 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/17 21:56:45 by tialbert         ###   ########.fr       */
+/*   Created: 2023/10/15 16:25:04 by rapcampo          #+#    #+#             */
+/*   Updated: 2023/10/15 16:25:06 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_export(t_tokens *token_lst, int *pipe)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	/*if (pipe != NULL)
-	{
-		if (dup2(1, pipe[1]) == -1)
-			//TODO: Write error handling function with errno
-	}*/
+	t_list	*curr;
 
-	close(pipe[1]);
+	if (!lst || !(*lst) || !del)
+		return ;
+	while (*lst != NULL)
+	{
+		curr = *lst;
+		*lst = (*lst)->next;
+		ft_lstdelone(curr, del);
+	}
 }

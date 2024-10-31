@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/31 17:03:30 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/10/31 23:18:09 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
-# include "../libft/ft_printf.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include "colours.h"
+# include "libft.h"
 
 typedef struct s_tokens {
 	char			*infile;
@@ -74,6 +74,10 @@ void			exit_failure(t_tokens *tokens, int fd);
 void			ft_echo(t_tokens *token_lst, int *pipe);
 void			ft_pwd(int *pipe);
 void			ft_cd(t_tokens *token_lst);
+//placeholder
+void			ft_env(t_tokens *token_lst, int *pipe);
+void			ft_unset(t_tokens *token_lst, int *pipe);
+void			ft_export(t_tokens *token_lst, int *pipe);
 
 /* ************************************************************************** */
 /*                            CMD UTILS                                       */

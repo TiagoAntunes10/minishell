@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rapcampo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 21:29:07 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/17 21:56:45 by tialbert         ###   ########.fr       */
+/*   Created: 2023/10/05 15:07:34 by rapcampo          #+#    #+#             */
+/*   Updated: 2023/10/06 13:18:29 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_export(t_tokens *token_lst, int *pipe)
+int	ft_toupper(int c)
 {
-	/*if (pipe != NULL)
-	{
-		if (dup2(1, pipe[1]) == -1)
-			//TODO: Write error handling function with errno
-	}*/
-
-	close(pipe[1]);
+	if (c >= 97 && c <= 122)
+		return (c - 32);
+	return (c);
 }

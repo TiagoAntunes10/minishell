@@ -17,11 +17,11 @@ void	ft_pwd(int *pipe)
 {
 	char	*cwd;
 
-	if (pipe != NULL)
+	/*if (pipe != NULL)
 	{
 		if (dup2(1, pipe[1]) == -1)
 			//TODO: Write error handling function with errno
-	}
+	}*/
 	cwd = getcwd(NULL, 0);
 	if (printf("%s\n", cwd) == -1)
 		//TODO: Write error handling function
