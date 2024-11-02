@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/09/22 18:14:21 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/02 16:35:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static void	cmd_record(t_tokens **token_lst, char ***tokens)
 }
 
 
+// TODO: Refactor tokeniser to make better separation, handle delimiters, ';' and >>
 t_tokens	*tokenisation(char *input)
 {
 	char		**tokens;
