@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/20 17:57:46 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/03 17:32:41 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,45 @@
 # include <errno.h>
 # include "../libft/ft_printf.h"
 
-typedef struct s_tokens {
-	char			*infile;
+# define PIPE	1
+# define LIST	2
+# define DELIM	3
+# define CMD	4
+# define REDIR	5
+
+typedef struct s_tree {
+	int	type;
+}				t_tree;
+
+typedef struct s_pipe {
+	int				type;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}				t_pipe;
+
+typedef struct s_lst {
+	int				type;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}				t_lst;
+
+typedef struct s_delim {
+	int				type;
+	char			*delim;
+	struct s_tree	*right;
+}				t_delim;
+
+typedef struct s_cmd {
+	int		type;
+	char	*cmd;
+	char	**opt;
+}				t_cmd;
+
+typedef struct s_redir {
+	int				type;
 	char			*cmd;
-	char			**options;
-	char			*outfile;
-	int				priority;
-	struct s_tokens	*next;
-	struct s_tokens	*prev;
-}				t_tokens;
+	struct s_tree	**opt;
+}				t_redir;
 
 /* ************************************************************************** */
 /*                            LIST OPERATIONS                                 */
