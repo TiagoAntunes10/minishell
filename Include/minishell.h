@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/03 17:32:41 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:29:41 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,24 @@ typedef struct s_cmd {
 
 typedef struct s_redir {
 	int				type;
-	char			*cmd;
-	struct s_tree	**opt;
+	char			*file;
+	int				mode;
+	struct s_tree	*cmd;
 }				t_redir;
 
 /* ************************************************************************** */
 /*                            LIST OPERATIONS                                 */
 /* ************************************************************************** */
 
-t_tokens		*create_lst(char **tokens);
-int				lst_len(t_tokens *lst);
+// t_tokens		*create_lst(char **tokens);
+// int				lst_len(t_tokens *lst);
 
 /* ************************************************************************** */
 /*                            TOKEN CREATION                                  */
 /* ************************************************************************** */
 
-t_tokens		*tokenisation(char *input);
+t_tree			*tokenisation(char *input);
+int				count_opt(char **tokens);
 
 /* ************************************************************************** */
 /*                            TOKEN UTILS                                     */

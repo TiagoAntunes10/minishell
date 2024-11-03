@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/03 17:45:43 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:28:06 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_tree	*cmd_node(t_tree *tree, char ***input)
 	int		opt_num;
 	int		i;
 
+	cmd = malloc(sizeof(*cmd));
 	cmd->type = CMD;
 	opt_num = count_opt(*input);
-	cmd = malloc(sizeof(*cmd));
 	cmd->cmd = malloc(ft_strlen(**input) + 1);
 	//TODO: Maybe create an error handling function that terminates the program
 	ft_strlcpy(cmd->cmd, **input, ft_strlen(**input) + 1);
@@ -45,9 +45,46 @@ t_tree	*delim_node(t_tree *tree, char ***input)
 {
 	t_delim	*delim;
 
+	delim = malloc(sizeof(*delim));
 	delim->type = DELIM;
 	delim->delim = malloc(ft_strlen(**input) + 1);
 	ft_strlcpy(delim->delim, **input, ft_strlen(**input) + 1);
 	delim->right = tree;
 	return ((t_tree *) delim);
+}
+
+t_tree	*pipe_node(t_tree *tree)
+{
+	t_pipe	*pipe;
+
+	pipe = malloc(sizeof(*pipe));
+	pipe->type = PIPE;
+	pipe->left = tree;
+	pipe->right = NULL;
+	return ((t_tree *) pipe);
+}
+
+t_tree	*lst_node(t_tree *tree)
+{
+	t_lst	*lst;
+
+	lst = malloc(sizeof(*lst));
+	lst->type = LIST;
+	lst->left = tree;
+	lst->right = NULL;
+	return ((t_tree *) lst);
+}
+
+t_tree	*redir_node(t_tree *tree, char ***input, int mode)
+{
+	t_redir	*redir;
+
+	redir = malloc(sizeof(*redir));
+	redir->file = malloc(ft_strlen(**input) + 1);
+	//TODO: Maybe create an error handling function that terminates the program
+	ft_strlcpy(redir->file, **input, ft_strlen(**input) + 1);
+	(*input)++;
+	redir->mode = mode;
+	redir->cmd = tree;
+	return ((t_tree *) redir);
 }

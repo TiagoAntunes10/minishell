@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/03 17:30:46 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:28:58 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	outfile_record(t_tokens **token_lst, char ***tokens)
 }
 
 // TODO: Handle parenthesis
-static int	count_opt(char **tokens)
+int	count_opt(char **tokens)
 {
 	int		count;
 	char	**token_cpy;
