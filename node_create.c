@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/03 21:28:06 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:04:17 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_tree	*cmd_node(t_tree *tree, char ***input)
 	cmd->opt[i] = NULL;
 	if (tree != NULL)
 		tree = org_tree(tree, (t_tree *) cmd);
-	return ((t_tree *) tree);
+	return (tree);
 }
 
 t_tree	*delim_node(t_tree *tree, char ***input)
@@ -46,8 +46,10 @@ t_tree	*delim_node(t_tree *tree, char ***input)
 	t_delim	*delim;
 
 	delim = malloc(sizeof(*delim));
+	//TODO: Maybe create an error handling function that terminates the program
 	delim->type = DELIM;
 	delim->delim = malloc(ft_strlen(**input) + 1);
+	//TODO: Maybe create an error handling function that terminates the program
 	ft_strlcpy(delim->delim, **input, ft_strlen(**input) + 1);
 	delim->right = tree;
 	return ((t_tree *) delim);
@@ -58,6 +60,7 @@ t_tree	*pipe_node(t_tree *tree)
 	t_pipe	*pipe;
 
 	pipe = malloc(sizeof(*pipe));
+	//TODO: Maybe create an error handling function that terminates the program
 	pipe->type = PIPE;
 	pipe->left = tree;
 	pipe->right = NULL;
@@ -69,6 +72,7 @@ t_tree	*lst_node(t_tree *tree)
 	t_lst	*lst;
 
 	lst = malloc(sizeof(*lst));
+	//TODO: Maybe create an error handling function that terminates the program
 	lst->type = LIST;
 	lst->left = tree;
 	lst->right = NULL;

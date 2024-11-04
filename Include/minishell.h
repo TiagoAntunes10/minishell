@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/03 21:29:41 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:19:47 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ typedef struct s_redir {
 
 t_tree			*tokenisation(char *input);
 int				count_opt(char **tokens);
+t_tree			*cmd_node(t_tree *tree, char ***input);
+t_tree			*delim_node(t_tree *tree, char ***input);
+t_tree			*pipe_node(t_tree *tree);
+t_tree			*lst_node(t_tree *tree);
+t_tree			*redir_node(t_tree *tree, char ***input, int mode);
+t_tree			*org_tree(t_tree *tree, t_tree *cmd);
 
 /* ************************************************************************** */
 /*                            TOKEN UTILS                                     */
@@ -92,20 +98,20 @@ char			**split_input(char *str);
 /*                            CLEANUP                                         */
 /* ************************************************************************** */
 char			**clear_arr(char **arr);
-t_tokens		*clear_lst(t_tokens *tokens);
-void			exit_success(t_tokens *tokens, int fd);
-void			exit_failure(t_tokens *tokens, int fd);
+// t_tokens		*clear_lst(t_tokens *tokens);
+// void			exit_success(t_tokens *tokens, int fd);
+// void			exit_failure(t_tokens *tokens, int fd);
 
 /* ************************************************************************** */
 /*                            FT_CMDS                                         */
 /* ************************************************************************** */
-void			ft_echo(t_tokens *token_lst, int *pipe);
-void			ft_pwd(int *pipe);
-void			ft_cd(t_tokens *token_lst);
+// void			ft_echo(t_tokens *token_lst, int *pipe);
+// void			ft_pwd(int *pipe);
+// void			ft_cd(t_tokens *token_lst);
 
 /* ************************************************************************** */
 /*                            CMD UTILS                                       */
 /* ************************************************************************** */
-void			dollar_sub(t_tokens *token_lst, int type);
+// void			dollar_sub(t_tokens *token_lst, int type);
 
 #endif
