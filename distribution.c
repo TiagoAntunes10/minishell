@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/20 18:04:50 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:16:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	cmd_dist(t_tokens *token_lst, int *pipe)
 		std_cmd(token_lst, pipe);
 }
 
+// TODO: I have to make a copy of the tree to make sure I am in the first node for cleanup
 void	execution(t_tokens *tokens_lst)
 {
 	int			lst_size;

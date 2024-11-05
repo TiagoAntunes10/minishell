@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/04 22:19:47 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:22:56 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_redir {
 	int				type;
 	char			*file;
 	int				mode;
-	struct s_tree	*cmd;
+	struct s_tree	*right;
 }				t_redir;
 
 /* ************************************************************************** */
@@ -98,9 +98,9 @@ char			**split_input(char *str);
 /*                            CLEANUP                                         */
 /* ************************************************************************** */
 char			**clear_arr(char **arr);
-// t_tokens		*clear_lst(t_tokens *tokens);
-// void			exit_success(t_tokens *tokens, int fd);
-// void			exit_failure(t_tokens *tokens, int fd);
+void			clear_tree(t_tree *tree);
+void			exit_success(t_tree *tree, int fd);
+void			exit_failure(t_tree *tree, int fd);
 
 /* ************************************************************************** */
 /*                            FT_CMDS                                         */
