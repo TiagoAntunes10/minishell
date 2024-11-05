@@ -11,11 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
-#include <unistd.h>
-
-
-
 
 //TODO: Verify if fd 1 is a terminal (that should be the standard)
 int	main(int argc, char **argv, char **envp)
@@ -31,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	while (input)
 	{
 		add_history(input);
-		signal(SIGINT, handle_signals);
+		signal(SIGINT, signal_sort);
 		signal(SIGQUIT, SIG_IGN);
 		if (input != NULL)
 		{
