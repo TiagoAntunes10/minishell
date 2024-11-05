@@ -11,6 +11,29 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
+
+int	execution(t_tokens token_lst, char **envp)
+{
+	int pid;
+	int	status;
+
+	if (is_builtin(token_lst[0]))
+		return (builtin(token_lst[0], token_lst));
+	pid = fork();
+	if (-1 == pid)
+		return (temp_err("ERROR\n"), 1);
+	if (!pid)
+	{
+		execve(ft_path(token_lst[0]), token_lst, envp);
+		temp_err("ERROR\n");
+		exit(1);
+	}
+	waitpid(pid, &status, 0);
+	return (WIFEXITED(status) && WEXITSTATUS(status));
+}
+
 
 //TODO: Verify if fd 1 is a terminal (that should be the standard)
 int	main(int argc, char **argv, char **envp)
@@ -26,12 +49,13 @@ int	main(int argc, char **argv, char **envp)
 	while (input)
 	{
 		add_history(input);
-		// TODO: create signal handling
+		signal(SIGINT, handle_signals);
+		signal(SIGQUIT, SIG_IGN);
 		if (input != NULL)
 		{
 			tokens_lst = tokenization(input);
 			free(input);
-			execution(tokens_lst);
+			execution(tokens_lst, envp);
 			clear_lst(tokens_lst);
 		}
 		input = readline(prompt);
