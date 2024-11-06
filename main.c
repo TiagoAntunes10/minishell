@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/02 17:00:54 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/06 20:55:24 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 //TODO: cd must execute in the parent process (it does not work with pipes and ';'), all other cmds execute in child processes
 int	main(int argc, char **argv, char **env)
 {
-	char		*input;
-	t_tokens	*tokens_lst;
+	char	*input;
+	t_tree	*tree;
 
 	while (check_end() != 0)
 	{
@@ -28,10 +28,10 @@ int	main(int argc, char **argv, char **env)
 			handle_signal(signal);
 		if (input != NULL)
 		{
-			tokens_lst = tokenization(input);
+			tree = tokenisation(input);
 			free(input);
-			execution(tokens_lst);
-			clear_lst(tokens_lst);
+			execution(tree);
+			clear_tree(tree);
 		}
 	}
 }

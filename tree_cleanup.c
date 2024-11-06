@@ -6,13 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 21:52:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/05 22:13:27 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/06 21:03:16 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Include/minishell.h"
 
-void	clear_pipe(t_tree *tree)
+static void	clear_pipe(t_tree *tree)
 {
 	t_pipe	*pipe;
 
@@ -22,7 +22,7 @@ void	clear_pipe(t_tree *tree)
 	free(pipe);
 }
 
-void	clear_delim(t_tree *tree)
+static void	clear_delim(t_tree *tree)
 {
 	t_delim	*delim;
 
@@ -32,7 +32,7 @@ void	clear_delim(t_tree *tree)
 	free(delim);
 }
 
-void	clear_list(t_tree *tree)
+static void	clear_list(t_tree *tree)
 {
 	t_lst	*lst;
 
@@ -42,7 +42,7 @@ void	clear_list(t_tree *tree)
 	free(lst);
 }
 
-void	clear_redir(t_tree *tree)
+static void	clear_redir(t_tree *tree)
 {
 	t_redir	*redir;
 

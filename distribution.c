@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/05 22:16:45 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/06 21:48:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,36 @@ void	cmd_dist(t_tokens *token_lst, int *pipe)
 		std_cmd(token_lst, pipe);
 }
 
-// TODO: I have to make a copy of the tree to make sure I am in the first node for cleanup
-void	execution(t_tokens *tokens_lst)
+static void	exec_tree(t_tree *tree)
 {
-	int			lst_size;
+	t_cmd	*cmd;
 
-	lst_size = lst_len(tokens_lst);
-	if (lst_size == 1)
-		cmd_dist(tokens_lst, NULL);
-	else
-		fork_init(tokens_lst, lst_size);
+	cmd = NULL;
+	if (tree == NULL)
+		return ;
+	else if (tree->type == PIPE)
+		exec_pipe(tree);
+	else if (tree->type == DELIM)
+		exec_delim(tree);	
+	else if (tree->type == LIST)
+		exec_list(tree);
+	else if (tree->type == REDIR)
+		exec_redir(tree);
+	else if (tree->type == CMD)
+		cmd_dist(tree);
+}
+
+// TODO: Handle input redirection with ';' and cd
+void	execution(t_tree *tree)
+{
+	t_cmd	*cmd;
+
+	cmd = NULL;
+	if (tree->type == CMD)
+	{
+		cmd = (t_cmd *) tree;
+		if (ft_strncmp(cmd->cmd, "cd", 2) == 0 && ft_strlen(cmd->cmd) == 2)
+			ft_cd(tree);
+	}
+	exec_tree(tree);
 }
