@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/06 21:10:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/07 22:07:10 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void			exit_failure(t_tree *tree, int fd);
 /*                            EXECUTION                                       */
 /* ************************************************************************** */
 
-void			execution(t_tree *tree);
+void			execution(t_tree *tree, int *fd);
 // void			ft_echo(t_tokens *token_lst, int *pipe);
 // void			ft_pwd(int *pipe);
 // void			ft_cd(t_tokens *token_lst);

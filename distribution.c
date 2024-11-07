@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/06 21:48:07 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/07 22:06:52 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ static void	exec_tree(t_tree *tree)
 	if (tree == NULL)
 		return ;
 	else if (tree->type == PIPE)
-		exec_pipe(tree);
+		exec_pipe(tree, fd);
 	else if (tree->type == DELIM)
-		exec_delim(tree);	
+		exec_delim(tree, fd);	
 	else if (tree->type == LIST)
-		exec_list(tree);
+		exec_list(tree, fd);
 	else if (tree->type == REDIR)
-		exec_redir(tree);
+		exec_redir(tree, fd);
 	else if (tree->type == CMD)
-		cmd_dist(tree);
+		cmd_dist(tree, fd);
 }
 
 // TODO: Handle input redirection with ';' and cd
-void	execution(t_tree *tree)
+void	execution(t_tree *tree, int *fd)
 {
 	t_cmd	*cmd;
 
@@ -68,5 +68,5 @@ void	execution(t_tree *tree)
 		if (ft_strncmp(cmd->cmd, "cd", 2) == 0 && ft_strlen(cmd->cmd) == 2)
 			ft_cd(tree);
 	}
-	exec_tree(tree);
+	exec_tree(tree, fd);
 }
