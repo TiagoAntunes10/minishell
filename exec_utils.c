@@ -6,13 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/07 22:34:11 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/08 22:22:49 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Include/minishell.h"
 
-void	exec_pipe(t_tree *tree, int *fd)
+void	exec_pipe(t_tree *tree, int fd)
 {
 	int		*inp_pipe;
 	int		id;
@@ -39,32 +39,88 @@ void	exec_pipe(t_tree *tree, int *fd)
 				close(inp_pipe[1]);
 				exit(1);
 			}
-			execution(pipe_node->left, inp_pipe);
+			close(inp_pipe[1]);
+			execution(pipe_node->left, 1);
 		}
 		waitpid(-1, &status, WNOHANG);
-		if (fd != NULL)
+		close(inp_pipe[1]);
+		if (fd == 1 || fd == -1)
 		{
-			close(inp_pipe[1]);
-			inp_pipe[1] = fd[1];
-			if (dup2(inp_pipe[1], 1) == -1 || dup2(inp_pipe[0], 0) == -1)
-			{
-				close(inp_pipe[0]);
-				// TODO: Check if I should close this end of the pipe here
-				close(inp_pipe[1]);
-				exit(1);
-			}
-		}
-		else
-		{
-			close(inp_pipe[1]);
 			if (dup2(inp_pipe[0], 0) == -1)
 			{
 				close(inp_pipe[0]);
+				// TODO: Check if I should close this end of the pipe here
+				if (fd == 1)
+					close(fd);
 				exit(1);
 			}
+			close(inp_pipe[0]);
 		}
-		execution(pipe_node->right, inp_pipe);
+		execution(pipe_node->right, 0);
 	}
 	waitpid(-1, &status, WNOHANG);
 	return ;
+}
+
+void	exec_delim(t_tree *tree, int fd)
+{
+	t_delim	*delim;
+	char	*line;
+	int		*inp_pipe;
+	int		id;
+
+	delim = (t_delim *) tree;
+	line = NULL;
+	if (pipe(inp_pipe) == -1)
+		exit(1);
+	id = fork();
+	if (id == -1)
+		exit(1);
+	else if (id == 0)
+	{
+		close(inp_pipe[0]);
+		line = get_next_line(0);
+		while (ft_strncmp(delim->delim, line, ft_strlen(line)) != 0)
+		{
+			// TODO: Not sure if I should handle the errors in this way
+			if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
+				exit(errno);
+			free(line);
+			line = get_next_line(0);
+		}
+		close(inp_pipe[1]);
+		exit(0);
+	}
+	waitpid(-1, &id, WNOHANG);
+	close(inp_pipe[1]);
+	if (dup2(inp_pipe[0], 0) == -1)
+	{
+		close(inp_pipe[0]);
+		exit(1);
+	}
+	close(inp_pipe[0]);
+	execution(delim->right, 0);
+}
+
+void	exec_list(t_tree *tree, int fd)
+{
+	t_lst	*lst;
+
+	lst = (t_lst *) tree;
+	execution(lst->left, fd);
+	execution(lst->right, fd);
+}
+
+// TODO: Finish the function
+void	exec_redir(t_tree *tree, int fd)
+{
+	t_redir	*redir;
+	int		redir_fd;
+
+	redir = (t_redir *) tree;
+	// TODO: Check if this error should be handled in this way
+	redir_fd = open(redir->file, redir->mode);
+	if (redir_fd == -1)
+		exit(errno);
+	
 }

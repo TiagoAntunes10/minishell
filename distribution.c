@@ -6,38 +6,38 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/07 22:06:52 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/08 22:16:49 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Include/minishell.h"
 
-void	cmd_dist(t_tokens *token_lst, int *pipe)
+// TODO: Check if passing fd as an argument is still necessary
+void	cmd_dist(t_tree *tree, int fd)
 {
-	char	*cmd;
+	t_cmd	*cmd;
 
-	cmd = token_lst->cmd;
-	if (ft_strncmp(cmd, "$", 1))
-		dollar_sub(token_lst, 0);
-	if (ft_strncmp(cmd, "echo", 4) && ft_strlen(cmd) == 4)
-		ft_echo(token_lst, pipe);
-	else if (ft_strncmp(cmd, "cd", 2) && ft_strlen(cmd) == 2)
-		ft_cd(token_lst);
-	else if (ft_strncmp(cmd, "pwd", 3) && ft_strlen(cmd) == 3)
-		ft_pwd(pipe);
-	else if (ft_strncmp(cmd, "export", 6) && ft_strlen(cmd) == 6)
-		ft_export(token_lst, pipe);
-	else if (ft_strncmp(cmd, "unset", 5) && ft_strlen(cmd) == 5)
-		ft_unset(token_lst, pipe);
-	else if (ft_strncmp(cmd, "env", 3) && ft_strlen(cmd) == 3)
-		ft_env(token_lst, pipe);
-	else if (ft_strncmp(cmd, "exit", 4) && ft_strlen(cmd) == 4)
-		exit_success(token_lst, 0);
+	cmd = (t_cmd *) tree;
+	if (ft_strncmp(cmd->cmd, "$", ft_strlen(cmd->cmd)))
+		dollar_sub(cmd, 0);
+	if (ft_strncmp(cmd->cmd, "echo", ft_strlen(cmd->cmd)))
+		ft_echo(cmd, fd);
+	else if (ft_strncmp(cmd->cmd, "pwd", ft_strlen(cmd->cmd))
+		ft_pwd(fd);
+	else if (ft_strncmp(cmd->cmd, "export", ft_strlen(cmd->cmd)))
+		ft_export(cmd, fd);
+	else if (ft_strncmp(cmd->cmd, "unset", ft_strlen(cmd->cmd)))
+		ft_unset(cmd, fd);
+	else if (ft_strncmp(cmd->cmd, "env", ft_strlen(cmd->cmd)))
+		ft_env(cmd, fd);
+	// TODO: The exit function will not be able to free the whole tree
+	else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)))
+		exit_success((t_tree *) cmd, 0);
 	else
-		std_cmd(token_lst, pipe);
+		std_cmd(cmd, fd);
 }
 
-static void	exec_tree(t_tree *tree)
+static void	exec_tree(t_tree *tree, int fd)
 {
 	t_cmd	*cmd;
 
@@ -57,7 +57,7 @@ static void	exec_tree(t_tree *tree)
 }
 
 // TODO: Handle input redirection with ';' and cd
-void	execution(t_tree *tree, int *fd)
+void	execution(t_tree *tree, int fd)
 {
 	t_cmd	*cmd;
 
