@@ -26,8 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	while (input)
 	{
 		add_history(input);
-		signal(SIGINT, signal_sort);
-		signal(SIGQUIT, SIG_IGN);
+		signal_parent();
 		if (input != NULL)
 		{
 			tokens_lst = tokenization(input);

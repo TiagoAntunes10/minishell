@@ -11,35 +11,10 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <stdlib.h>
 
-char	ft_path(char *name)
-{
-	char	**path;
-	int		i;
-	struct stat	buffer = {0};
-
-	path = ft_split(getenv("PATH"), ':');
-	i = -1;
-	while (path[++i])
-	{
-		char *tpath = ft_calloc(ft_strlen(path[i]) + ft_strlen(name) + 2, 1);
-		if (!tpath)
-			return (NULL);
-		if (stat(tpath, &buffer) == 0)
-		{
-			ft_freematrix(path);
-			return (tpath);
-		}
-		if (tpath)
-		{
-			free(tpath);
-			tpath = NULL;
-		}
-	}
-	ft_freematrix(path);
-	return (ft_strdup(name));
-}
+//TODO: Get mininal builtin recognition for exec and path testing
+//TODO: Macro WIFEXITED and WEXITSTATUS need a struct to save the status for $?
+//TODO: use STAT function struct to check metadata of files for possible erros
 
 int	is_builtin(t_tokens token_lst[0])
 {
@@ -60,6 +35,7 @@ int	execution(t_tokens token_lst, char **envp)
 
 	if (is_builtin(token_lst[0]))
 		return (builtin(token_lst[0], token_lst));
+	signal_child();
 	pid = fork();
 	if (-1 == pid)
 		return (temp_err("ERROR\n"), 1);

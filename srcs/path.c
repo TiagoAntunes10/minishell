@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+//TODO: treating relative and absolute paths
+//TODO: Finishing concatenation
+
 void	ft_freematrix(char **matrix)
 {
 	int	i;
