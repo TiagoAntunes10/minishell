@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/09 14:53:25 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/09 15:01:57 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include "../libft/ft_printf.h"
 # include "parser.h"
+# include "cleanup.h"
 
 # define PIPE	1
 # define LIST	2
