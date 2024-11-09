@@ -1,4 +1,4 @@
-PRE = ./
+PRE = ./src ./src/parser ./src/builtin ./src/cleanup ./src/execution
 INCLUDE = ./Include
 FUNCTION = ./libft
 MLX = ./minilibx-linux

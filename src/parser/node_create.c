@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/05 22:28:44 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:46:23 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // TODO: Maybe create a function that safely alloc memory
 // TODO: Clean input variable
+// TODO: Reduce number of lines
 t_tree	*cmd_node(t_tree *tree, char ***input)
 {
 	t_cmd	*cmd;
