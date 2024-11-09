@@ -6,12 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/08 22:22:49 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:06:02 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Include/minishell.h"
 
+// TODO: Reduce number of lines
 void	exec_pipe(t_tree *tree, int fd)
 {
 	int		*inp_pipe;
@@ -62,6 +63,7 @@ void	exec_pipe(t_tree *tree, int fd)
 	return ;
 }
 
+// TODO: Reduce number of lines
 void	exec_delim(t_tree *tree, int fd)
 {
 	t_delim	*delim;
@@ -111,16 +113,50 @@ void	exec_list(t_tree *tree, int fd)
 	execution(lst->right, fd);
 }
 
-// TODO: Finish the function
+// TODO: Reduce number of lines
 void	exec_redir(t_tree *tree, int fd)
 {
 	t_redir	*redir;
 	int		redir_fd;
+	int		id;
 
 	redir = (t_redir *) tree;
-	// TODO: Check if this error should be handled in this way
-	redir_fd = open(redir->file, redir->mode);
-	if (redir_fd == -1)
-		exit(errno);
-	
+	id = fork();
+	if (id == -1)
+		exit(1);
+	else if (id == 0)
+	{
+		if (t_redir->mode == O_RDONLY)
+		{
+			// TODO: Check if this error should be handled in this way
+			if (access(redir->file, F_OK | R_OK) == -1)
+				exit(errno);
+			// TODO: Check if this error should be handled in this way
+			redir_fd = open(redir->file, redir->mode);
+			if (redir_fd == -1)
+				exit(errno);
+			if (dup2(redir_fd, 0) == -1)
+			{
+				close(redir_fd);
+				exit(errno);
+			}
+			close(redir_fd);
+			execution(redir->right, 0);
+		}
+		else
+		{
+			redir_fd = open(redir->file, redir->mode, 0755);
+			// TODO: Check if this error should be handled in this way
+			if (redir_fd == -1)
+				exit(errno);
+			// TODO: Check if this error should be handled in this way
+			if (dup2(redir_fd, 1) == -1)
+			{
+				close(redir_fd);
+				exit(errno);
+			}
+			close(redir_fd);
+			execution(redir->right, 1);
+		}
+	}
 }
