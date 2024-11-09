@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/08 21:37:04 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:53:25 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include "../libft/ft_printf.h"
+# include "parser.h"
 
 # define PIPE	1
 # define LIST	2
@@ -65,49 +66,16 @@ typedef struct s_redir {
 	struct s_tree	*right;
 }				t_redir;
 
-/* ************************************************************************** */
-/*                            LIST OPERATIONS                                 */
-/* ************************************************************************** */
-
-// t_tokens		*create_lst(char **tokens);
-// int				lst_len(t_tokens *lst);
-
-/* ************************************************************************** */
-/*                            TOKEN CREATION                                  */
-/* ************************************************************************** */
-
-t_tree			*tokenisation(char *input);
-int				count_opt(char **tokens);
-t_tree			*cmd_node(t_tree *tree, char ***input);
-t_tree			*delim_node(t_tree *tree, char ***input);
-t_tree			*pipe_node(t_tree *tree);
-t_tree			*lst_node(t_tree *tree);
-t_tree			*redir_node(t_tree *tree, char ***input, int mode);
-t_tree			*org_tree(t_tree *tree, t_tree *cmd);
-
-/* ************************************************************************** */
-/*                            TOKEN UTILS                                     */
-/* ************************************************************************** */
-
-int				count_words(char *str);
-unsigned int	mod_strlen(char *str);
-char			**split_input(char *str);
-
-
-/* ************************************************************************** */
-/*                            CLEANUP                                         */
-/* ************************************************************************** */
-
-char			**clear_arr(char **arr);
-void			clear_tree(t_tree *tree);
-void			exit_success(t_tree *tree, int fd);
-void			exit_failure(t_tree *tree, int fd);
 
 /* ************************************************************************** */
 /*                            EXECUTION                                       */
 /* ************************************************************************** */
 
 void			execution(t_tree *tree, int fd);
+void			exec_pipe(t_tree *tree, int fd);
+void			exec_delim(t_tree *tree, int fd);
+void			exec_list(t_tree *tree, int fd);
+void			exec_redir(t_tree *tree, int fd);
 // void			ft_echo(t_tokens *token_lst, int *pipe);
 // void			ft_pwd(int *pipe);
 // void			ft_cd(t_tokens *token_lst);
