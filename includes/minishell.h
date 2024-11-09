@@ -25,7 +25,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-# include "colours.h"
+# include "macro.h"
 # include "libft.h"
 # include "execution.h"
 

@@ -53,6 +53,7 @@ char	*ft_strdup(const char *s);
 int		ft_atoi(const char *nptr);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_strcmp(const char *s1, const char *s2);
+void	*ft_mempcpy(void *dest, const void *src, size_t n);
 
 //non libc functions//
 

@@ -16,5 +16,5 @@ char	*ft_stpcpy(char *restrict dst, const char *restrict src)
 {
 	char *p;
 	
-	return (p = ft_memcpy(dst, src, ft_strlen(src)), *p = 0, p);
+	return (p = ft_mempcpy(dst, src, ft_strlen(src)), *p = 0, p);
 }
