@@ -10,28 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 //TODO: Get mininal builtin recognition for exec and path testing
 //TODO: Macro WIFEXITED and WEXITSTATUS need a struct to save the status for $?
 //TODO: use STAT function struct to check metadata of files for possible erros
 
-int	is_builtin(t_tokens token_lst[0])
+int	is_builtin(t_cmd cmd, int fd)
 {
 	auto char *builtins[] = {"exit", "cd", NULL};
 	int	i;
 
 	i = -1;
 	while (builtins[++i])
-		if (token_lst[0] && !ft_strcmp(builtins[i], token_lst[0]))
+		if (cmd->option[0] && !ft_strcmp(builtins[i], cmd->option[0]))
 			return (1);
 	return (0);
 }
 
-int	execution(t_tokens token_lst, char **envp)
+int	execution(t_cmd cmd, int fd, char **envp)
 {
-	int pid;
-	int	status;
+	pid_t	pid;
+	int		status;
 
 	if (is_builtin(token_lst[0]))
 		return (builtin(token_lst[0], token_lst));
@@ -41,7 +41,7 @@ int	execution(t_tokens token_lst, char **envp)
 		return (temp_err("ERROR\n"), 1);
 	if (!pid)
 	{
-		execve(ft_path(token_lst[0]), token_lst, envp);
+		execve(ft_path(cmd->option[0]), cmd->option[0], envp);
 		temp_err("ERROR\n");
 		exit(1);
 	}

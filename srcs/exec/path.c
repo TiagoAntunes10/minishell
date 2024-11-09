@@ -15,27 +15,12 @@
 //TODO: treating relative and absolute paths
 //TODO: Finishing concatenation
 
-void	ft_freematrix(char **matrix)
-{
-	int	i;
-
-	i = -1;
-	while (matrix[++i])
-	{
-		free(matrix[i]);
-	}
-	free(matrix);
-}
-
 char	*cat_path(char *tpath,char *path, char *name)
 {
-	int	i;
-	char *cat_path;
-	
-	cat_path = ft_strlcat(cat_path, ft_strlen())
-
-
-	return (cat_path);
+	ft_stpcpy(tpath, path);
+	ft_stpcpy(tpath, "/");
+	ft_stpcpy(tpath, name);
+	return (tpath);
 }
 
 char	*ft_path(char *name)
@@ -66,5 +51,3 @@ char	*ft_path(char *name)
 	ft_freematrix(path);
 	return (ft_strdup(name));
 }
-
-
