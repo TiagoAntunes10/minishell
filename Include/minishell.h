@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/09 15:01:57 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/09 15:05:23 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include "../libft/ft_printf.h"
 # include "parser.h"
 # include "cleanup.h"
