@@ -16,6 +16,8 @@
 
 void	handle_parent(int signum)
 {
+	if (signum != SIGINT)
+		return ;
 	rl_replace_line("", 0);
 	write(1, "\n", 1);
 	rl_on_new_line();
