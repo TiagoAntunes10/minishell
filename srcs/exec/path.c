@@ -17,9 +17,9 @@
 
 char	*cat_path(char *tpath,char *path, char *name)
 {
-	ft_stpcpy(tpath, path);
-	ft_stpcpy(tpath, "/");
-	ft_stpcpy(tpath, name);
+	tpath = ft_stpcpy(tpath, path);
+	tpath = ft_stpcpy(tpath, "/");
+	tpath = ft_stpcpy(tpath, name);
 	return (tpath);
 }
 
