@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/06 20:52:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/10 21:36:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ t_tree	*tokenisation(char *input)
 	{
 		if (**arr_cpy == '<' && ft_strlen(*arr_cpy) == 1)
 			tree = redir_node(tree, &(++arr_cpy), O_RDONLY);
-		else if (ft_strncmp(*arr_cpy, "<<", 2) && ft_strlen(*arr_cpy) == 2)
+		else if (ft_strncmp(*arr_cpy, "<<", ft_strlen(*arr_cpy)) == 0)
 			tree = delim_node(tree, &(++arr_cpy));
 		else if (**arr_cpy == '>' && ft_strlen(*arr_cpy) == 1)
 			tree = redir_node(tree, &(++arr_cpy), O_WRONLY | O_CREAT);
-		else if (ft_strncmp(*arr_cpy, ">>", 2) && ft_strlen(*arr_cpy) == 2)
+		else if (ft_strncmp(*arr_cpy, ">>", ft_strlen(*arr_cpy)) == 0)
 			tree = redir_node(tree, &(++arr_cpy), O_WRONLY | O_CREAT | O_APPEND);
 		else if (**arr_cpy == '|' && ft_strlen(*arr_cpy) == 1)
 			tree = pipe_node(tree);

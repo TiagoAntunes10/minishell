@@ -6,11 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/09 11:46:23 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/10 21:41:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "../../Include/minishell.h"
 
 // TODO: Maybe create a function that safely alloc memory
 // TODO: Clean input variable
@@ -81,6 +81,7 @@ t_tree	*pipe_node(t_tree *tree)
 	return ((t_tree *) pipe);
 }
 
+// TODO: Maybe remove the semicolon handling
 t_tree	*lst_node(t_tree *tree)
 {
 	t_lst	*lst;

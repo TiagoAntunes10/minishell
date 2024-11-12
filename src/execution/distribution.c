@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/08 22:16:49 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/10 21:40:37 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ void	cmd_dist(t_tree *tree, int fd)
 
 static void	exec_tree(t_tree *tree, int fd)
 {
-	t_cmd	*cmd;
-
-	cmd = NULL;
 	if (tree == NULL)
 		return ;
 	else if (tree->type == PIPE)
