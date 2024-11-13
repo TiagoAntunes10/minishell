@@ -7,8 +7,8 @@ DEPFLG	= -MP -MD
 
 # ============================ Folder Structures ===============================
 
-HEADERS		= include/
-SOURCE_DIR	= libft/libft libft/libft/get_next_line/ libft/printf 
+HEADERS		= ../includes/
+SOURCE_DIR	= srcs/ctype srcs/list srcs/stdio srcs/stdlib srcs/string srcs/printf srcs/gnl
 OBJS_DIR	= objs/
 
 # ============================ Commands & Flags ===============================

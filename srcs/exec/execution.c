@@ -31,7 +31,7 @@ int	is_builtin(t_cmd cmd, int fd)
 int	execution(t_cmd cmd, int fd, char **envp)
 {
 	pid_t	pid;
-	int		status;
+	t_exec	status;
 
 	if (is_builtin(token_lst[0]))
 		return (builtin(token_lst[0], token_lst));

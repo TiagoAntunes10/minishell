@@ -13,7 +13,6 @@
 #include "minishell.h"
 
 //TODO: treating relative and absolute paths
-//TODO: Finishing concatenation
 
 char	*cat_path(char *tpath,char *path, char *name)
 {

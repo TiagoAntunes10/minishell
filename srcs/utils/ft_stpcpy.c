@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   ft_stpcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 12:42:28 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/08 12:46:54 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/11/13 16:21:11 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/11/13 16:25:18 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include "minishell.h"
 
-# include "minishell.h"
-# include <signal.h>
-
-typedef	struct s_exec 
+void	*ft_mempcpy(void *dest, const void *src, size_t n)
 {
-	int		exit_status;
-	char	*cwd;
-}		t_exec;
+	if (!dest || !src)
+		return (NULL);
+	while (n--)
+		*(char *)dest++ = *(char *)src++;
+	return (dest);
+}
 
-//concatanation
-char	*ft_stpcpy(char *restrict dst, const char *restrict src);
-void	*ft_mempcpy(void *dest, const void *src, size_t n);
+char	*ft_stpcpy(char *restrict dst, char const *restrict src)
+{
+	char *ptr;
+	return (ptr = ft_mempcpy(dst, src, ft_strlen(src)), *ptr = 0, ptr);
+}
 
-//memory safety
-void	ft_freematrix(char **matrix);
-
-
-#endif
