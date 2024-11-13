@@ -3,25 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: rapcampo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 11:32:36 by tialbert          #+#    #+#             */
-/*   Updated: 2023/10/03 11:32:37 by tialbert         ###   ########.fr       */
+/*   Created: 2023/10/10 16:53:50 by rapcampo          #+#    #+#             */
+/*   Updated: 2023/10/12 16:15:12 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-void	*ft_calloc(size_t nmem, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void		*arr;
-	long int	n;
+	void	*ptr;
 
-	if (nmem == 0 || size == 0)
-		return (NULL);
-	n = nmem * size;
-	if (n > 2147483647)
-		return (NULL);
-	arr = malloc (nmem * size);
-	return (arr);
+	ptr = (void *)malloc(nmemb * size);
+	if (ptr)
+		ft_bzero(ptr, nmemb * size);
+	return (ptr);
 }
