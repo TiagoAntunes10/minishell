@@ -14,16 +14,12 @@
 # define EXECUTION_H
 
 # include "minishell.h"
-<<<<<<< HEAD:includes/execution.h
 # include <signal.h>
-=======
->>>>>>> 71ce289d75c5a9ae06a9d8fa17370ae53fa319ee:Include/execution.h
 
 typedef	struct s_exec 
 {
 	int		exit_status;
 	char	*cwd;
-<<<<<<< HEAD:includes/execution.h
 }		t_exec;
 
 //concatanation
@@ -32,9 +28,6 @@ void	*ft_mempcpy(void *dest, const void *src, size_t n);
 
 //memory safety
 void	ft_freematrix(char **matrix);
-=======
-};
->>>>>>> 71ce289d75c5a9ae06a9d8fa17370ae53fa319ee:Include/execution.h
 
 
 #endif

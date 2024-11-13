@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/10/06 10:16:29 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:11:26 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	count_words(char *str)
 }
 
 // TODO: Reduce lines
+// TODO: Refactor to handle () and ';' - these chars will not be separated by a space
+// TODO: I want to keep the () and ';' in the array of strings
 char	**split_input(char *str)
 {
 	char			**word_arr;
