@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <assert.h>
 
 void	handle_child(int signum)
 {
@@ -79,12 +80,21 @@ int b_exit(int ac, char **av)
 
 int b_cd(int ac, char **av)
 {
-	if (ac != 2)
-		return (err("Error: cd: Invalid arguments\n"), 1);
-	if (-1 == chdir(av[1]))
-		return (err("Error: cd: could not change dir to "),
-				err(av[1]), err("\n"), 1);
-	return (1);
+	(void)ac;
+	struct stat stats;
+	if (access(av[1], F_OK) && access(av[1], X_OK))
+			return (ft_putstr_fd("cd: Error no permission", 2), 2);
+	if (av[1] && av[2])
+		return (ft_putstr_fd("cd: Error too many args", 2), 2);
+	stat(av[1], &stats);
+	if (S_ISDIR(stats.st_mode))
+	{
+		if (chdir(av[1]) == -1)
+			return (ft_putstr_fd("cd: Error could not change directory", 2), 127);
+	}
+	else
+		return (ft_putstr_fd("cd: Error is not a directory", 2), 2);
+	return (0);
 }
 
 int builtin(char *str, char **av)
