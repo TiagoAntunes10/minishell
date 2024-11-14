@@ -6,11 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 21:52:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/06 21:03:16 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:54:39 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "../../Include/minishell.h"
 
 static void	clear_pipe(t_tree *tree)
 {

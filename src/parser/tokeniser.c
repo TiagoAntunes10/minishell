@@ -6,11 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/10 21:36:03 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:53:19 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "../../Include/minishell.h"
 
 // TODO: Handle parenthesis
 int	count_opt(char **tokens)
