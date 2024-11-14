@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -10,13 +9,6 @@
 #    Updated: 2024/08/17 16:07:49 by rapcampo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-=======
-PRE = ./src ./src/parser ./src/builtin ./src/cleanup ./src/execution
-INCLUDE = ./Include
-FUNCTION = ./libft
-MLX = ./minilibx-linux
-BONUS = ./bonus/
->>>>>>> 71ce289d75c5a9ae06a9d8fa17370ae53fa319ee
 
 # ================================= Files ======================================
 
@@ -28,8 +20,8 @@ DEPFLG	= -MP -MD
 
 # ============================ Folder Structures ===============================
 
-HEADERS		= includes
-SOURCE_DIR	= srcs srcs/parsing srcs/builtins srcs/exec
+HEADERS		= Include
+SOURCE_DIR	= src src/parser srcs/builtin srcs/execution
 LIBFT_DIR	= libft
 OBJS_DIR	= objs
 

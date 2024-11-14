@@ -82,10 +82,10 @@ int b_cd(int ac, char **av)
 {
 	(void)ac;
 	struct stat stats;
-	if (access(av[1], F_OK) && access(av[1], X_OK))
-			return (ft_putstr_fd("cd: Error no permission", 2), 2);
 	if (av[1] && av[2])
 		return (ft_putstr_fd("cd: Error too many args", 2), 2);
+	if (av[0] && !av[1])
+		return (chdir(getenv("HOME")), 0);
 	stat(av[1], &stats);
 	if (S_ISDIR(stats.st_mode))
 	{
