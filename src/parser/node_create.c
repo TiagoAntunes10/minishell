@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/10 21:41:45 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/16 23:03:22 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_tree	*delim_node(t_tree *tree, char ***input)
 {
 	t_delim	*delim;
 
+	(*input)++;
 	delim = malloc(sizeof(*delim));
 	//TODO: Maybe create an error handling function that terminates the program
 	delim->type = DELIM;
@@ -66,9 +67,11 @@ t_tree	*delim_node(t_tree *tree, char ***input)
 	//TODO: Maybe create an error handling function that terminates the program
 	ft_strlcpy(delim->delim, **input, ft_strlen(**input) + 1);
 	delim->right = tree;
+	(*input)++;
 	return ((t_tree *) delim);
 }
 
+// TODO: Solve problem in creating this node
 t_tree	*pipe_node(t_tree *tree)
 {
 	t_pipe	*pipe;
@@ -98,11 +101,16 @@ t_tree	*redir_node(t_tree *tree, char ***input, int mode)
 {
 	t_redir	*redir;
 
-	redir = malloc(sizeof(*redir));
-	redir->file = malloc(ft_strlen(**input) + 1);
-	//TODO: Maybe create an error handling function that terminates the program
-	ft_strlcpy(redir->file, **input, ft_strlen(**input) + 1);
 	(*input)++;
+	redir = malloc(sizeof(*redir));
+	redir->file = NULL;
+	if (**input != NULL)
+	{
+		redir->file = malloc(ft_strlen(**input) + 1);
+		//TODO: Maybe create an error handling function that terminates the program
+		ft_strlcpy(redir->file, **input, ft_strlen(**input) + 1);
+		(*input)++;
+	}
 	redir->mode = mode;
 	redir->right = tree;
 	return ((t_tree *) redir);

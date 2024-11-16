@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/12 22:22:14 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/15 17:31:47 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "../libft/ft_printf.h"
-# include "tree.h"
-# include "parser.h"
-# include "cleanup.h"
+# include "./tree.h"
+# include "./parser.h"
+# include "./cleanup.h"
 
 # define PIPE	1
 # define LIST	2

@@ -1,4 +1,4 @@
-PRE = ./src ./src/parser ./src/builtin ./src/cleanup ./src/execution
+PRE = ./src/parser ./src/cleanup
 INCLUDE = ./Include
 FUNCTION = ./libft
 BONUS = ./bonus/
@@ -12,7 +12,7 @@ SOURCE = tokeniser.c cleanup.c lst_op.c tokeniser_utils.c \
 
 SOURCE_TEST = tests.c
 
-SOURCES = $(foreach dir, $(TEST), $(wildcard $(dir)/*.c))
+SOURCES = $(foreach dir, $(PRE), $(wildcard $(dir)/*.c))
 SOURCES_BON = ${addprefix $(PRE), $(SOURCE_BON)}
 SOURCES_TEST = $(foreach dir, $(TEST), $(wildcard $(dir)/*.c))
 

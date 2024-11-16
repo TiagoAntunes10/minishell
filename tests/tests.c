@@ -1,20 +1,20 @@
 #include "../Include/minishell.h"
 #include <assert.h>
 
-static void	test_tree(t_tree *tree, char **input);
+static char	**test_tree(t_tree *tree, char **input);
 
 static void	test_pipe(t_tree *tree, char **input)
 {
 	t_pipe	*pipe;
 
 	pipe = (t_pipe *) tree;
-	test_tree((t_tree *) pipe->left, input);
+	input = test_tree((t_tree *) pipe->left, input);
 	assert(ft_strncmp(*input, "|", ft_strlen(*input)) == 0);
 	input++;
 	test_tree((t_tree *) pipe->right, input);
 }
 
-static void	test_delim(t_tree *tree, char **input)
+static char	**test_delim(t_tree *tree, char **input)
 {
 	t_delim	*delim;
 
@@ -24,26 +24,28 @@ static void	test_delim(t_tree *tree, char **input)
 	input++;
 	assert(ft_strncmp(*input, delim->delim, ft_strlen(delim->delim)) == 0);
 	input++;
+	return (input);
 }
 
-static void	test_redir(t_tree *tree, char **input)
+static char	**test_redir(t_tree *tree, char **input)
 {
 	t_redir	*redir;
 
 	redir = (t_redir *) tree;
 	test_tree((t_tree *) redir->right, input);
-	if (**input == '<')
+	if (**input == '<' && ft_strlen(*input) == 1)
 		assert(redir->mode == O_RDONLY);
-	else if (**input == '>')
+	else if (**input == '>' && ft_strlen(*input) == 1)
 		assert(redir->mode == (O_WRONLY | O_CREAT));
 	else if (ft_strncmp(*input, ">>", ft_strlen(*input)) == 0)
 		assert(redir->mode == (O_WRONLY | O_CREAT | O_APPEND));
 	input++;
 	assert(ft_strncmp(*input, redir->file, ft_strlen(redir->file)));
 	input++;
+	return (input);
 }
 
-static void	test_cmd(t_tree *tree, char **input)
+static char	**test_cmd(t_tree *tree, char **input)
 {
 	char	**arr;
 	t_cmd	*cmd;
@@ -64,20 +66,22 @@ static void	test_cmd(t_tree *tree, char **input)
 		i++;
 	}
 	clear_arr(arr);
+	return (input);
 }
 
-static void	test_tree(t_tree *tree, char **input)
+static char	**test_tree(t_tree *tree, char **input)
 {
 	if (tree == NULL)
-		return ;
+		return (NULL);
 	else if (tree->type == PIPE)
 		test_pipe(tree, input);
 	else if (tree->type == DELIM)
-		test_delim(tree, input);	
+		return (test_delim(tree, input));
 	else if (tree->type == REDIR)
-		test_redir(tree, input);
+		return (test_redir(tree, input));
 	else if (tree->type == CMD)
-		test_cmd(tree, input);
+		return (test_cmd(tree, input));
+	return (NULL);
 }
 
 int	main(void)
