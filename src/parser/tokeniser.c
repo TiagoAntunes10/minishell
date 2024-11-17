@@ -6,11 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/06 20:52:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 18:03:57 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "../../Include/minishell.h"
 
 // TODO: Handle parenthesis
 int	count_opt(char **tokens)
@@ -22,9 +22,12 @@ int	count_opt(char **tokens)
 	token_cpy = tokens;
 	while (*token_cpy != NULL && **token_cpy != '>' && **token_cpy != ';' &&
 			**token_cpy != '|' && **token_cpy != '<' &&
-			ft_strncmp(*token_cpy, "<<", 2) != 0 &&
-			ft_strncmp(*token_cpy, ">>", 2) != 0)
+			ft_strncmp(*token_cpy, "<<", ft_strlen(*token_cpy)) != 0 &&
+			ft_strncmp(*token_cpy, ">>", ft_strlen(*token_cpy)) != 0)
+	{
 		count++;
+		token_cpy++;
+	}
 	return (count);
 }
 
@@ -40,20 +43,18 @@ t_tree	*tokenisation(char *input)
 	cmd_lst = split_input(input);
 	arr_cpy = cmd_lst;
 	tree = NULL;
-	while (arr_cpy != NULL)
+	while (*arr_cpy != NULL)
 	{
 		if (**arr_cpy == '<' && ft_strlen(*arr_cpy) == 1)
-			tree = redir_node(tree, &(++arr_cpy), O_RDONLY);
-		else if (ft_strncmp(*arr_cpy, "<<", 2) && ft_strlen(*arr_cpy) == 2)
-			tree = delim_node(tree, &(++arr_cpy));
+			tree = redir_node(tree, &arr_cpy, O_RDONLY);
+		else if (ft_strncmp(*arr_cpy, "<<", ft_strlen(*arr_cpy)) == 0)
+			tree = delim_node(tree, &arr_cpy);
 		else if (**arr_cpy == '>' && ft_strlen(*arr_cpy) == 1)
-			tree = redir_node(tree, &(++arr_cpy), O_WRONLY | O_CREAT);
-		else if (ft_strncmp(*arr_cpy, ">>", 2) && ft_strlen(*arr_cpy) == 2)
-			tree = redir_node(tree, &(++arr_cpy), O_WRONLY | O_CREAT | O_APPEND);
-		else if (**arr_cpy == '|' && ft_strlen(*arr_cpy) == 1)
+			tree = redir_node(tree, &arr_cpy, O_WRONLY | O_CREAT);
+		else if (ft_strncmp(*arr_cpy, ">>", ft_strlen(*arr_cpy)) == 0)
+			tree = redir_node(tree, &arr_cpy, O_WRONLY | O_CREAT | O_APPEND);
+		else if (**arr_cpy == '|' && ft_strlen(*(arr_cpy++)) == 1)
 			tree = pipe_node(tree);
-		else if (**arr_cpy == ';' && ft_strlen(*arr_cpy) == 1)
-			tree = lst_node(tree);
 		else
 			tree = cmd_node(tree, &arr_cpy);
 	}

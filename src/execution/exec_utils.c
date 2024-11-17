@@ -6,11 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/09 11:06:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:28:44 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "../../Include/minishell.h"
 
 // TODO: Reduce number of lines
 void	exec_pipe(t_tree *tree, int fd)
@@ -126,7 +126,7 @@ void	exec_redir(t_tree *tree, int fd)
 		exit(1);
 	else if (id == 0)
 	{
-		if (t_redir->mode == O_RDONLY)
+		if (redir->mode == O_RDONLY)
 		{
 			// TODO: Check if this error should be handled in this way
 			if (access(redir->file, F_OK | R_OK) == -1)
