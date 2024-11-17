@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/17 16:24:07 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 18:03:50 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,6 @@ t_tree	*pipe_node(t_tree *tree)
 	pipe->left = tree;
 	pipe->right = NULL;
 	return ((t_tree *) pipe);
-}
-
-// TODO: Maybe remove the semicolon handling
-t_tree	*lst_node(t_tree *tree)
-{
-	t_lst	*lst;
-
-	lst = malloc(sizeof(*lst));
-	//TODO: Maybe create an error handling function that terminates the program
-	lst->type = LIST;
-	lst->left = tree;
-	lst->right = NULL;
-	return ((t_tree *) lst);
 }
 
 t_tree	*redir_node(t_tree *tree, char ***input, int mode)

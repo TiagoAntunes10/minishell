@@ -20,7 +20,7 @@ static char	**test_delim(t_tree *tree, char **input)
 	t_delim	*delim;
 
 	delim = (t_delim *) tree;
-	test_tree(delim->right, input);
+	input = test_tree(delim->right, input);
 	assert(ft_strncmp(*input, "<<", ft_strlen(*input)) == 0);
 	input++;
 	assert(ft_strncmp(*input, delim->delim, ft_strlen(delim->delim)) == 0);
@@ -140,5 +140,19 @@ int	main(void)
 	tree_cpy = tree;
 	char	*input7[9] = {"cat", "<", "infile", "|", "grep 'dlkjfj dshfh'", "|", "wc -l", ">", "outfile"};
 	test_tree(tree_cpy, input7);
+	clear_tree(tree);
+
+	// Test "cat << delim" input
+	tree = tokenisation("cat << delim");
+	tree_cpy = tree;
+	char	*input8[3] = {"cat", "<<", "delim"};
+	test_tree(tree_cpy, input8);
+	clear_tree(tree);
+
+	// Test "cat >> outfile" input
+	tree = tokenisation("cat >> outfile");
+	tree_cpy = tree;
+	char	*input9[3] = {"cat", ">>", "outfile"};
+	test_tree(tree_cpy, input9);
 	clear_tree(tree);
 }

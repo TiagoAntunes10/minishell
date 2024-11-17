@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/17 15:42:12 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 18:03:57 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ t_tree	*tokenisation(char *input)
 			tree = redir_node(tree, &arr_cpy, O_WRONLY | O_CREAT | O_APPEND);
 		else if (**arr_cpy == '|' && ft_strlen(*(arr_cpy++)) == 1)
 			tree = pipe_node(tree);
-		else if (**arr_cpy == ';' && ft_strlen(*(arr_cpy++)) == 1)
-			tree = lst_node(tree);
 		else
 			tree = cmd_node(tree, &arr_cpy);
 	}

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/17 16:12:23 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 18:07:18 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static unsigned int	check_quotes(char **str, int len)
 		quotes = 1;
 	else if (**str == '\'')
 		quotes = 2;
+	else if (**str == '(' || **str == ')')
+		(*str)++;
 	while (quotes > 0)
 	{
 		(*str)++;

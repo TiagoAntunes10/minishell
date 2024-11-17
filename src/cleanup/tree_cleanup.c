@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 21:52:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/14 21:54:39 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 20:41:44 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ static void	clear_delim(t_tree *tree)
 	free(delim);
 }
 
-static void	clear_list(t_tree *tree)
-{
-	t_lst	*lst;
-
-	lst = (t_lst *) tree;
-	clear_tree(lst->left);
-	clear_tree(lst->right);
-	free(lst);
-}
-
 static void	clear_redir(t_tree *tree)
 {
 	t_redir	*redir;
@@ -63,8 +53,6 @@ void	clear_tree(t_tree *tree)
 		clear_pipe(tree);
 	else if (tree->type == DELIM)
 		clear_delim(tree);	
-	else if (tree->type == LIST)
-		clear_list(tree);
 	else if (tree->type == REDIR)
 		clear_redir(tree);
 	else if (tree->type == CMD)

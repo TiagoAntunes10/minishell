@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/15 17:31:47 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 18:01:42 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@
 # include "./cleanup.h"
 
 # define PIPE	1
-# define LIST	2
-# define DELIM	3
-# define CMD	4
-# define REDIR	5
+# define DELIM	2
+# define CMD	3
+# define REDIR	4
 
 /* ************************************************************************** */
 /*                            EXECUTION                                       */
