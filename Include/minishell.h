@@ -28,6 +28,7 @@
 # include "tree.h"
 # include "parser.h"
 # include "cleanup.h"
+# include "macro.h"
 
 # define PIPE	1
 # define LIST	2

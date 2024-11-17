@@ -9,11 +9,26 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <assert.h>
+#include "macro.h"
 
 void	handle_child(int signum)
 {
-	if (signum == SIGINT)
-		printf("ignored");
+	if (signum != SIGINT)
+		return ;
+	printf("ignored");
+}
+
+int	b_pwd(int ac, char **av)
+{
+	(void)ac;
+	char *cwd = getcwd(NULL, 4096);
+	if (av[1] != NULL)
+		return (free(cwd), ft_putstr_fd(RED PWD_ERR_ARG RST, 2), 2);
+	if (printf(GRN "%s\n" RST, cwd) < 0)
+		return (free(cwd), ft_putstr_fd(RED PWD_NO_PRNT RST, 2), 2);
+	if (cwd)
+		free(cwd);
+	return (0);
 }
 
 void	handle_parent(int signum)
@@ -52,7 +67,7 @@ void err(char *str)
 
 int is_builtin(char *str)
 {
-	char **builtins = (char *[]){"exit", "cd", NULL};
+	char **builtins = (char *[]){"exit", "cd", "pwd", NULL};
 	int i = -1;
 
 	while (builtins[++i])
@@ -82,25 +97,25 @@ int b_cd(int ac, char **av)
 {
 	(void)ac;
 	struct stat stats;
-	if (av[1] && av[2])
-		return (ft_putstr_fd("cd: Error too many args", 2), 2);
+	if (av[1] && av[2] != NULL)
+		return (ft_putstr_fd("cd: Error too many args\n", 2), 2);
 	if (av[0] && !av[1])
 		return (chdir(getenv("HOME")), 0);
 	stat(av[1], &stats);
 	if (S_ISDIR(stats.st_mode))
 	{
 		if (chdir(av[1]) == -1)
-			return (ft_putstr_fd("cd: Error could not change directory", 2), 127);
+			return (ft_putstr_fd("cd: Error could not change directory\n", 2), 127);
 	}
 	else
-		return (ft_putstr_fd("cd: Error is not a directory", 2), 2);
+		return (ft_putstr_fd("cd: Error is not a directory\n", 2), 2);
 	return (0);
 }
 
 int builtin(char *str, char **av)
 {
-	char **builtins = (char *[]){"exit", "cd", NULL};
-	int (*builtin_fn[])(int, char **) = { b_exit, b_cd, NULL};
+	char **builtins = (char *[]){"exit", "cd", "pwd", NULL};
+	int (*builtin_fn[])(int, char **) = { b_exit, b_cd, b_pwd, NULL};
 	int i = -1;
 	int ac = ft_argc(av);
 	while (builtins[++i])
@@ -140,9 +155,8 @@ int exec(char **av, char **ev)
 		return (err("ERROR\n"), 1);
 	if (!pid)
 	{
-		execve(ft_path(av[0]), av, ev);
 		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, handle_child);
+		execve(ft_path(av[0]), av, ev);
 		err("ERROR\n");
 		exit(1);
 	}

@@ -13,8 +13,6 @@
 #ifndef MACRO_H 
 # define MACRO_H 
 
-#include "minishell.h"
-
 //colour prints
 
 # define RST "\e[0m"

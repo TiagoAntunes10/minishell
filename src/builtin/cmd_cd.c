@@ -23,7 +23,7 @@ int	ft_cd(t_cmd *cmd)
 
 //	if (access(cmd->opt[0], F_OK) != 0 && access(cmd->opt[0], X_OK) != 0)
 	if (cmd->opt[0] && cmd->opt[1])
-		return (ft_putstr_fd("cd: Error too many args\n", 2), 2);
+		return (ft_putstr_fd(RED CD_ERR_ARG RST, 2), 2);
 	if (cmd->cmd && !cmd->opt)
 		return (chdir(getenv("HOME")), 0);
 	stat(cmd->opt[0], &stats);
@@ -32,12 +32,12 @@ int	ft_cd(t_cmd *cmd)
 		if (chdir(cmd->opt[0]) == -1)
 		{
 			if (errno == EACCES)
-				return (ft_putstr_fd("cd: Error no permission\n", 2), 2);
+				return (ft_putstr_fd(RED CD_NO_PERM RST, 2), 2);
 			else
-				return (ft_putstr_fd("cd: Error could not change directory\n", 2), 127);
+				return (ft_putstr_fd(RED CD_GEN_ERR RST, 2), 127);
 		}
 	}
 	else
-		return (ft_putstr_fd("cd: Error is not a directory\n", 2), 2);
+		return (ft_putstr_fd(RED CD_NOT_DIR RST, 2), 2);
 	return (0);
 }

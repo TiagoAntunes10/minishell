@@ -16,14 +16,11 @@ int	ft_pwd(t_cmd *cmd)
 {
 	char	*cwd;
 
-	if (cmd->opt)
-		return (ft_putstr_fd("pwd: too many args", 2), 2);
 	cwd = getcwd(NULL, 4096);
+	if (cmd->opt != NULL)
+		return (free(cwd), ft_putstr_fd(RED PWD_ERR_ARG RST, 2), 2);
 	if (printf("%s", cwd) < 0)
-	{
-		free(cwd);
-		return (ft_putstr_fd("pwd: could not print directory", 2), 2);
-	}
+		return (free(cwd), ft_putstr_fd(RED PWD_NO_PRNT RST, 2), 2);
 	if (cwd)
 		free(cwd);
 	return (0);
