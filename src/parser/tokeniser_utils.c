@@ -6,34 +6,45 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/14 21:54:10 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 16:12:23 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
+static unsigned int	check_quotes(char **str, int len)
+{
+	int				quotes;
+
+	quotes = 0;
+	if (**str == '"')
+		quotes = 1;
+	else if (**str == '\'')
+		quotes = 2;
+	while (quotes > 0)
+	{
+		(*str)++;
+		if (((**str == '"' && quotes == 1)
+			|| (**str == '\'' && quotes == 2)) || **str == 0)
+		{
+			quotes = 0;
+			break ;
+		}
+		len++;
+	}
+	return (len);
+}
+
 unsigned int	mod_strlen(char *str)
 {
 	unsigned int	len;
-	int				quotes;
 	char			*str_cpy;
 
-	quotes = 0;
 	len = 0;
 	str_cpy = str;
 	while (*str_cpy != ' ' && *str_cpy != 0)
 	{
-		if (*str_cpy == '"')
-			quotes = 1;
-		else if (*str_cpy == '\'')
-			quotes = 2;
-		while (quotes > 0)
-		{
-			str_cpy++;
-			if (((*str_cpy == '"' && quotes == 1) || (*str_cpy == '\'' && quotes == 2)) || *str_cpy == 0)
-				quotes = 0;
-			len++;
-		}
+		len = check_quotes(&str_cpy, len);
 		if (*str_cpy != '"' && *str_cpy != '\'')
 			len++;
 		str_cpy++;
@@ -48,9 +59,13 @@ int	count_words(char *str)
 	count = 0;
 	while (*str != 0)
 	{
-		str += mod_strlen(str);
 		if (*str == '"' || *str == '\'')
-			str++;
+		{
+			str += mod_strlen(str);
+			str += 2;
+		}
+		else
+			str += mod_strlen(str);
 		count++;
 		while (*str == ' ')
 			str++;

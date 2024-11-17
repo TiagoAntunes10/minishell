@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/16 22:35:21 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:42:12 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	count_opt(char **tokens)
 // TODO: How to handle ';' without parenthesis and a pipe - this might take a different function
 // The current function works well with parenthesis
 // TODO: Reduce number of lines
-// TODO: Progressing through the array is not working correctly
 t_tree	*tokenisation(char *input)
 {
 	t_tree	*tree;

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/16 23:03:22 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 16:24:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ t_tree	*cmd_node(t_tree *tree, char ***input)
 	}
 	cmd->opt[i] = NULL;
 	if (tree != NULL)
+	{
 		tree = org_tree(tree, (t_tree *) cmd);
-	return (tree);
+		return (tree);
+	}
+	return ((t_tree *) cmd);
 }
 
 t_tree	*delim_node(t_tree *tree, char ***input)
@@ -103,6 +106,7 @@ t_tree	*redir_node(t_tree *tree, char ***input, int mode)
 
 	(*input)++;
 	redir = malloc(sizeof(*redir));
+	redir->type = REDIR;
 	redir->file = NULL;
 	if (**input != NULL)
 	{

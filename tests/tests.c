@@ -3,15 +3,16 @@
 
 static char	**test_tree(t_tree *tree, char **input);
 
-static void	test_pipe(t_tree *tree, char **input)
+static char	**test_pipe(t_tree *tree, char **input)
 {
 	t_pipe	*pipe;
 
 	pipe = (t_pipe *) tree;
-	input = test_tree((t_tree *) pipe->left, input);
+	input = test_tree(pipe->left, input);
 	assert(ft_strncmp(*input, "|", ft_strlen(*input)) == 0);
 	input++;
-	test_tree((t_tree *) pipe->right, input);
+	input = test_tree(pipe->right, input);
+	return (input);
 }
 
 static char	**test_delim(t_tree *tree, char **input)
@@ -19,7 +20,7 @@ static char	**test_delim(t_tree *tree, char **input)
 	t_delim	*delim;
 
 	delim = (t_delim *) tree;
-	test_tree((t_tree *) delim->right, input);
+	test_tree(delim->right, input);
 	assert(ft_strncmp(*input, "<<", ft_strlen(*input)) == 0);
 	input++;
 	assert(ft_strncmp(*input, delim->delim, ft_strlen(delim->delim)) == 0);
@@ -32,7 +33,7 @@ static char	**test_redir(t_tree *tree, char **input)
 	t_redir	*redir;
 
 	redir = (t_redir *) tree;
-	test_tree((t_tree *) redir->right, input);
+	input = test_tree(redir->right, input);
 	if (**input == '<' && ft_strlen(*input) == 1)
 		assert(redir->mode == O_RDONLY);
 	else if (**input == '>' && ft_strlen(*input) == 1)
@@ -40,7 +41,10 @@ static char	**test_redir(t_tree *tree, char **input)
 	else if (ft_strncmp(*input, ">>", ft_strlen(*input)) == 0)
 		assert(redir->mode == (O_WRONLY | O_CREAT | O_APPEND));
 	input++;
-	assert(ft_strncmp(*input, redir->file, ft_strlen(redir->file)));
+	if (redir->file == NULL)
+		assert(redir->file == *input);
+	else
+		assert(ft_strncmp(*input, redir->file, ft_strlen(redir->file)) == 0);
 	input++;
 	return (input);
 }
@@ -54,7 +58,7 @@ static char	**test_cmd(t_tree *tree, char **input)
 
 	cmd = (t_cmd *) tree;
 	arr = split_input(*input);
-	assert(ft_strncmp(*input, cmd->cmd, ft_strlen(cmd->cmd)) == 0);
+	assert(ft_strncmp(arr[0], cmd->cmd, ft_strlen(cmd->cmd)) == 0);
 	input++;
 	arr_size = 0;
 	while (arr[arr_size] != NULL)
@@ -74,7 +78,7 @@ static char	**test_tree(t_tree *tree, char **input)
 	if (tree == NULL)
 		return (NULL);
 	else if (tree->type == PIPE)
-		test_pipe(tree, input);
+		return (test_pipe(tree, input));
 	else if (tree->type == DELIM)
 		return (test_delim(tree, input));
 	else if (tree->type == REDIR)
@@ -106,7 +110,7 @@ int	main(void)
 	// Test "cat < "" input
 	tree = tokenisation("cat < """);
 	tree_cpy = tree;
-	char	*input3[3] = {"cat", "<", ""};
+	char	*input3[3] = {"cat", "<", NULL};
 	test_tree(tree_cpy, input3);
 	clear_tree(tree);
 
