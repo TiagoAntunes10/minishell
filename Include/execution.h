@@ -20,7 +20,14 @@ typedef	struct s_exec
 {
 	int		exit_status;
 	char	*cwd;
-}		t_exec;
+}			t_exec;
+
+typedef struct s_env
+{
+	char	*key;
+	char	*value;
+	
+}			t_env;
 
 //concatanation
 char	*ft_stpcpy(char *restrict dst, const char *restrict src);
