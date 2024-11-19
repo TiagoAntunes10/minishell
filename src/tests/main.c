@@ -11,6 +11,32 @@
 #include <assert.h>
 #include "macro.h"
 
+
+int b_echo(int ac, char **av)
+{
+	(void)ac;
+	int	i;
+	int nflag;
+
+	i = 1;
+	nflag = 0;
+	if ((av[1]) && !ft_strncmp(av[1], "-n", 2))
+	{
+		nflag = 1;
+		i++;
+	}
+	i--;
+	while (av[++i])
+	{
+		printf("%s", av[i]);
+		if (av[i] && av[i + 1])
+			printf(" ");
+	}
+	if (!nflag)
+		printf("\n");
+	return (0);
+}
+
 void	handle_child(int signum)
 {
 	if (signum != SIGINT)
@@ -67,7 +93,7 @@ void err(char *str)
 
 int is_builtin(char *str)
 {
-	char **builtins = (char *[]){"exit", "cd", "pwd", NULL};
+	char **builtins = (char *[]){"exit", "cd", "pwd", "echo", NULL};
 	int i = -1;
 
 	while (builtins[++i])
@@ -114,8 +140,8 @@ int b_cd(int ac, char **av)
 
 int builtin(char *str, char **av)
 {
-	char **builtins = (char *[]){"exit", "cd", "pwd", NULL};
-	int (*builtin_fn[])(int, char **) = { b_exit, b_cd, b_pwd, NULL};
+	char **builtins = (char *[]){"exit", "cd", "pwd", "echo", NULL};
+	int (*builtin_fn[])(int, char **) = { b_exit, b_cd, b_pwd, b_echo, NULL};
 	int i = -1;
 	int ac = ft_argc(av);
 	while (builtins[++i])

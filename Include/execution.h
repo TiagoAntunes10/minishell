@@ -29,6 +29,12 @@ typedef struct s_env
 	
 }			t_env;
 
+typedef struct s_envlist
+{
+	t_env	var;
+	void	*next;
+}	t_envlist;
+
 //concatanation
 char	*ft_stpcpy(char *restrict dst, const char *restrict src);
 void	*ft_mempcpy(void *dest, const void *src, size_t n);
