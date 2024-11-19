@@ -12,32 +12,36 @@
 
 #include "../../Include/minishell.h"
 #include <asm-generic/errno-base.h>
-#include <unistd.h>
 
-//TODO check if int fd is needed or not
-//TODO check if better to use errno for access rights
+//TODO: handle ~ as $HOME cd ~/dir example
+//TODO: handle envs so to update PWD and OLDPWD
 
-int	ft_cd(t_cmd *cmd)
+static int ft_changedir(char *path, t_envlist *envp)
+{
+		
+}
+
+int	ft_cd(t_cmd *cmd, t_envlist *envp)
 {
 	struct stat	stats;
 
 //	if (access(cmd->opt[0], F_OK) != 0 && access(cmd->opt[0], X_OK) != 0)
-	if (cmd->opt[0] && cmd->opt[1])
-		return (ft_putstr_fd(RED CD_ERR_ARG RST, 2), 2);
-	if (cmd->cmd && !cmd->opt)
+	if (cmd->opt[1] && cmd->opt[2])
+		return (ft_putstr_fd(RED CD_ERR_ARG RST, STDERR_FILENO), 2);
+	if (cmd->opt[0] && !cmd->opt[1])
 		return (chdir(getenv("HOME")), 0);
-	stat(cmd->opt[0], &stats);
+	stat(cmd->opt[1], &stats);
 	if (S_ISDIR(stats.st_mode))
 	{
-		if (chdir(cmd->opt[0]) == -1)
+		if (ft_changedir(cmd->opt[1], envp) == -1)
 		{
 			if (errno == EACCES)
-				return (ft_putstr_fd(RED CD_NO_PERM RST, 2), 2);
+				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 2);
 			else
-				return (ft_putstr_fd(RED CD_GEN_ERR RST, 2), 127);
+				return (ft_putstr_fd(RED CD_GEN_ERR RST, STDERR_FILENO), 127);
 		}
 	}
 	else
-		return (ft_putstr_fd(RED CD_NOT_DIR RST, 2), 2);
-	return (0);
+		return (ft_putstr_fd(RED CD_NOT_DIR RST, STDERR_FILENO), 2);
+	return (EXIT_SUCCESS);
 }

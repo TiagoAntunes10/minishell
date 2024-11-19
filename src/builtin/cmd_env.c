@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_echo.c                                         :+:      :+:    :+:   */
+/*   cmd_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 21:06:26 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/14 21:06:54 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/11/18 16:58:19 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/11/18 17:19:35 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-
-int	ft_echo(t_cmd *cmd)
+int	ft_env(t_cmd *cmd, t_envlist *envp)
 {
-
-	return (0);
+	
 }
