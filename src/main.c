@@ -6,11 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/08 21:42:42 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:39:48 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "../Include/minishell.h"
 
 //TODO: Verify if fd 1 is a terminal (that should be the standard)
 //TODO: Check if this is the best way to have access to the envirenment variables

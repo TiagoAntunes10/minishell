@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/14 21:28:44 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:45:28 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	exec_pipe(t_tree *tree, int fd)
 			}
 			close(inp_pipe[1]);
 			execution(pipe_node->left, 1);
+			close(inp_pipe[0]);
+			close(1);
 		}
 		waitpid(-1, &status, WNOHANG);
 		close(inp_pipe[1]);
@@ -58,6 +60,7 @@ void	exec_pipe(t_tree *tree, int fd)
 			close(inp_pipe[0]);
 		}
 		execution(pipe_node->right, 0);
+		close(0);
 	}
 	waitpid(-1, &status, WNOHANG);
 	return ;
@@ -104,15 +107,6 @@ void	exec_delim(t_tree *tree, int fd)
 	execution(delim->right, 0);
 }
 
-void	exec_list(t_tree *tree, int fd)
-{
-	t_lst	*lst;
-
-	lst = (t_lst *) tree;
-	execution(lst->left, fd);
-	execution(lst->right, fd);
-}
-
 // TODO: Reduce number of lines
 void	exec_redir(t_tree *tree, int fd)
 {
@@ -142,6 +136,7 @@ void	exec_redir(t_tree *tree, int fd)
 			}
 			close(redir_fd);
 			execution(redir->right, 0);
+			close(0);
 		}
 		else
 		{
@@ -157,6 +152,7 @@ void	exec_redir(t_tree *tree, int fd)
 			}
 			close(redir_fd);
 			execution(redir->right, 1);
+			close(1);
 		}
 	}
 }
