@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/17 18:07:18 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:33:11 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static unsigned int	check_quotes(char **str, int len)
 		quotes = 1;
 	else if (**str == '\'')
 		quotes = 2;
-	else if (**str == '(' || **str == ')')
-		(*str)++;
 	while (quotes > 0)
 	{
 		(*str)++;
@@ -40,16 +38,14 @@ static unsigned int	check_quotes(char **str, int len)
 unsigned int	mod_strlen(char *str)
 {
 	unsigned int	len;
-	char			*str_cpy;
 
 	len = 0;
-	str_cpy = str;
-	while (*str_cpy != ' ' && *str_cpy != 0)
+	while (*str != ' ' && *str != 0)
 	{
-		len = check_quotes(&str_cpy, len);
-		if (*str_cpy != '"' && *str_cpy != '\'')
+		len = check_quotes(&str, len);
+		if (*str != '"' && *str != '\'' && *str != '(' && *str != ')')
 			len++;
-		str_cpy++;
+		str++;
 	}
 	return (len);
 }
@@ -69,15 +65,13 @@ int	count_words(char *str)
 		else
 			str += mod_strlen(str);
 		count++;
-		while (*str == ' ')
+		while (*str == ' ' || *str == ')')
 			str++;
 	}
 	return (count);
 }
 
 // TODO: Reduce lines
-// TODO: Refactor to handle () and ';' - these chars will not be separated by a space
-// TODO: I want to keep the () and ';' in the array of strings
 char	**split_input(char *str)
 {
 	char			**word_arr;
@@ -96,7 +90,7 @@ char	**split_input(char *str)
 		if (*str == 0)
 			break ;
 		len = mod_strlen(str);
-		if (*str == '"' || *str == '\'')
+		if (*str == '"' || *str == '\'' || *str == '(')
 			str++;
 		*word_arr_cp = malloc(len + 1);
 		//TODO: Maybe create an error handling function that terminates the program
@@ -105,7 +99,7 @@ char	**split_input(char *str)
 		ft_strlcpy(*word_arr_cp, str, len + 1);
 		word_arr_cp++;
 		str += len;
-		if (*str == '"' || *str == '\'')
+		if (*str == '"' || *str == '\'' || *str == ')')
 			str++;
 	}
 	*word_arr_cp = NULL;

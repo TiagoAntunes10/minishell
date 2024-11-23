@@ -155,4 +155,11 @@ int	main(void)
 	char	*input9[3] = {"cat", ">>", "outfile"};
 	test_tree(tree_cpy, input9);
 	clear_tree(tree);
+	
+	// Test "(cat infile) | wc -l" input
+	tree = tokenisation("(cat infile) | wc -l");
+	tree_cpy = tree;
+	char	*input10[3] = {"cat infile", "|", "wc -l"};
+	test_tree(tree_cpy, input10);
+	clear_tree(tree);
 }
