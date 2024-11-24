@@ -13,6 +13,7 @@
 #include "../../Include/minishell.h"
 
 //TODO: handle -nnnnnnn?
+//TODO: check how echo handles new lines withing an argument
 
 int	ft_echo(t_cmd *cmd)
 {

@@ -28,12 +28,12 @@ int b_echo(int ac, char **av)
 	i--;
 	while (av[++i])
 	{
-		printf("%s", av[i]);
+		ft_putstr_fd(av[i], STDOUT_FILENO);
 		if (av[i] && av[i + 1])
-			printf(" ");
+			ft_putchar_fd(32, STDOUT_FILENO);
 	}
 	if (!nflag)
-		printf("\n");
+		ft_putchar_fd(10, STDOUT_FILENO);
 	return (0);
 }
 
