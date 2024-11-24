@@ -12,7 +12,17 @@
 
 #include "../../Include/minishell.h"
 
-int	ft_env(t_cmd *cmd, t_envlist *envp)
+//TODO: ERROR for too many args? is it really necessary?
+
+int	ft_env(t_cmd *cmd, t_envp *envp)
 {
-	
+	while (envp)
+	{
+		ft_putstr_fd(envp->key, STDOUT_FILENO);
+		ft_putchar_fd(61, STDOUT_FILENO);
+		ft_putstr_fd(envp->value, STDOUT_FILENO);
+		ft_putchar_fd(10, STDOUT_FILENO);
+		envp = envp->next;
+	}
+	return (EXIT_SUCCESS);
 }
