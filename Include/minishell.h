@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/24 16:04:28 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:50:14 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@
 /*                            EXECUTION                                       */
 /* ************************************************************************** */
 
-void	execution(t_tree *tree, int fd);
-void	exec_pipe(t_tree *tree, int fd);
-void	exec_delim(t_tree *tree, int fd);
-void	exec_list(t_tree *tree, int fd);
-void	exec_redir(t_tree *tree, int fd);
+void	execution(t_tree *tree, int fd, t_envp *envp);
+void	exec_pipe(t_tree *tree, int fd, t_envp *envp);
+void	exec_delim(t_tree *tree, int fd, t_envp *envp);
+void	exec_list(t_tree *tree, int fd, t_envp *envp);
+void	exec_redir(t_tree *tree, int fd, t_envp *envp);
+void	std_cmd(t_cmd *cmd, t_envp *envp);
 // void			ft_echo(t_tokens *token_lst, int *pipe);
 // void			ft_pwd(int *pipe);
 // void			ft_cd(t_tokens *token_lst);

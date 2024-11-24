@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/19 21:39:48 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:52:36 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*input;
 	t_tree	*tree;
+	t_envp	*envp_lst;
 
+	(void) argc;
+	(void) argv;
+	envp_lst = arr_to_lst(env);
 	while (check_end() != 0)
 	{
 		input = readline(get_prompt());
@@ -30,7 +34,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			tree = tokenisation(input);
 			free(input);
-			execution(tree, -1);
+			execution(tree, -1, envp_lst);
 			clear_tree(tree);
 		}
 	}
