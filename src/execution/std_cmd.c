@@ -6,46 +6,24 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/23 13:43:05 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:51:32 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-static char	**lst_to_arr(t_envp *envp)
-{
-	char	**arr;
-	int		size;
-	int		i;
-
-	arr = malloc((lst_len(envp) + 1) * sizeof(char *));
-	if (arr == NULL)
-		// TODO: Exit program
-	i = 0;
-	while (envp != NULL)
-	{
-		size = ft_strlen(envp->key) + ft_strlen(envp->value) + 2;
-		arr[i] = malloc(size);
-		if (arr[i] == NULL)
-			// TODO: Clear array and exit program
-		ft_strlcat(arr[i], envp->key, ft_strlen(envp->key) + 1);
-		ft_strlcat(arr[i], ":", ft_strlen(envp->key) + 2);
-		ft_strlcat(arr[i++], envp->value, size);
-	}
-	return (arr);
-}
 
 static char	*conc_path(char *cmd, char *path)
 {
 	char	*cmd_path;
 	int		size;
 
-	size = ft_strlen(cmd) + ft_strlen(*envp_path) + 2;
+	size = ft_strlen(cmd) + ft_strlen(path) + 2;
 	cmd_path = malloc(size);
 	if (cmd_path == NULL)
-		// TODO:Clear envp_path and exit the program
-	ft_strlcat(cmd_path, *envp_path, ft_strlen(*envp_path) + 1);
-	ft_strlcat(cmd_path, "/", ft_strlen(*envp_path) + 2);
+		// TODO:Clear path and exit the program
+	ft_strlcat(cmd_path, path, ft_strlen(path) + 1);
+	ft_strlcat(cmd_path, "/", ft_strlen(path) + 2);
 	ft_strlcat(cmd_path, cmd, size + 1);
 	return (cmd_path);
 }
@@ -56,12 +34,12 @@ static char	*find_path(char *cmd, t_envp *envp)
 	char	**envp_path;
 	int		size;
 
-	envp_path = get_path(envp);
+	envp_path = ft_split(search_envp(envp, "PATH")->value, ';');
 	if (access(cmd, F_OK) == -1)
 	{
 		while (*envp_path != NULL)
 		{
-			cmd_path = conc_path(cmd, envp_path);
+			cmd_path = conc_path(cmd, *envp_path);
 			if (access(cmd_path, F_OK | X_OK) == 1)
 				return (cmd_path);
 			free(cmd_path);
