@@ -6,11 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/09 11:46:23 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/17 18:03:50 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Include/minishell.h"
+#include "../../Include/minishell.h"
 
 // TODO: Maybe create a function that safely alloc memory
 // TODO: Clean input variable
@@ -51,14 +51,18 @@ t_tree	*cmd_node(t_tree *tree, char ***input)
 	}
 	cmd->opt[i] = NULL;
 	if (tree != NULL)
+	{
 		tree = org_tree(tree, (t_tree *) cmd);
-	return (tree);
+		return (tree);
+	}
+	return ((t_tree *) cmd);
 }
 
 t_tree	*delim_node(t_tree *tree, char ***input)
 {
 	t_delim	*delim;
 
+	(*input)++;
 	delim = malloc(sizeof(*delim));
 	//TODO: Maybe create an error handling function that terminates the program
 	delim->type = DELIM;
@@ -66,9 +70,11 @@ t_tree	*delim_node(t_tree *tree, char ***input)
 	//TODO: Maybe create an error handling function that terminates the program
 	ft_strlcpy(delim->delim, **input, ft_strlen(**input) + 1);
 	delim->right = tree;
+	(*input)++;
 	return ((t_tree *) delim);
 }
 
+// TODO: Solve problem in creating this node
 t_tree	*pipe_node(t_tree *tree)
 {
 	t_pipe	*pipe;
@@ -81,27 +87,21 @@ t_tree	*pipe_node(t_tree *tree)
 	return ((t_tree *) pipe);
 }
 
-t_tree	*lst_node(t_tree *tree)
-{
-	t_lst	*lst;
-
-	lst = malloc(sizeof(*lst));
-	//TODO: Maybe create an error handling function that terminates the program
-	lst->type = LIST;
-	lst->left = tree;
-	lst->right = NULL;
-	return ((t_tree *) lst);
-}
-
 t_tree	*redir_node(t_tree *tree, char ***input, int mode)
 {
 	t_redir	*redir;
 
-	redir = malloc(sizeof(*redir));
-	redir->file = malloc(ft_strlen(**input) + 1);
-	//TODO: Maybe create an error handling function that terminates the program
-	ft_strlcpy(redir->file, **input, ft_strlen(**input) + 1);
 	(*input)++;
+	redir = malloc(sizeof(*redir));
+	redir->type = REDIR;
+	redir->file = NULL;
+	if (**input != NULL)
+	{
+		redir->file = malloc(ft_strlen(**input) + 1);
+		//TODO: Maybe create an error handling function that terminates the program
+		ft_strlcpy(redir->file, **input, ft_strlen(**input) + 1);
+		(*input)++;
+	}
 	redir->mode = mode;
 	redir->right = tree;
 	return ((t_tree *) redir);

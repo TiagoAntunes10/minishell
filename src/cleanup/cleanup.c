@@ -6,11 +6,15 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/05 22:23:24 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:54:29 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "minishell.h"
+=======
+#include "../../Include/minishell.h"
+>>>>>>> 91d655cd368eec5976dfca42dd733e0176863e75
 
 char	**clear_arr(char **arr)
 {

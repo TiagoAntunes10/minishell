@@ -6,37 +6,50 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/04 22:11:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:33:11 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "minishell.h"
+=======
+#include "../../Include/minishell.h"
+
+static unsigned int	check_quotes(char **str, int len)
+{
+	int				quotes;
+
+	quotes = 0;
+	if (**str == '"')
+		quotes = 1;
+	else if (**str == '\'')
+		quotes = 2;
+	while (quotes > 0)
+	{
+		(*str)++;
+		if (((**str == '"' && quotes == 1)
+			|| (**str == '\'' && quotes == 2)) || **str == 0)
+		{
+			quotes = 0;
+			break ;
+		}
+		len++;
+	}
+	return (len);
+}
+>>>>>>> 91d655cd368eec5976dfca42dd733e0176863e75
 
 unsigned int	mod_strlen(char *str)
 {
 	unsigned int	len;
-	int				quotes;
-	char			*str_cpy;
 
-	quotes = 0;
 	len = 0;
-	str_cpy = str;
-	while (*str_cpy != ' ' && *str_cpy != 0)
+	while (*str != ' ' && *str != 0)
 	{
-		if (*str_cpy == '"')
-			quotes = 1;
-		else if (*str_cpy == '\'')
-			quotes = 2;
-		while (quotes > 0)
-		{
-			str_cpy++;
-			if (((*str_cpy == '"' && quotes == 1) || (*str_cpy == '\'' && quotes == 2)) || *str_cpy == 0)
-				quotes = 0;
+		len = check_quotes(&str, len);
+		if (*str != '"' && *str != '\'' && *str != '(' && *str != ')')
 			len++;
-		}
-		if (*str_cpy != '"' && *str_cpy != '\'')
-			len++;
-		str_cpy++;
+		str++;
 	}
 	return (len);
 }
@@ -48,19 +61,21 @@ int	count_words(char *str)
 	count = 0;
 	while (*str != 0)
 	{
-		str += mod_strlen(str);
 		if (*str == '"' || *str == '\'')
-			str++;
+		{
+			str += mod_strlen(str);
+			str += 2;
+		}
+		else
+			str += mod_strlen(str);
 		count++;
-		while (*str == ' ')
+		while (*str == ' ' || *str == ')')
 			str++;
 	}
 	return (count);
 }
 
 // TODO: Reduce lines
-// TODO: Refactor to handle () and ';' - these chars will not be separated by a space
-// TODO: I want to keep the () and ';' in the array of strings
 char	**split_input(char *str)
 {
 	char			**word_arr;
@@ -79,7 +94,7 @@ char	**split_input(char *str)
 		if (*str == 0)
 			break ;
 		len = mod_strlen(str);
-		if (*str == '"' || *str == '\'')
+		if (*str == '"' || *str == '\'' || *str == '(')
 			str++;
 		*word_arr_cp = malloc(len + 1);
 		//TODO: Maybe create an error handling function that terminates the program
@@ -88,7 +103,7 @@ char	**split_input(char *str)
 		ft_strlcpy(*word_arr_cp, str, len + 1);
 		word_arr_cp++;
 		str += len;
-		if (*str == '"' || *str == '\'')
+		if (*str == '"' || *str == '\'' || *str == ')')
 			str++;
 	}
 	*word_arr_cp = NULL;
