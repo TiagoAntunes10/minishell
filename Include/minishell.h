@@ -6,11 +6,8 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2024/11/12 22:22:14 by tialbert         ###   ########.fr       */
-=======
 /*   Updated: 2024/11/24 16:04:28 by tialbert         ###   ########.fr       */
->>>>>>> 91d655cd368eec5976dfca42dd733e0176863e75
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +26,17 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "../libft/ft_printf.h"
-<<<<<<< HEAD
 # include "tree.h"
 # include "parser.h"
 # include "cleanup.h"
 # include "macro.h"
+# include "execution.h"
 
 # define PIPE	1
 # define LIST	2
 # define DELIM	3
 # define CMD	4
 # define REDIR	5
-=======
 # include "./tree.h"
 # include "./parser.h"
 # include "./cleanup.h"
@@ -50,7 +46,6 @@
 # define DELIM	2
 # define CMD	3
 # define REDIR	4
->>>>>>> 91d655cd368eec5976dfca42dd733e0176863e75
 
 /* ************************************************************************** */
 /*                            EXECUTION                                       */

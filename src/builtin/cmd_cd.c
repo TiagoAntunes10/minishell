@@ -11,21 +11,40 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <asm-generic/errno-base.h>
+#include <stddef.h>
+#include <unistd.h>
 
 //TODO: handle ~ as $HOME cd ~/dir example
 //TODO: handle envs so to update PWD and OLDPWD
 
-static int ft_changedir(char *path, t_envlist *envp)
+static int ft_changedir(char *path, t_envp *envp)
 {
-		
+	t_envp	*oldpwd;
+	t_envp	*pwd;
+	char	*oldvalue;
+
+	oldpwd = search_envp(envp, "OLDPWD=");
+	pwd = search_envp(envp, "PWD=");
+	oldvalue = getcwd(NULL, 4096);
+	if (chdir(path) == -1)
+	{
+		free(oldvalue);
+		return (-1);
+	}
+	free(oldpwd->value);
+	oldpwd->value = NULL;
+	oldpwd->value = oldvalue;
+	free(pwd->value);
+	pwd->value = NULL;
+	pwd->value = getcwd(NULL, 4096); 
+	free(oldvalue);
+	return (0);
 }
 
-int	ft_cd(t_cmd *cmd, t_envlist *envp)
+int	ft_cd(t_cmd *cmd, t_envp *envp)
 {
 	struct stat	stats;
 
-//	if (access(cmd->opt[0], F_OK) != 0 && access(cmd->opt[0], X_OK) != 0)
 	if (cmd->opt[1] && cmd->opt[2])
 		return (ft_putstr_fd(RED CD_ERR_ARG RST, STDERR_FILENO), 2);
 	if (cmd->opt[0] && !cmd->opt[1])
