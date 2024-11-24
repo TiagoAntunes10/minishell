@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 15:57:26 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/24 16:27:08 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:01:19 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_envp	*create_lst(char *envp)
 	envp_lst = malloc(sizeof(*envp_lst));
 	if (envp_lst == NULL)
 		// TODO: Handle error
-	key_value = ft_split(envp, ':');
+	key_value = ft_split(envp, '=');
 	if (key_value == NULL)
 		// TODO: Handle error
 	envp_lst->key = malloc(ft_strlen(key_value[0] + 1));
@@ -46,7 +46,7 @@ static void	add_envp(char *envp, t_envp *envp_lst)
 	while (envp_lst->next != NULL)
 		envp_lst = envp_lst->next;
 	envp_lst->next = envp_node;
-	key_value = ft_split(envp, ':');
+	key_value = ft_split(envp, '=');
 	if (key_value == NULL)
 		// TODO: Handle error
 	envp_node->key = malloc(ft_strlen(key_value[0] + 1));
