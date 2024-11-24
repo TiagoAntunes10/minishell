@@ -11,10 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <stdlib.h>
 
 //TODO: handle -nnnnnnn?
-//TODO: handle printf errors?
 
 int	ft_echo(t_cmd *cmd)
 {
@@ -23,7 +21,7 @@ int	ft_echo(t_cmd *cmd)
 
 	i = 1;
 	nflag = 0;
-	if ((cmd->opt[1]) && ft_strncmp(cmd->opt[1], "-n", 2))
+	if ((cmd->opt[1]) && !ft_strncmp(cmd->opt[1], "-n", 2))
 	{
 		nflag = 1;
 		i++;
@@ -31,11 +29,11 @@ int	ft_echo(t_cmd *cmd)
 	i--;
 	while (cmd->opt[++i])
 	{
-		printf("%s", cmd->opt[i]);
+		ft_putstr_fd(cmd->opt[i], STDOUT_FILENO);
 		if (cmd->opt[i] && cmd->opt[i + 1])
-			printf(" ");
+			ft_putchar_fd(32, STDOUT_FILENO);	
 	}
 	if (!nflag)
-		printf("\n");
+		ft_putchar_fd(10, STDOUT_FILENO);	
 	return (EXIT_SUCCESS);
 }
