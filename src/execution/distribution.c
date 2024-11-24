@@ -6,13 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/24 17:53:22 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:48:16 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-void	cmd_dist(t_tree *tree)
+void	cmd_dist(t_tree *tree, t_envp *envp)
 {
 	t_cmd	*cmd;
 
@@ -33,25 +33,24 @@ void	cmd_dist(t_tree *tree)
 	else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)))
 		exit_success((t_tree *) cmd, 0);
 	else
-		std_cmd(cmd);
+		std_cmd(cmd, envp);
 }
 
-static void	exec_tree(t_tree *tree, int fd)
+static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 {
 	if (tree == NULL)
 		return ;
 	else if (tree->type == PIPE)
-		exec_pipe(tree, fd);
+		exec_pipe(tree, fd, envp);
 	else if (tree->type == DELIM)
-		exec_delim(tree, fd);	
+		exec_delim(tree, fd, envp);	
 	else if (tree->type == REDIR)
-		exec_redir(tree, fd);
+		exec_redir(tree, fd, envp);
 	else if (tree->type == CMD)
-		cmd_dist(tree);
+		cmd_dist(tree, envp);
 }
 
-// TODO: Handle input redirection with ';' and cd
-void	execution(t_tree *tree, int fd)
+void	execution(t_tree *tree, int fd, t_envp *envp)
 {
 	t_cmd	*cmd;
 
@@ -62,5 +61,5 @@ void	execution(t_tree *tree, int fd)
 		if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
 			ft_cd(tree);
 	}
-	exec_tree(tree, fd);
+	exec_tree(tree, fd, envp);
 }
