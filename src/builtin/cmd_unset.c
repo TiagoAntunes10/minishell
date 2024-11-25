@@ -14,7 +14,7 @@
 
 //TODO: verify node delition
 //TODO: linking nodes if middle node is unset
-//TODO: edge case handling if head node is to be deleted
+//TODO: ERROR handling?
 
 static void	ft_delnode(t_envp *node)
 {
@@ -22,8 +22,6 @@ static void	ft_delnode(t_envp *node)
 		free(node->key);
 	if (node->value)
 		free(node->value);
-	if (node->next)
-		free(node->next);
 	if (node)
 		free(node);
 }
@@ -31,12 +29,26 @@ static void	ft_delnode(t_envp *node)
 int	ft_unset(t_cmd *cmd, t_envp *envp)
 {
 	t_envp	*prev;
-	t_envp	*curr;
+	t_envp	*temp;
 
 	prev = NULL;
-	while (curr)
+	temp = envp;
+	if (!prev && !ft_strncmp(temp->key, cmd->opt[1], ft_strlen(cmd->opt[1])))
 	{
-		if ()	
+		envp = temp->next;
+		ft_delnode(temp);
+		return (EXIT_SUCCESS);
+	}
+	while (temp)
+	{
+		if (!ft_strncmp(temp->key, cmd->opt[1], ft_strlen(cmd->opt[1])))
+		{
+			prev->next = temp->next;
+			ft_delnode(temp);
+			break ;
+		}
+		prev->next = temp;
+		temp = temp->next;
 	}
 	return (EXIT_SUCCESS);
 }

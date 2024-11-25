@@ -15,6 +15,7 @@
 //TODO: ERROR for too many args? is it really necessary?
 //TODO: should just use printf maybe?
 
+
 /*int	ft_env(t_cmd *cmd, t_envp *envp)
 {
 	while (envp)
@@ -28,11 +29,14 @@
 	return (EXIT_SUCCESS);
 }*/
 
+//env in bash does not print evs with NULL as value, export will
+
 int	ft_env(t_cmd *cmd, t_envp *envp)
 {
 	while (envp)
 	{
-		printf("%s=%s\n", envp->key, envp->value);
+		if (envp->value)
+			printf("%s=%s\n", envp->key, envp->value);
 		envp = envp->next;
 	}
 	return (EXIT_SUCCESS);
