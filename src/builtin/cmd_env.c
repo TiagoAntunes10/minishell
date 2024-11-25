@@ -13,8 +13,9 @@
 #include "../../Include/minishell.h"
 
 //TODO: ERROR for too many args? is it really necessary?
+//TODO: should just use printf maybe?
 
-int	ft_env(t_cmd *cmd, t_envp *envp)
+/*int	ft_env(t_cmd *cmd, t_envp *envp)
 {
 	while (envp)
 	{
@@ -22,6 +23,16 @@ int	ft_env(t_cmd *cmd, t_envp *envp)
 		ft_putchar_fd(61, STDOUT_FILENO);
 		ft_putstr_fd(envp->value, STDOUT_FILENO);
 		ft_putchar_fd(10, STDOUT_FILENO);
+		envp = envp->next;
+	}
+	return (EXIT_SUCCESS);
+}*/
+
+int	ft_env(t_cmd *cmd, t_envp *envp)
+{
+	while (envp)
+	{
+		printf("%s=%s\n", envp->key, envp->value);
 		envp = envp->next;
 	}
 	return (EXIT_SUCCESS);
