@@ -11,6 +11,16 @@
 #include <assert.h>
 #include "macro.h"
 
+int	b_env(char **ev)
+{
+	int i = -1;
+	while (ev[++i])
+	{
+		ft_putstr_fd(ev[i], STDOUT_FILENO);
+		ft_putchar_fd(10, STDOUT_FILENO);
+	}
+	return (0);
+}
 
 int b_echo(int ac, char **av)
 {
@@ -176,6 +186,8 @@ int exec(char **av, char **ev)
 {
 	if (is_builtin(av[0]))
 		return (builtin(av[0], av));
+	else if (!ft_strncmp(av[0], "test_env", 9))
+		return (b_env(ev));
 	int pid = fork();
 	if (-1 == pid)
 		return (err("ERROR\n"), 1);
