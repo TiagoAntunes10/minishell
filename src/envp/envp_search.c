@@ -6,15 +6,22 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:45:27 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/24 17:48:29 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:55:03 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-t_envp	*search_envp(t_envp *envp, char *var)
+t_envp	*search_envp(t_envp *head, char *var)
 {
-	while (ft_strncmp(envp->key, var, ft_strlen(var)) != 0)
-		envp = envp->next;
-	return (envp);
+	t_envp	*curr;
+
+	if (!head)
+		return (NULL);
+	curr = head;
+	while (curr)
+			if (ft_strncmp(curr->key, var, ft_strlen(var)) == 0)
+				return (curr);
+		curr = curr->next;
+	return (NULL);
 }

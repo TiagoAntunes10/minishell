@@ -43,15 +43,49 @@ void	export_print(t_envp *envp)
 	}
 }
 
-void	export_env(char *key, t_envp *envp)
+void	append_node(t_envp *head, t_envp *new_node)
 {
-	char	**keyvalue;
-	size_t	size;
+	t_envp	*temp;
 
-	if (!ft_strchr(key, '='))
-		size = ft_strlen(key);
+	temp = head;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new_node;
+}
+
+void	update_envp(char *value, t_envp *node)
+{
+	
+}
+
+void	export_env(char *var, t_envp *envp)
+{
+	t_envp	*node;
+	size_t	key_size;
+	size_t	val_size;
+	char	*key;
+	int		i;
+
+	key_size = ft_strcspn(var, "=");
+	key = ft_calloc(sizeof(char), key_size + 1);
+	if (key == NULL)
+		return ;
+	ft_strlcpy(key, var, key_size);
+	if (!(node = search_envp(envp, key)))
+	{
+		node = ft_calloc(sizeof(*envp), 1);
+		node->key = key;
+		node->value = NULL;
+		node->next = NULL;
+		append_node(envp, node);
+	}
+	if (ft_strchr(var, '=') != NULL)
+		val_size = (ft_strlen(var) - 1) - key_size;
 	else
-	 size = ;
+		val_size = 0;
+
+
+
 }
 
 int	ft_export(t_cmd *cmd, t_envp *envp)
