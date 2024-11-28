@@ -14,8 +14,11 @@
 #include <stdlib.h>
 
 //TODO: verify node delition
-//TODO: ERROR handling?
 //TODO: check if using a loop for multiple args in unset is the best way
+//NOTE!! unset on bash and c function unsetenv(const char *env) both does not
+//seem to do much if no arguments or options are presented, and mostly always
+//returns sucess. Only error seems to be related to not being able to allocate
+//more memory.
 
 static void	ft_delnode(t_envp *node)
 {
@@ -27,16 +30,16 @@ static void	ft_delnode(t_envp *node)
 		free(node);
 }
 
-static void	unset_env(char *key, t_envp *head)
+static void	unset_env(char *key, t_envp **head)
 {
 	t_envp	*prev;
 	t_envp	*temp;
 
 	prev = NULL;
-	temp = head;
+	temp = *head;
 	if (!prev && !ft_strncmp(temp->key, key, ft_strlen(key)))
 	{
-		head = temp->next;
+		*head = temp->next;
 		ft_delnode(temp);
 		return ;
 	}
@@ -48,7 +51,7 @@ static void	unset_env(char *key, t_envp *head)
 			ft_delnode(temp);
 			break ;
 		}
-		prev->next = temp;
+		prev = temp;
 		temp = temp->next;
 	}
 }
@@ -61,6 +64,6 @@ int	ft_unset(t_cmd *cmd, t_envp *envp)
 	if (cmd->opt[0] && !cmd->opt[1])
 		return (EXIT_SUCCESS);
 	while (cmd->opt[++i])
-		unset_env(cmd->opt[i], envp);
+		unset_env(cmd->opt[i], &envp);
 	return (EXIT_SUCCESS);
 }

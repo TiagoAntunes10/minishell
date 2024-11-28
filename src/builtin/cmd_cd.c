@@ -13,8 +13,10 @@
 #include "../../Include/minishell.h"
 
 //TODO: handle ~ as $HOME cd ~/dir example OBS.: not normally implemented
-//TODO: verify that getcwd changes its return value after execution of chdir
 //TODO: verify that cd with no args works with envp as expected
+//TODO: safety check for null returned in case of unset OLDPWD and PWD
+//or search_envp returns null for some reason.
+//TODO: use export to properly append and update values seems more appropriate
 
 static int ft_changedir(char *path, t_envp *envp)
 {
@@ -22,20 +24,23 @@ static int ft_changedir(char *path, t_envp *envp)
 	t_envp	*pwd;
 	char	*oldvalue;
 
-	oldpwd = search_envp(envp, "OLDPWD");
-	pwd = search_envp(envp, "PWD");
-	oldvalue = getcwd(NULL, 4096);
+	if (!(oldpwd = search_envp(envp, "OLDPWD")) || 
+			!(pwd = search_envp(envp, "PWD")))
+		return (-1);
+	if (!(oldvalue = getcwd(NULL, 4096)))
+		return (-1);
 	if (chdir(path) == -1)
 	{
 		free(oldvalue);
-		return (-1;
+		return (-1);
 	}
-	free(oldpwd->value);
-	oldpwd->value = NULL;
+	if (oldpwd->value)
+		free(oldpwd->value);
 	oldpwd->value = oldvalue;
-	free(pwd->value);
-	pwd->value = NULL;
-	pwd->value = getcwd(NULL, 4096); 
+	if (pwd->value)
+		free(pwd->value);
+	if (!(pwd->value = getcwd(NULL, 4096))) 
+		return (-1);
 	free(oldvalue);
 	return (0);
 }
@@ -46,7 +51,7 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 
 	if (cmd->opt[1] && cmd->opt[2])
 		return (ft_putstr_fd(RED CD_ERR_ARG RST, STDERR_FILENO), 2);
-	if (cmd->opt[0] && !cmd->opt[1])
+	if (!cmd->opt[1] || !ft_strncmp(cmd->opt[1], "~", 1))
 	{
 		if (ft_changedir(getenv("HOME"), envp) == -1)
 			return (ft_putstr_fd(RED CD_GEN_ERR RST, STDERR_FILENO), 127);

@@ -15,8 +15,9 @@
 //TODO: handle -nnnnnnn?
 //TODO: check how echo handles new lines withing an argument
 
-int	ft_echo(t_cmd *cmd)
+int	ft_echo(t_cmd *cmd, t_envp *envp)
 {
+	(void)envp;
 	int	i;
 	int nflag;
 

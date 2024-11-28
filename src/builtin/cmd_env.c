@@ -18,26 +18,32 @@
 
 /*int	ft_env(t_cmd *cmd, t_envp *envp)
 {
-	while (envp)
+	t_envp	*head;
+
+	head = envp;
+	while (head)
 	{
-		ft_putstr_fd(envp->key, STDOUT_FILENO);
+		ft_putstr_fd(head->key, STDOUT_FILENO);
 		ft_putchar_fd(61, STDOUT_FILENO);
-		ft_putstr_fd(envp->value, STDOUT_FILENO);
+		ft_putstr_fd(head->value, STDOUT_FILENO);
 		ft_putchar_fd(10, STDOUT_FILENO);
-		envp = envp->next;
+		head = head->next;
 	}
 	return (EXIT_SUCCESS);
 }*/
 
-//env in bash does not print evs with NULL as value, export will
+//env in bash does not print envs with NULL as value, export will
 
 int	ft_env(t_cmd *cmd, t_envp *envp)
 {
-	while (envp)
+	t_envp	*head;
+
+	head = envp;
+	while (head)
 	{
-		if (envp->value)
-			printf("%s=%s\n", envp->key, envp->value);
-		envp = envp->next;
+		if (head->value)
+			printf("%s=%s\n", head->key, head->value);
+		head = head->next;
 	}
 	return (EXIT_SUCCESS);
 }

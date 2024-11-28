@@ -12,8 +12,9 @@
 
 #include "../../Include/minishell.h"
 
-int	ft_pwd(t_cmd *cmd)
+int	ft_pwd(t_cmd *cmd, t_envp *envp)
 {
+	(void)envp;
 	char	*cwd;
 
 	cwd = getcwd(NULL, 4096);
