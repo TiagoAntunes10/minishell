@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <stddef.h>
 
 //NOTE: bash treats multiple args as different envs to be exported, therefore
 //all args should just contain NAME or NAME[=VALUE] format. VALUE can contain
@@ -47,41 +46,43 @@ void	append_node(t_envp *head, t_envp *new_node)
 {
 	t_envp	*temp;
 
+	if (!head || !new_node)
+		return ;
 	temp = head;
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new_node;
 }
 
-void	update_envp(char *value, t_envp *node)
-{
-	
-}
+//strcspn will count the length until it finds '=', if it doesnt it will return
+//the string length, which we will assume it is the key length.
 
-void	export_env(char *var, t_envp *envp)
+int	export_env(char *var, t_envp *envp)
 {
 	t_envp	*node;
-	size_t	key_size;
 	char	*key;
+	char	*value;
 	int		i;
 
-	key_size = ft_strcspn(var, "=");
-	if (!(key = ft_calloc(sizeof(char), key_size + 1)))
-		return ;
-	ft_strlcpy(key, var, key_size);
-	i = key_size;
+	i = ft_strcspn(var, "=");
+	if (!(key = ft_substr(var, 0, i)))
+		return (-1);
+	value = ft_strdup(var + i + 1);
 	if (!(node = search_envp(envp, key)))
 	{
-		node = ft_calloc(sizeof(*envp), 1);
+		if (!(node = ft_calloc(1, sizeof(*envp))))
+			return (-1);
 		node->key = key;
-		node->value = NULL;
-		node->next = NULL;
-	}
-	if (node->value)
+		node->value = value;
 		append_node(envp, node);
-	else if (var[i + 1] == '=')
-		node->value = ft_calloc(sizeof(char), ft_strlen(var) - i);
-	append_node(envp, node);
+	}
+	else
+	{
+		free(key);
+		free(node->value);
+		node->value = value;
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	ft_export(t_cmd *cmd, t_envp *envp)
@@ -92,6 +93,7 @@ int	ft_export(t_cmd *cmd, t_envp *envp)
 	if (!cmd->opt[1])
 		export_print(envp);
 	while (cmd->opt[++i])
-		export_env(cmd->opt[i], envp);
+		if ((export_env(cmd->opt[i], envp)) == -1)
+			return (ft_putstr_fd("export: memory allocation failure ERANGE", 2), STDERR_FILENO);
 	return (EXIT_SUCCESS);
 }

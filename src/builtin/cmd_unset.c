@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <stdlib.h>
 
 //TODO: verify node delition
 //TODO: check if using a loop for multiple args in unset is the best way
