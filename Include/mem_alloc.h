@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   safe_alloc.c                                       :+:      :+:    :+:   */
+/*   mem_alloc.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 18:12:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/28 21:22:18 by tialbert         ###   ########.fr       */
+/*   Created: 2024/11/28 21:24:11 by tialbert          #+#    #+#             */
+/*   Updated: 2024/11/28 21:25:48 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/minishell.h"
+#ifndef MEM_ALLOC_H
+# define MEM_ALLOC_H
 
-// TODO: Think how this should be applied because of the error handling
+# include "envp.h"
+# include "tree.h"
+
+
+/* ************************************************************************** */
+/*                            MEM ALLOCATION                                  */
+/* ************************************************************************** */
 void	*safe_alloc(unsigned int size, unsigned int type,
-					t_tree *tree, t_envp *envp)
-{
-	void	*var;
+					t_tree *tree, t_envp *envp);
 
-	var = malloc(size * type);
-	if (var == NULL)
-		exit_failure(tree, -1, envp);
-	ft_bzero(var, size * type);
-	return (var);
-}
+#endif

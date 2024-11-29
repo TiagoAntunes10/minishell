@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/26 21:11:27 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/29 22:18:28 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	clear_envp(t_envp *envp)
 	envp_cpy = envp->next;
 	while (envp != NULL)
 	{
-		free(envp->key);
-		free(envp->value);
+		if (envp->key != NULL)
+			free(envp->key);
+		if (envp->value != NULL)
+			free(envp->value);
 		envp_cpy = envp->next;
 		free(envp);
 		envp = envp_cpy;
@@ -40,20 +42,24 @@ char	**clear_arr(char **arr)
 
 //TODO: Check if there are cases where more than one fd is open
 //TODO: Maybe this function does not need to close fds
-void	exit_success(t_tree *tree, int fd)
+void	exit_success(t_tree *tree, int fd, t_envp *envp)
 {
 	if (tree != NULL)
 		clear_tree(tree);
+	if (envp != NULL)
+		clear_envp(envp);
 	if (fd != -1)
 		close(fd);
 	exit(EXIT_SUCCESS);
 }
 
 //TODO: Maybe this function should handle closing pipes
-void	exit_failure(t_tree *tree, int fd)
+void	exit_failure(t_tree *tree, int fd, t_envp *envp)
 {
 	if (tree != NULL)
 		clear_tree(tree);
+	if (envp != NULL)
+		clear_envp(envp);
 	if (fd != -1)
 		close(fd);
 	perror(strerror(errno));

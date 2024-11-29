@@ -6,35 +6,23 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/17 18:03:50 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:04:18 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-// TODO: Maybe create a function that safely alloc memory
-// TODO: Clean input variable
-// TODO: Reduce number of lines
-t_tree	*cmd_node(t_tree *tree, char ***input)
+static void	get_opt(t_cmd *cmd, t_tree *tree, char ***input, t_envp *envp)
 {
-	t_cmd	*cmd;
 	int		opt_num;
 	int		i;
-
-	cmd = malloc(sizeof(*cmd));
-	if (cmd == NULL)
-		exit_failure(tree, -1);
-	cmd->type = CMD;
+	
 	opt_num = count_opt(*input);
-	cmd->cmd = malloc(ft_strlen(**input) + 1);
-	if (cmd->cmd == NULL)
-		exit_failure(tree, -1);
-	ft_strlcpy(cmd->cmd, **input, ft_strlen(**input) + 1);
 	cmd->opt = malloc((opt_num + 1) * sizeof(char *));
 	if (cmd->opt == NULL)
 	{
-		free(cmd->cmd);
-		exit_failure(tree, -1);
+		clear_tree((t_tree *) cmd);
+		exit_failure(tree, -1, envp);
 	}
 	i = 0;
 	while (i < opt_num)
@@ -42,14 +30,25 @@ t_tree	*cmd_node(t_tree *tree, char ***input)
 		cmd->opt[i] = malloc(ft_strlen(**input) + 1);
 		if (cmd->opt == NULL)
 		{
-			free(cmd->cmd);
-			clear_arr(cmd->opt);
-			exit_failure(tree, -1);
+			clear_tree((t_tree *) cmd);
+			exit_failure(tree, -1, envp);
 		}
 		ft_strlcpy(cmd->opt[i++], **input, ft_strlen(**input) + 1);
 		(*input)++;
 	}
 	cmd->opt[i] = NULL;
+}
+
+// TODO: Clean input variable
+t_tree	*cmd_node(t_tree *tree, char ***input, t_envp *envp)
+{
+	t_cmd	*cmd;
+
+	cmd = (t_cmd *) safe_alloc(sizeof(*cmd), 1, tree, envp);
+	cmd->type = CMD;
+	cmd->cmd = (char *) safe_alloc(ft_strlen(**input) + 1, 1, tree, envp);
+	ft_strlcpy(cmd->cmd, **input, ft_strlen(**input) + 1);
+	get_opt(cmd, tree, input, envp);
 	if (tree != NULL)
 	{
 		tree = org_tree(tree, (t_tree *) cmd);
@@ -58,47 +57,52 @@ t_tree	*cmd_node(t_tree *tree, char ***input)
 	return ((t_tree *) cmd);
 }
 
-t_tree	*delim_node(t_tree *tree, char ***input)
+t_tree	*delim_node(t_tree *tree, char ***input, t_envp *envp)
 {
 	t_delim	*delim;
 
 	(*input)++;
-	delim = malloc(sizeof(*delim));
-	//TODO: Maybe create an error handling function that terminates the program
+	delim = (t_delim *) safe_alloc(sizeof(*delim), 1, tree, envp);
 	delim->type = DELIM;
 	delim->delim = malloc(ft_strlen(**input) + 1);
-	//TODO: Maybe create an error handling function that terminates the program
+	if (delim->delim == NULL)
+	{
+		free(delim);
+		exit_failure(tree, -1, envp);
+	}
 	ft_strlcpy(delim->delim, **input, ft_strlen(**input) + 1);
 	delim->right = tree;
 	(*input)++;
 	return ((t_tree *) delim);
 }
 
-// TODO: Solve problem in creating this node
-t_tree	*pipe_node(t_tree *tree)
+t_tree	*pipe_node(t_tree *tree, t_envp *envp)
 {
 	t_pipe	*pipe;
 
-	pipe = malloc(sizeof(*pipe));
-	//TODO: Maybe create an error handling function that terminates the program
+	pipe = (t_pipe *) safe_alloc(sizeof(*pipe), 1, tree, envp);
 	pipe->type = PIPE;
 	pipe->left = tree;
 	pipe->right = NULL;
 	return ((t_tree *) pipe);
 }
 
-t_tree	*redir_node(t_tree *tree, char ***input, int mode)
+t_tree	*redir_node(t_tree *tree, char ***input, int mode, t_envp *envp)
 {
 	t_redir	*redir;
 
 	(*input)++;
-	redir = malloc(sizeof(*redir));
+	redir = (t_redir *) safe_alloc(sizeof(*redir), 1, tree, envp);
 	redir->type = REDIR;
 	redir->file = NULL;
 	if (**input != NULL)
 	{
 		redir->file = malloc(ft_strlen(**input) + 1);
-		//TODO: Maybe create an error handling function that terminates the program
+		if (redir->file == NULL)
+		{
+			free(redir);
+			exit_failure(tree, -1, envp);
+		}
 		ft_strlcpy(redir->file, **input, ft_strlen(**input) + 1);
 		(*input)++;
 	}

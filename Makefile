@@ -1,4 +1,4 @@
-PRE = ./src/parser ./src/cleanup
+PRE = ./src/parser ./src/cleanup ./src/envp ./src/mem_alloc
 INCLUDE = ./Include
 FUNCTION = ./libft
 BONUS = ./bonus/

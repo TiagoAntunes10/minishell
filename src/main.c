@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/24 21:52:36 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:14:49 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 			handle_signal(signal);
 		if (input != NULL)
 		{
-			tree = tokenisation(input);
+			tree = tokenisation(input, envp_lst);
 			free(input);
 			execution(tree, -1, envp_lst);
 			clear_tree(tree);
