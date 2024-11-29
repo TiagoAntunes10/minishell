@@ -28,6 +28,10 @@ void	*ft_mempcpy(void *dest, const void *src, size_t n);
 
 //memory safety
 void	ft_freematrix(char **matrix);
+size_t	ft_strcspn(const char *str, const char *reject);
+
+//builtins
+
 
 
 #endif

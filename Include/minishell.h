@@ -24,7 +24,8 @@
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "../libft/ft_printf.h"
+# include "../libft/libft/ft_printf.h"
+# include "../../libft/libft.h"
 # include "tree.h"
 # include "parser.h"
 # include "cleanup.h"

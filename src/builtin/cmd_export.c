@@ -62,30 +62,26 @@ void	export_env(char *var, t_envp *envp)
 {
 	t_envp	*node;
 	size_t	key_size;
-	size_t	val_size;
 	char	*key;
 	int		i;
 
 	key_size = ft_strcspn(var, "=");
-	key = ft_calloc(sizeof(char), key_size + 1);
-	if (key == NULL)
+	if (!(key = ft_calloc(sizeof(char), key_size + 1)))
 		return ;
 	ft_strlcpy(key, var, key_size);
+	i = key_size;
 	if (!(node = search_envp(envp, key)))
 	{
 		node = ft_calloc(sizeof(*envp), 1);
 		node->key = key;
 		node->value = NULL;
 		node->next = NULL;
-		append_node(envp, node);
 	}
-	if (ft_strchr(var, '=') != NULL)
-		val_size = (ft_strlen(var) - 1) - key_size;
-	else
-		val_size = 0;
-
-
-
+	if (node->value)
+		append_node(envp, node);
+	else if (var[i + 1] == '=')
+		node->value = ft_calloc(sizeof(char), ft_strlen(var) - i);
+	append_node(envp, node);
 }
 
 int	ft_export(t_cmd *cmd, t_envp *envp)
