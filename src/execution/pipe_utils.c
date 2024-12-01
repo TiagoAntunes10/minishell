@@ -6,12 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:00 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/30 22:27:38 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/01 16:20:52 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
+// TODO: Write errors with perror
 void	child_pipe(t_pipe *pipe_node, t_envp *envp, int *inp_pipe)
 {
 	if (dup2(inp_pipe[1], 1) == -1)

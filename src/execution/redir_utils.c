@@ -6,12 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:12:05 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/30 22:13:08 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/01 16:20:27 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
+// TODO: Write errors with perror
 void	redir_read(t_redir *redir, t_envp *envp)
 {
 	int		redir_fd;

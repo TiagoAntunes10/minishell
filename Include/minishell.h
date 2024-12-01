@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/30 22:28:05 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:29:00 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	execution(t_tree *tree, int fd, t_envp *envp);
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp);
 void	child_pipe(t_pipe *pipe_node, t_envp *envp, int *inp_pipe);
 void	pipe_in_pipe(int *inp_pipe, int fd);
-void	exec_delim(t_tree *tree, int fd, t_envp *envp);
+void	exec_delim(t_tree *tree, t_envp *envp);
 void	exec_list(t_tree *tree, int fd, t_envp *envp);
-void	exec_redir(t_tree *tree, int fd, t_envp *envp);
+void	exec_redir(t_tree *tree, t_envp *envp);
 void	redir_read(t_redir *redir, t_envp *envp);
 void	redir_write(t_redir *redir, t_envp *envp);
 void	std_cmd(t_cmd *cmd, t_envp *envp);

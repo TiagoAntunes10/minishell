@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/30 21:58:37 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:29:33 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@ static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 	else if (tree->type == PIPE)
 		exec_pipe(tree, fd, envp);
 	else if (tree->type == DELIM)
-		exec_delim(tree, fd, envp);	
+		exec_delim(tree, envp);	
 	else if (tree->type == REDIR)
-		exec_redir(tree, fd, envp);
+		exec_redir(tree, envp);
 	else if (tree->type == CMD)
 		cmd_dist(tree, envp);
 }
 
 void	execution(t_tree *tree, int fd, t_envp *envp)
 {
-	t_cmd	*cmd;
+	// t_cmd	*cmd;
 	int		id;
 	int		status;
 
-	cmd = NULL;
+	// cmd = NULL;
 	// if (tree->type == CMD)
 	// {
 	// 	cmd = (t_cmd *) tree;

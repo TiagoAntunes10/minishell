@@ -6,15 +6,16 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/30 22:27:42 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:30:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
+// TODO: Write errors with perror
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 {
-	int		*inp_pipe;
+	int		inp_pipe[2];
 	int		id;
 	t_pipe	*pipe_node;
 	int		status;
@@ -54,10 +55,10 @@ static void	read_here_doc(t_delim *delim, int *inp_pipe)
 	exit(0);
 }
 
-void	exec_delim(t_tree *tree, int fd, t_envp *envp)
+void	exec_delim(t_tree *tree, t_envp *envp)
 {
 	t_delim	*delim;
-	int		*inp_pipe;
+	int		inp_pipe[2];
 	int		id;
 
 	delim = (t_delim *) tree;
@@ -80,7 +81,7 @@ void	exec_delim(t_tree *tree, int fd, t_envp *envp)
 }
 
 
-void	exec_redir(t_tree *tree, int fd, t_envp *envp)
+void	exec_redir(t_tree *tree, t_envp *envp)
 {
 	t_redir	*redir;
 	int		id;
