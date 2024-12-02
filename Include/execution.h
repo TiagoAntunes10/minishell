@@ -28,7 +28,6 @@ void	*ft_mempcpy(void *dest, const void *src, size_t n);
 
 //memory safety
 void	ft_freematrix(char **matrix);
-size_t	ft_strcspn(const char *str, const char *reject);
 
 //builtins
 
@@ -38,5 +37,10 @@ int		ft_cd(t_cmd *cmd, t_envp *envp);
 int		ft_env(t_cmd *cmd, t_envp *envp);
 int		ft_echo(t_cmd *cmd, t_envp *envp);
 int		ft_pwd(t_cmd *cmd, t_envp *envp);
+
+//useful functions
+
+size_t	ft_strcspn(const char *str, const char *reject);
+int		export_env(char *var, t_envp *envp);
 
 #endif
