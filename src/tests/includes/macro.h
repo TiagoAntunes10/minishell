@@ -12,6 +12,31 @@
 
 #ifndef MACRO_H 
 # define MACRO_H 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "libft.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <signal.h>
+#include <assert.h>
+#include <errno.h>
+
+typedef struct s_envp {
+	char			*key;
+	char			*value;
+	struct s_envp	*next;
+}				t_envp;
+
+typedef struct s_cmd {
+//	int		type;
+	char	*cmd;
+	char	**opt;
+}				t_cmd;
+
 
 //colour prints
 
@@ -40,8 +65,34 @@
 # define PWD_ERR_ARG "pwd: Too many arguments\n"
 # define PWD_NO_PRNT "pwd: could not print current directory\n"
 
-//ECHO ERRORS
 
+//builtins
 
+typedef int	(*t_builtin_fn[])(t_cmd *, t_envp *);
+
+int		ft_unset(t_cmd *cmd, t_envp *envp);
+int		ft_export(t_cmd *cmd, t_envp *envp);
+int		ft_cd(t_cmd *cmd, t_envp *envp);
+int		ft_env(t_cmd *cmd, t_envp *envp);
+int		ft_echo(t_cmd *cmd, t_envp *envp);
+int		ft_pwd(t_cmd *cmd, t_envp *envp);
+
+//useful functions
+
+size_t	ft_strcspn(const char *str, const char *reject);
+int		export_env(char *var, t_envp *envp);
+
+//test envp
+
+t_envp	*search_envp(t_envp *head, char *var);
+t_envp	*arr_to_lst(char **envp);
+char	**lst_to_arr(t_envp *envp);
+
+//signal
+
+void	signal_parent(void);
+void	signal_child(void);
+void	signal_ignore(void);
+//void	signal_heredoc(void);
 
 #endif

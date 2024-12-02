@@ -7,7 +7,7 @@ DEPFLG	= -MP -MD
 
 # ============================ Folder Structures ===============================
 
-HEADERS		= includes/
+HEADERS		= ../includes/
 SOURCE_DIR	= srcs/ctype srcs/list srcs/stdio srcs/stdlib srcs/string srcs/printf srcs/gnl
 OBJS_DIR	= objs/
 

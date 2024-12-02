@@ -17,8 +17,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
-# include "ft_printf.h"
-# include "get_next_line.h"
+# include "../libft/includes/ft_printf.h"
+# include "../libft/includes/get_next_line.h"
 
 //typedef struct for bonus//
 
