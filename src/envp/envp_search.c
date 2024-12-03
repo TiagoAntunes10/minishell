@@ -20,8 +20,10 @@ t_envp	*search_envp(t_envp *head, char *var)
 		return (NULL);
 	curr = head;
 	while (curr)
-			if (ft_strncmp(curr->key, var, ft_strlen(var)) == 0)
-				return (curr);
+	{
+		if (ft_strncmp(curr->key, var, ft_strlen(var)) == 0)
+			return (curr);
 		curr = curr->next;
+	}
 	return (NULL);
 }
