@@ -18,9 +18,7 @@ int	ft_pwd(t_cmd *cmd, t_envp *envp)
 	char	*cwd;
 
 	cwd = getcwd(NULL, 4096);
-	if (cmd->opt[1])
-		return (free(cwd), ft_putstr_fd(RED PWD_ERR_ARG RST, 2), 2);
-	if (printf("%s", cwd) < 0)
+	if (printf("%s\n", cwd) < 0)
 		return (free(cwd), ft_putstr_fd(RED PWD_NO_PRNT RST, 2), 2);
 	if (cwd)
 		free(cwd);

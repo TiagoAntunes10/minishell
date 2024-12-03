@@ -29,17 +29,9 @@ int is_builtin(char *str)
 	char **builtins = (char *[]){"exit", "cd", "pwd", "echo", "env", "export", "unset",  NULL};
 	int i = -1;
 	while (builtins[++i])
-		if (str[i] && !ft_strcmp(builtins[i], str))
+		if (str && !ft_strcmp(builtins[i], str))
 			return (1);
 	return (0);
-}
-
-int ft_argc(char **argv)
-{
-	int i = 0;
-	while (argv[i])
-		i++;
-	return (i);
 }
 
 int b_exit(t_cmd *cmd, t_envp *envp)
@@ -71,6 +63,8 @@ int builtin(t_cmd *cmd, t_envp *envp)
 char *ft_path(char *str)
 {
 	char **path = ft_split_mult(getenv("PATH"), ":");
+	if (!path)
+		return (NULL);
 	int i = -1;
 	while (path[++i])
 	{

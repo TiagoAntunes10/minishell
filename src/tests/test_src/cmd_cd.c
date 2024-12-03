@@ -28,12 +28,12 @@ static int ft_changedir(char *path, t_envp *envp)
 		free(oldvalue);
 		return (-1);
 	}
-	export_env(ft_stpcpy("OLDPWD=", oldvalue), envp);
+	export_env(ft_strjoin("OLDPWD=", oldvalue), envp);
 	if (oldvalue)
 		free(oldvalue);
 	if (!(newvalue = getcwd(NULL, 4096))) 
 		return (-1);
-	export_env(ft_stpcpy("PWD=", newvalue), envp);
+	export_env(ft_strjoin("PWD=", newvalue), envp);
 	if (newvalue)
 		free(newvalue);
 	return (EXIT_SUCCESS);

@@ -68,7 +68,8 @@ int	export_env(char *var, t_envp *envp)
 	i = ft_strcspn(var, "=");
 	if (!(key = ft_substr(var, 0, i)))
 		return (-1);
-	value = ft_strdup(var + (i + 1));
+	if (!(value = ft_substr(var, i + 1, ft_strlen(var + i))))
+			return (free(key), -1);
 	if (!(node = search_envp(envp, key)))
 	{
 		if (!(node = ft_calloc(1, sizeof(*envp))))
