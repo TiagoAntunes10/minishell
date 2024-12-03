@@ -87,6 +87,8 @@ int		export_env(char *var, t_envp *envp);
 t_envp	*search_envp(t_envp *head, char *var);
 t_envp	*arr_to_lst(char **envp);
 char	**lst_to_arr(t_envp *envp);
+void	clear_envp(t_envp *envp);
+void	*safe_alloc(unsigned int size, unsigned int type, t_envp *envp);
 
 //signal
 

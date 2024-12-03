@@ -12,7 +12,7 @@
 
 # ================================= Files ======================================
 
-NAME	= minishell
+NAME	= testshell
 LIBFT	= -L ./libft
 SOURCE	= test_src/*.c
 OBJS	= objs/*.o

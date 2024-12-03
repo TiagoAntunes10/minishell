@@ -1,4 +1,4 @@
-#include "macro.h"
+#include "../includes/macro.h"
 
 char	*cat_path(char *tpath,char *path, char *name)
 {
@@ -21,7 +21,7 @@ void ft_free(void *p)
 void err(char *str)
 {
 	while (*str)
-		write(2, str++, 1);
+		(void)!write(2, str++, 1);
 }
 
 int is_builtin(char *str)
@@ -94,7 +94,7 @@ int exec(t_cmd *cmd, t_envp *envp, char **ev)
 	if (!pid)
 	{
 		signal(SIGQUIT, SIG_IGN);
-		execve(ft_path(cmd->cmd), cmd->opt, ev);
+		execve(ft_path(cmd->opt[0]), cmd->opt, ev);
 		err("ERROR\n");
 		exit(1);
 	}
@@ -108,30 +108,28 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	char *input;
-	t_cmd cmd;
+	t_cmd *cmd;
 	t_envp	*ev;
-	char *user = getenv("USER");
-	char pwd[512] = {0};
-	getcwd(pwd, 512);
-	char prompt[1024] = {0};
-	ft_stpcpy(ft_stpcpy(ft_stpcpy(ft_stpcpy(prompt, user), "@"), pwd), " $ ");
+	char prompt[1024] = {RED "testshell->" RST};
+	cmd = ft_calloc(1, sizeof(t_cmd));
 	ev = arr_to_lst(envp);
 	input = readline(prompt);
 	while (input)
 	{
 		signal_parent();
 		add_history(input);
-		cmd.opt = ft_split_mult(input, " \t");
-		cmd.cmd = ft_strdup(cmd.opt[0]);
-		exec(&cmd, ev, envp);
-		ft_free(cmd.cmd);
-		ft_freematrix(cmd.opt);
+		cmd->opt = ft_split_mult(input, " \t");
+		cmd->cmd = ft_strdup(cmd->opt[0]);
+		exec(cmd, ev, envp);
+		ft_free(cmd->cmd);
+		ft_freematrix(cmd->opt);
 		ft_free(&input);
 		ft_bzero(prompt, 1024);
-		getcwd(pwd, 512);
-		ft_stpcpy(ft_stpcpy(ft_stpcpy(ft_stpcpy(prompt, user), "@"), pwd), " $ ");
+		//(void)!getcwd(pwd, 512);
+		//ft_stpcpy(ft_stpcpy(ft_stpcpy(ft_stpcpy(prompt, user), "@"), pwd), " $ ");
 		input = readline(prompt);
 	}
+	clear_envp(ev);
 	rl_clear_history();
 	printf("exit\n");
 	return (0);
