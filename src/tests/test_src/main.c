@@ -39,11 +39,17 @@ int b_exit(t_cmd *cmd, t_envp *envp)
 	if (cmd->opt[0] && !cmd->opt[1])
 	{
 		clear_envp(envp);
+		ft_freematrix(cmd->opt);
+		ft_free(cmd->cmd);
+		free(cmd);
 		return (exit(0), 1);
 	}
 	else if (cmd->opt[1])
 	{
 		clear_envp(envp);
+		ft_freematrix(cmd->opt);
+		ft_free(cmd->cmd);
+		free(cmd);
 		return (exit(ft_atoi(cmd->opt[1])), 1);
 	}
 	return (1);
@@ -128,6 +134,8 @@ int main(int argc, char **argv, char **envp)
 		input = readline(prompt);
 	}
 	clear_envp(ev);
+	ft_free(&cmd->cmd);
+	free(cmd);
 	rl_clear_history();
 	printf("exit\n");
 	return (0);

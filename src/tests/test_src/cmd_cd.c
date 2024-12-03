@@ -10,32 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "macro.h"
+#include "../includes/macro.h"
 
 //TODO: handle ~ as $HOME cd ~/dir example OBS.: not normally implemented
-//TODO: verify that cd with no args works with envp as expected
 //TODO: make sure the allocated string with strjoin doesnt cause issues.
 
 static int ft_changedir(char *path, t_envp *envp)
 {
 	char	*newvalue;
 	char	*oldvalue;
+	char	*buffer;
 
 	if (!(oldvalue = getcwd(NULL, 4096)))
 		return (-1);
 	if (chdir(path) == -1)
-	{
-		free(oldvalue);
-		return (-1);
-	}
-	export_env(ft_strjoin("OLDPWD=", oldvalue), envp);
-	if (oldvalue)
-		free(oldvalue);
+		return (free(oldvalue), -1);
+	if (!(buffer = ft_strjoin("OLDPWD=", oldvalue)))
+		return (free(oldvalue), -1);
+	export_env(buffer, envp);
+	free(buffer);
+	free(oldvalue);
 	if (!(newvalue = getcwd(NULL, 4096))) 
 		return (-1);
-	export_env(ft_strjoin("PWD=", newvalue), envp);
-	if (newvalue)
-		free(newvalue);
+	if (!(buffer = ft_strjoin("PWD=", newvalue)))
+		return (free(newvalue), -1);
+	export_env(buffer, envp);
+	free(buffer);
+	free(newvalue);
 	return (EXIT_SUCCESS);
 }
 
@@ -55,7 +56,7 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 	if (S_ISDIR(stats.st_mode))
 	{
 		if (ft_changedir(cmd->opt[1], envp) == -1)
-//		if (chdir(cmd->opt[1]) == -1)
+			//		if (chdir(cmd->opt[1]) == -1)
 		{
 			if (errno == EACCES)
 				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 2);
