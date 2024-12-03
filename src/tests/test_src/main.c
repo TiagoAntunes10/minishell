@@ -29,7 +29,7 @@ int is_builtin(char *str)
 	char **builtins = (char *[]){"exit", "cd", "pwd", "echo", "env", "export", "unset",  NULL};
 	int i = -1;
 	while (builtins[++i])
-		if (str && !ft_strcmp(builtins[i], str))
+		if (str[i] && !ft_strcmp(builtins[i], str))
 			return (1);
 	return (0);
 }
@@ -86,6 +86,7 @@ char *ft_path(char *str)
 
 int exec(t_cmd *cmd, t_envp *envp, char **ev)
 {
+	char **env = lst_to_arr(envp);
 	if (is_builtin(cmd->cmd))
 		return (builtin(cmd, envp));
 	int pid = fork();
@@ -94,7 +95,7 @@ int exec(t_cmd *cmd, t_envp *envp, char **ev)
 	if (!pid)
 	{
 		signal(SIGQUIT, SIG_IGN);
-		execve(ft_path(cmd->opt[0]), cmd->opt, ev);
+		execve(ft_path(cmd->cmd), cmd->opt, env);
 		err("ERROR\n");
 		exit(1);
 	}
@@ -121,12 +122,9 @@ int main(int argc, char **argv, char **envp)
 		cmd->opt = ft_split_mult(input, " \t");
 		cmd->cmd = ft_strdup(cmd->opt[0]);
 		exec(cmd, ev, envp);
-		ft_free(cmd->cmd);
+		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);
 		ft_free(&input);
-		ft_bzero(prompt, 1024);
-		//(void)!getcwd(pwd, 512);
-		//ft_stpcpy(ft_stpcpy(ft_stpcpy(ft_stpcpy(prompt, user), "@"), pwd), " $ ");
 		input = readline(prompt);
 	}
 	clear_envp(ev);

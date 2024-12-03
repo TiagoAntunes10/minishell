@@ -28,12 +28,12 @@ static int ft_changedir(char *path, t_envp *envp)
 		free(oldvalue);
 		return (-1);
 	}
-	export_env(ft_strjoin("OLDPWD=", oldvalue), envp);
+	export_env(ft_stpcpy("OLDPWD=", oldvalue), envp);
 	if (oldvalue)
 		free(oldvalue);
 	if (!(newvalue = getcwd(NULL, 4096))) 
 		return (-1);
-	export_env(ft_strjoin("PWD=", newvalue), envp);
+	export_env(ft_stpcpy("PWD=", newvalue), envp);
 	if (newvalue)
 		free(newvalue);
 	return (EXIT_SUCCESS);
@@ -55,6 +55,7 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 	if (S_ISDIR(stats.st_mode))
 	{
 		if (ft_changedir(cmd->opt[1], envp) == -1)
+//		if (chdir(cmd->opt[1]) == -1)
 		{
 			if (errno == EACCES)
 				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 2);

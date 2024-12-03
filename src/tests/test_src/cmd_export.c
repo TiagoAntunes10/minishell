@@ -35,9 +35,9 @@ static	void	export_print(t_envp *envp)
 	while (head)
 	{
 		if (!head->value)
-			printf("%s %s\n", dec, envp->key);
+			printf("%s %s\n", dec, head->key);
 		else
-			printf("%s %s=\"%s\"\n", dec, envp->key, envp->value);
+			printf("%s %s=\"%s\"\n", dec, head->key, head->value);
 		head = head->next;
 	}
 }
