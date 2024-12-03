@@ -45,9 +45,15 @@ int ft_argc(char **argv)
 int b_exit(t_cmd *cmd, t_envp *envp)
 {
 	if (cmd->opt[0] && !cmd->opt[1])
+	{
+		clear_envp(envp);
 		return (exit(0), 1);
+	}
 	else if (cmd->opt[1])
+	{
+		clear_envp(envp);
 		return (exit(ft_atoi(cmd->opt[1])), 1);
+	}
 	return (1);
 }
 
@@ -86,7 +92,7 @@ char *ft_path(char *str)
 
 int exec(t_cmd *cmd, t_envp *envp, char **ev)
 {
-	char **env = lst_to_arr(envp);
+	//char **env = lst_to_arr(envp);
 	if (is_builtin(cmd->cmd))
 		return (builtin(cmd, envp));
 	int pid = fork();
@@ -94,8 +100,8 @@ int exec(t_cmd *cmd, t_envp *envp, char **ev)
 		return (err("ERROR\n"), 1);
 	if (!pid)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		execve(ft_path(cmd->cmd), cmd->opt, env);
+		signal_child();
+		execve(ft_path(cmd->cmd), cmd->opt, ev);
 		err("ERROR\n");
 		exit(1);
 	}
