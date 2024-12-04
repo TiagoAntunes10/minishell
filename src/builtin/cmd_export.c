@@ -34,7 +34,7 @@ static	void	export_print(t_envp *envp)
 	head = envp;
 	while (head)
 	{
-		if (!head->value)
+		if (!ft_strncmp(head->value, "", 1))
 			printf("%s %s\n", dec, head->key);
 		else
 			printf("%s %s=\"%s\"\n", dec, head->key, head->value);
@@ -53,10 +53,6 @@ static	void	append_node(t_envp *head, t_envp *new_node)
 		temp = temp->next;
 	temp->next = new_node;
 }
-
-//strcspn will count the length until it finds '=', if it doesnt it will return
-//the string length, which we will assume it is the key length.
-//possibly need to free(var);
 
 int	export_env(char *var, t_envp *envp)
 {

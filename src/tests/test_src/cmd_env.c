@@ -41,7 +41,7 @@ int	ft_env(t_cmd *cmd, t_envp *envp)
 	head = envp;
 	while (head)
 	{
-		if (ft_strcmp(head->value, "") || !head->value)
+		if (ft_strcmp(head->value, ""))
 			printf("%s=%s\n", head->key, head->value);
 		head = head->next;
 	}

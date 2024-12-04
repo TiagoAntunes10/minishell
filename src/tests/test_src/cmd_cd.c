@@ -56,7 +56,6 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 	if (S_ISDIR(stats.st_mode))
 	{
 		if (ft_changedir(cmd->opt[1], envp) == -1)
-			//		if (chdir(cmd->opt[1]) == -1)
 		{
 			if (errno == EACCES)
 				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 2);

@@ -117,7 +117,7 @@ int main(int argc, char **argv, char **envp)
 	char *input;
 	t_cmd *cmd;
 	t_envp	*ev;
-	char prompt[1024] = {RED "testshell->" RST};
+	char prompt[7000000] = {RED "testshell->" RST};
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	ev = arr_to_lst(envp);
 	input = readline(prompt);
