@@ -1,4 +1,5 @@
 #include "../includes/macro.h"
+#include <readline/readline.h>
 
 char	*cat_path(char *tpath,char *path, char *name)
 {
@@ -39,6 +40,7 @@ int b_exit(t_cmd *cmd, t_envp *envp)
 	int ext = 0;
 	if (cmd->opt[0] && !cmd->opt[1])
 	{
+		rl_clear_history();
 		clear_envp(envp);
 		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);
@@ -48,6 +50,7 @@ int b_exit(t_cmd *cmd, t_envp *envp)
 	else if (cmd->opt[1])
 	{
 		ext = ft_atoi(cmd->opt[1]);
+		rl_clear_history();
 		clear_envp(envp);
 		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);
