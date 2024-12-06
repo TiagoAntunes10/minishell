@@ -1,5 +1,5 @@
 PRE = ./ft_printf/
-HEADER = ../includes
+HEADER = ./
 FUNCTION = ./libft
 
 SOURCE = ft_printf.c utils.c write_c.c write_d_i.c\
