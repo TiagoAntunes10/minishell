@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+//NOTE: signal child needs to be called before forking, and signal parent
+//needs to be restored after the waitpid;
 //TODO: heredoc signal handling?
 
 void	handle_parent(int signum)
@@ -20,8 +21,8 @@ void	handle_parent(int signum)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
+	g_exit_status = 130;
 }
-//TODO: error code handling in a struct
 
 void	handle_child(int signum)
 {
@@ -29,6 +30,6 @@ void	handle_child(int signum)
 		ft_putstr_fd("\n", 2);
 	else if (signum == SIGQUIT)
 		ft_putstr_fd("Quit: 3\n", 2);
+	g_exit_status = 128 + signum;
 }
 
-//TODO: error code handling in a struct

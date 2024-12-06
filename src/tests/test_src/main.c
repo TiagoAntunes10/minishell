@@ -99,14 +99,15 @@ int exec(t_cmd *cmd, t_envp *envp, char **ev)
 	if (is_builtin(cmd->cmd))
 		return (builtin(cmd, envp));
 	env = lst_to_arr(envp);
+	signal_child();
 	int pid = fork();
 	path = ft_path(cmd->cmd);
 	if (-1 == pid)
 		return (err("ERROR\n"), 1);
 	if (!pid)
 	{
-		signal_child();
 		execve(path, cmd->opt, env);
+		ft_free(&path);
 		err("ERROR\n");
 		exit(1);
 	}
@@ -114,6 +115,7 @@ int exec(t_cmd *cmd, t_envp *envp, char **ev)
 	free(path);
 	int status;
 	waitpid(pid, &status, 0);
+	signal_parent();
 	return (WIFEXITED(status) && WEXITSTATUS(status));
 }
 
