@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_sorting.c                                   :+:      :+:    :+:   */
+/*   sighandler.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 19:03:38 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/08 11:23:34 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/12/06 15:49:55 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/12/06 15:51:00 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef SIGHANDLER_H
+# define SIGHANDLER_H
 
-//TODO: heredoc?
+# include "minishell.h"
+# include <signal.h>
 
-void	signal_parent(void)
-{
-	signal(SIGINT, handle_parent);
-	signal(SIGQUIT, SIG_IGN);
-}
+//signal receivers
 
-void	signal_child(void)
-{
-	signal(SIGINT, handle_child);
-	signal(SIGQUIT, handle_child);
-}
+void	signal_parent(void);
+void	signal_child(void);
+void	signal_ignore(void);
+//void	signal_heredoc(void);
 
-void	signal_ignore(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
+//signal handlers
+
+void	handle_parent(int signum);
+void	handle_child(int signum);
+
+#endif

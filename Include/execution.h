@@ -14,14 +14,6 @@
 # define EXECUTION_H
 
 # include "minishell.h"
-# include <signal.h>
-
-/*typedef	struct s_exec 
-{
-	int		exit_status;
-	char	*cwd;
-}			t_exec;
-*/
 
 //concatanation
 char	*ft_stpcpy(char *restrict dst, const char *restrict src);
