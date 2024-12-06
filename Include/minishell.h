@@ -33,6 +33,7 @@
 # include "./utils.h"
 # include "./execution.h"
 # include "./sighandler.h"
+# include "./macro.h"
 
 
 # define PIPE	1

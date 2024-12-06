@@ -16,7 +16,7 @@
 //TODO: verify that cd with no args works with envp as expected
 //TODO: make sure the allocated string with strjoin doesnt cause issues.
 
-static int ft_changedir(char *path, t_envp *envp)
+static int	ft_changedir(char *path, t_envp *envp)
 {
 	char	*newvalue;
 	char	*oldvalue;
@@ -33,7 +33,7 @@ static int ft_changedir(char *path, t_envp *envp)
 	export_env(buffer, envp);
 	free(buffer);
 	free(oldvalue);
-	newvalue = getcwd(NULL, 4096); 
+	newvalue = getcwd(NULL, 4096);
 	if (!newvalue)
 		return (-1);
 	buffer = ft_strjoin("PWD=", newvalue);

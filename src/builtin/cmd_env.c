@@ -14,9 +14,9 @@
 
 int	ft_env(t_cmd *cmd, t_envp *envp)
 {
-	(void)cmd;
 	t_envp	*head;
 
+	(void)cmd;
 	head = envp;
 	while (head)
 	{

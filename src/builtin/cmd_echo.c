@@ -17,10 +17,10 @@
 
 int	ft_echo(t_cmd *cmd, t_envp *envp)
 {
-	(void)envp;
 	int	i;
-	int nflag;
+	int	nflag;
 
+	(void)envp;
 	i = 1;
 	nflag = 0;
 	if ((cmd->opt[1]) && !ft_strncmp(cmd->opt[1], "-n", 2))
@@ -33,9 +33,9 @@ int	ft_echo(t_cmd *cmd, t_envp *envp)
 	{
 		ft_putstr_fd(cmd->opt[i], STDOUT_FILENO);
 		if (cmd->opt[i] && cmd->opt[i + 1])
-			ft_putchar_fd(32, STDOUT_FILENO);	
+			ft_putchar_fd(32, STDOUT_FILENO);
 	}
 	if (!nflag)
-		ft_putchar_fd(10, STDOUT_FILENO);	
+		ft_putchar_fd(10, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
