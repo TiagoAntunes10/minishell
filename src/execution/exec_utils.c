@@ -6,153 +6,95 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/24 21:49:42 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:30:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-// TODO: Reduce number of lines
+// TODO: Write errors with perror
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 {
-	int		*inp_pipe;
+	int		inp_pipe[2];
 	int		id;
 	t_pipe	*pipe_node;
 	int		status;
 
+	pipe_node = (t_pipe *) tree;
+	if (pipe(inp_pipe) == -1)
+		exit(errno);
 	id = fork();
 	if (id == -1)
-		return ;
+		exit(errno);
 	else if (id == 0)
-	{
-		pipe_node = (t_pipe *) tree;
-		// TODO: Not sure if this should exit
-		if (pipe(inp_pipe) == -1)
-			exit(1);
-		id = fork();
-		if (id == -1)
-			exit(1);
-		else if (id == 0)
-		{
-			if (dup2(inp_pipe[1], 1) == -1)
-			{
-				close(inp_pipe[0]);
-				close(inp_pipe[1]);
-				exit(1);
-			}
-			close(inp_pipe[1]);
-			execution(pipe_node->left, 1, envp);
-			close(inp_pipe[0]);
-			close(1);
-		}
-		waitpid(-1, &status, WNOHANG);
-		close(inp_pipe[1]);
-		if (fd == 1 || fd == -1)
-		{
-			if (dup2(inp_pipe[0], 0) == -1)
-			{
-				close(inp_pipe[0]);
-				// TODO: Check if I should close this end of the pipe here
-				if (fd == 1)
-					close(fd);
-				exit(1);
-			}
-			close(inp_pipe[0]);
-		}
-		execution(pipe_node->right, 0, envp);
-		close(0);
-	}
+		child_pipe(pipe_node, envp, inp_pipe);
 	waitpid(-1, &status, WNOHANG);
-	return ;
+	close(inp_pipe[1]);
+	if (fd == 1 || fd == -1)
+		pipe_in_pipe(inp_pipe, fd);
+	execution(pipe_node->right, 0, envp);
+	close(0);
+	exit(0);
 }
 
-// TODO: Reduce number of lines
-void	exec_delim(t_tree *tree, int fd, t_envp *envp)
+static void	read_here_doc(t_delim *delim, int *inp_pipe)
+{
+	char	*line;
+	
+	line = NULL;
+	close(inp_pipe[0]);
+	line = get_next_line(0);
+	while (ft_strncmp(delim->delim, line, ft_strlen(line)) != 0)
+	{
+		if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
+			exit(errno);
+		free(line);
+		line = get_next_line(0);
+	}
+	close(inp_pipe[1]);
+	exit(0);
+}
+
+void	exec_delim(t_tree *tree, t_envp *envp)
 {
 	t_delim	*delim;
-	char	*line;
-	int		*inp_pipe;
+	int		inp_pipe[2];
 	int		id;
 
 	delim = (t_delim *) tree;
-	line = NULL;
 	if (pipe(inp_pipe) == -1)
-		exit(1);
+		exit(errno);
 	id = fork();
 	if (id == -1)
-		exit(1);
+		exit(errno);
 	else if (id == 0)
-	{
-		close(inp_pipe[0]);
-		line = get_next_line(0);
-		while (ft_strncmp(delim->delim, line, ft_strlen(line)) != 0)
-		{
-			// TODO: Not sure if I should handle the errors in this way
-			if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
-				exit(errno);
-			free(line);
-			line = get_next_line(0);
-		}
-		close(inp_pipe[1]);
-		exit(0);
-	}
+		read_here_doc(delim, inp_pipe);
 	waitpid(-1, &id, WNOHANG);
 	close(inp_pipe[1]);
 	if (dup2(inp_pipe[0], 0) == -1)
 	{
 		close(inp_pipe[0]);
-		exit(1);
+		exit(errno);
 	}
 	close(inp_pipe[0]);
 	execution(delim->right, 0, envp);
 }
 
-// TODO: Reduce number of lines
-void	exec_redir(t_tree *tree, int fd, t_envp *envp)
+
+void	exec_redir(t_tree *tree, t_envp *envp)
 {
 	t_redir	*redir;
-	int		redir_fd;
 	int		id;
 
 	redir = (t_redir *) tree;
 	id = fork();
 	if (id == -1)
-		exit(1);
+		exit(errno);
 	else if (id == 0)
 	{
 		if (redir->mode == O_RDONLY)
-		{
-			// TODO: Check if this error should be handled in this way
-			if (access(redir->file, F_OK | R_OK) == -1)
-				exit(errno);
-			// TODO: Check if this error should be handled in this way
-			redir_fd = open(redir->file, redir->mode);
-			if (redir_fd == -1)
-				exit(errno);
-			if (dup2(redir_fd, 0) == -1)
-			{
-				close(redir_fd);
-				exit(errno);
-			}
-			close(redir_fd);
-			execution(redir->right, 0, envp);
-			close(0);
-		}
+			redir_read(redir, envp);
 		else
-		{
-			redir_fd = open(redir->file, redir->mode, 0755);
-			// TODO: Check if this error should be handled in this way
-			if (redir_fd == -1)
-				exit(errno);
-			// TODO: Check if this error should be handled in this way
-			if (dup2(redir_fd, 1) == -1)
-			{
-				close(redir_fd);
-				exit(errno);
-			}
-			close(redir_fd);
-			execution(redir->right, 1, envp);
-			close(1);
-		}
+			redir_write(redir, envp);
 	}
 }

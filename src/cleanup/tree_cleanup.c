@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 21:52:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/17 20:41:44 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:45:26 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ void	clear_tree(t_tree *tree)
 	else if (tree->type == CMD)
 	{
 		cmd = (t_cmd *) tree;
-		clear_arr(cmd->opt);
-		free(cmd->cmd);
+		if (cmd->opt != NULL)
+			clear_arr(cmd->opt);
+		if (cmd->cmd != NULL)
+			free(cmd->cmd);
 		free(cmd);
 	}
 }

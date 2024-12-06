@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/23 15:59:46 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:43:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ int	count_opt(char **tokens)
 	return (count);
 }
 
-// TODO: How to handle ';' without parenthesis and a pipe - this might take a different function
-// The current function works well with parenthesis
 // TODO: Reduce number of lines
-t_tree	*tokenisation(char *input)
+// TODO: Check if the flags for the open fuction are passed correctly (var type problem???)
+t_tree	*tokenisation(char *input, t_envp *envp)
 {
 	t_tree	*tree;
 	char	**cmd_lst;
@@ -46,17 +45,18 @@ t_tree	*tokenisation(char *input)
 	while (*arr_cpy != NULL)
 	{
 		if (**arr_cpy == '<' && ft_strlen(*arr_cpy) == 1)
-			tree = redir_node(tree, &arr_cpy, O_RDONLY);
+			tree = redir_node(tree, &arr_cpy, O_RDONLY, envp);
 		else if (ft_strncmp(*arr_cpy, "<<", ft_strlen(*arr_cpy)) == 0)
-			tree = delim_node(tree, &arr_cpy);
+			tree = delim_node(tree, &arr_cpy, envp);
 		else if (**arr_cpy == '>' && ft_strlen(*arr_cpy) == 1)
-			tree = redir_node(tree, &arr_cpy, O_WRONLY | O_CREAT);
+			tree = redir_node(tree, &arr_cpy, O_WRONLY | O_CREAT, envp);
 		else if (ft_strncmp(*arr_cpy, ">>", ft_strlen(*arr_cpy)) == 0)
-			tree = redir_node(tree, &arr_cpy, O_WRONLY | O_CREAT | O_APPEND);
+			tree = redir_node(tree, &arr_cpy,
+								O_WRONLY | O_CREAT | O_APPEND, envp);
 		else if (**arr_cpy == '|' && ft_strlen(*(arr_cpy++)) == 1)
-			tree = pipe_node(tree);
+			tree = pipe_node(tree, envp);
 		else
-			tree = cmd_node(tree, &arr_cpy);
+			tree = cmd_node(tree, &arr_cpy, envp);
 	}
 	clear_arr(cmd_lst);
 	return (tree);

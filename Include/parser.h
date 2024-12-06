@@ -6,26 +6,26 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:48:30 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/16 22:18:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:19:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+# include "envp.h"
 # include "tree.h"
 
 /* ************************************************************************** */
 /*                            TOKEN CREATION                                  */
 /* ************************************************************************** */
 
-t_tree			*tokenisation(char *input);
+t_tree			*tokenisation(char *input, t_envp *envp);
 int				count_opt(char **tokens);
-t_tree			*cmd_node(t_tree *tree, char ***input);
-t_tree			*delim_node(t_tree *tree, char ***input);
-t_tree			*pipe_node(t_tree *tree);
-t_tree			*lst_node(t_tree *tree);
-t_tree			*redir_node(t_tree *tree, char ***input, int mode);
+t_tree			*cmd_node(t_tree *tree, char ***input, t_envp *envp);
+t_tree			*delim_node(t_tree *tree, char ***input, t_envp *envp);
+t_tree			*pipe_node(t_tree *tree, t_envp *envp);
+t_tree			*redir_node(t_tree *tree, char ***input, int mode, t_envp *envp);
 t_tree			*org_tree(t_tree *tree, t_tree *cmd);
 
 /* ************************************************************************** */
