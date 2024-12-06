@@ -24,9 +24,7 @@ static char	**envp_split(char *str, t_envp *envp)
 	key_value = (char **)safe_alloc(sizeof(*key_value), 3, NULL);
 	if (!key_value)
 		return (NULL);
-	size = 0;
-	while (str[size] && str[size] != '=')
-		size++;
+	size = ft_strcspn(str, "=");
 	key_value[0] = (char *)malloc(size + 1);
 	if (key_value[0] == NULL)
 	{
@@ -150,7 +148,8 @@ char	**lst_to_arr(t_envp *head)
 	char	*buf2;
 
 	envp = head;
-	if (!(arr = malloc((lst_len(envp) + 1) * sizeof(char *))))
+	arr = malloc((lst_len(envp) + 1) * sizeof(char *));
+	if (!arr)
 		return (NULL);
 	i = 0;
 	while (envp != NULL)

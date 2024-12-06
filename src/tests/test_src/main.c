@@ -94,10 +94,11 @@ char *ft_path(char *str)
 
 int exec(t_cmd *cmd, t_envp *envp, char **ev)
 {
-	char **env = lst_to_arr(envp);
+	char **env;
 	char *path;
 	if (is_builtin(cmd->cmd))
 		return (builtin(cmd, envp));
+	env = lst_to_arr(envp);
 	int pid = fork();
 	path = ft_path(cmd->cmd);
 	if (-1 == pid)
@@ -132,8 +133,7 @@ int main(int argc, char **argv, char **envp)
 		signal_parent();
 		add_history(input);
 		cmd->opt = ft_split_mult(input, " \t");
-		if (!(cmd->cmd = ft_strdup(cmd->opt[0])))
-			continue ;
+		cmd->cmd = ft_strdup(cmd->opt[0]);
 		exec(cmd, ev, envp);
 		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);

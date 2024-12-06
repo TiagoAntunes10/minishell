@@ -15,24 +15,24 @@
 //TODO: handle ~ as $HOME cd ~/dir example OBS.: not normally implemented
 //TODO: make sure the allocated string with strjoin doesnt cause issues.
 
-static int ft_changedir(char *path, t_envp *envp)
+static int	ft_changedir(char *path, t_envp *envp)
 {
 	char	*newvalue;
 	char	*oldvalue;
 	char	*buffer;
 
-	if (!(oldvalue = getcwd(NULL, 4096)))
-		return (-1);
+	oldvalue = getcwd(NULL, 4096);
 	if (chdir(path) == -1)
 		return (free(oldvalue), -1);
-	if (!(buffer = ft_strjoin("OLDPWD=", oldvalue)))
+	buffer = ft_strjoin("OLDPWD=", oldvalue);
+	if (!buffer)
 		return (free(oldvalue), -1);
 	export_env(buffer, envp);
 	free(buffer);
 	free(oldvalue);
-	if (!(newvalue = getcwd(NULL, 4096))) 
-		return (-1);
-	if (!(buffer = ft_strjoin("PWD=", newvalue)))
+	newvalue = getcwd(NULL, 4096);
+	buffer = ft_strjoin("PWD=", newvalue);
+	if (!buffer)
 		return (free(newvalue), -1);
 	export_env(buffer, envp);
 	free(buffer);

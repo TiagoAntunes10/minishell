@@ -12,36 +12,15 @@
 
 #include "../../Include/minishell.h"
 
-//TODO: ERROR for too many args? is it really necessary?
-//TODO: should just use printf maybe?
-
-
-/*int	ft_env(t_cmd *cmd, t_envp *envp)
-{
-	t_envp	*head;
-
-	head = envp;
-	while (head)
-	{
-		ft_putstr_fd(head->key, STDOUT_FILENO);
-		ft_putchar_fd(61, STDOUT_FILENO);
-		ft_putstr_fd(head->value, STDOUT_FILENO);
-		ft_putchar_fd(10, STDOUT_FILENO);
-		head = head->next;
-	}
-	return (EXIT_SUCCESS);
-}*/
-
-//env in bash does not print envs with NULL as value, export will
-
 int	ft_env(t_cmd *cmd, t_envp *envp)
 {
+	(void)cmd;
 	t_envp	*head;
 
 	head = envp;
 	while (head)
 	{
-		if (head->value)
+		if (ft_strncmp(head->value, "", 1))
 			printf("%s=%s\n", head->key, head->value);
 		head = head->next;
 	}
