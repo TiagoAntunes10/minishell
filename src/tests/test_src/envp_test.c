@@ -145,31 +145,56 @@ char	**lst_to_arr(t_envp *head)
 	char	**arr;
 	int		size;
 	int		i;
-	t_envp *envp;
+	t_envp	*envp;
+	char	*buf;
+	char	*buf2;
 
 	envp = head;
-	arr = malloc((lst_len(envp) + 1) * sizeof(char *));
-	if (arr == NULL)
+	if (!(arr = malloc((lst_len(envp) + 1) * sizeof(char *))))
 		return (NULL);
 	i = 0;
 	while (envp != NULL)
 	{
 		size = ft_strlen(envp->key) + ft_strlen(envp->value) + 2;
-		arr[i] = malloc(size);
-		if (arr[i] == NULL)
-		{
-			ft_freematrix(arr);
-			return (NULL);
-		}
-		ft_strlcat(arr[i], envp->key, ft_strlen(envp->key) + 1);
-		ft_strlcat(arr[i], "=", ft_strlen(envp->key) + 2);
-		ft_strlcat(arr[i++], envp->value, size);
-	//	ft_stpcpy(arr[i], envp->key);
-	//	ft_stpcpy(arr[i], "=");
-	//	ft_stpcpy(arr[i], envp->value); 
+		if (!(arr[i] = malloc(size)))
+			return (ft_freematrix(arr), NULL);
+		buf = ft_strjoin(envp->key, "=");
+		buf2 = ft_strjoin(buf, envp->value);
+		ft_stpcpy(arr[i], buf2);	
+		free(buf);
+		free(buf2);
 		i++;
 		envp = envp->next;
 	}
 	arr[i] = NULL;
 	return (arr);
 }
+
+/*char **lst_to_arr(t_envp *envp)
+{
+	char	**matrix;
+	int		size;
+	char	*buffer;
+	int		i;
+	t_envp	*head = envp;
+	char	*tmp1;
+	char	*tmp2;
+
+	i = 0;
+	if (!(matrix = ft_calloc((lst_len(head) + 1), sizeof(char *))))
+		return (NULL);
+	while (head && i <= lst_len(envp))
+	{
+		size = ft_strlen(head->key) + ft_strlen(head->value) + 2;
+		if (!(matrix[i] = ft_calloc(1, size)))
+			return (ft_freematrix(matrix), NULL);
+		tmp1 = ft_strjoin(head->key, "=");
+		tmp2 = ft_strjoin(tmp1, head->value);
+		ft_stpcpy(matrix[i], tmp2);
+		free(tmp1);
+		free(tmp2);
+		head = head->next;
+	}
+	matrix[i] = NULL;
+	return (matrix);
+}*/

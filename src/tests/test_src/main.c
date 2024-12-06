@@ -36,21 +36,23 @@ int is_builtin(char *str)
 
 int b_exit(t_cmd *cmd, t_envp *envp)
 {
+	int ext = 0;
 	if (cmd->opt[0] && !cmd->opt[1])
 	{
 		clear_envp(envp);
+		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);
-		ft_free(cmd->cmd);
 		free(cmd);
-		return (exit(0), 1);
+		return (printf("exit\n"), exit(0), 1);
 	}
 	else if (cmd->opt[1])
 	{
+		ext = ft_atoi(cmd->opt[1]);
 		clear_envp(envp);
+		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);
-		ft_free(cmd->cmd);
 		free(cmd);
-		return (exit(ft_atoi(cmd->opt[1])), 1);
+		return (printf("exit\n"), exit(ext), 1);
 	}
 	return (1);
 }
@@ -92,19 +94,23 @@ char *ft_path(char *str)
 
 int exec(t_cmd *cmd, t_envp *envp, char **ev)
 {
-	//char **env = lst_to_arr(envp);
+	char **env = lst_to_arr(envp);
+	char *path;
 	if (is_builtin(cmd->cmd))
 		return (builtin(cmd, envp));
 	int pid = fork();
+	path = ft_path(cmd->cmd);
 	if (-1 == pid)
 		return (err("ERROR\n"), 1);
 	if (!pid)
 	{
 		signal_child();
-		execve(ft_path(cmd->cmd), cmd->opt, ev);
+		execve(path, cmd->opt, env);
 		err("ERROR\n");
 		exit(1);
 	}
+	ft_freematrix(env);
+	free(path);
 	int status;
 	waitpid(pid, &status, 0);
 	return (WIFEXITED(status) && WEXITSTATUS(status));
@@ -126,7 +132,8 @@ int main(int argc, char **argv, char **envp)
 		signal_parent();
 		add_history(input);
 		cmd->opt = ft_split_mult(input, " \t");
-		cmd->cmd = ft_strdup(cmd->opt[0]);
+		if (!(cmd->cmd = ft_strdup(cmd->opt[0])))
+			continue ;
 		exec(cmd, ev, envp);
 		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);

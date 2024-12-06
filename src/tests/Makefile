@@ -30,7 +30,7 @@ OBJS_DIR	= objs
 CC			= gcc
 RM			= rm -rf
 AR			= ar -rcs
-FLAGS		= -I$(HEADERS) -g -O3  #-fsanitize=address  $(DEPFLG)
+FLAGS		= -I$(HEADERS) -g -O3  -fsanitize=address # $(DEPFLG)
 RDLN_FLAG	= -lreadline
 MAKE_FLAG	= --no-print-directory
 LDLIBS		= -lft
