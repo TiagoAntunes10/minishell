@@ -24,14 +24,16 @@
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "../libft/libft/ft_printf.h"
-# include "../../libft/libft.h"
+# include "../libft/ft_printf.h"
 # include "./tree.h"
 # include "./parser.h"
 # include "./cleanup.h"
 # include "./envp.h"
 # include "./mem_alloc.h"
 # include "./utils.h"
+# include "./execution.h"
+# include "./sighandler.h"
+
 
 # define PIPE	1
 # define DELIM	2

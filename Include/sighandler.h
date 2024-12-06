@@ -13,7 +13,6 @@
 #ifndef SIGHANDLER_H
 # define SIGHANDLER_H
 
-# include "minishell.h"
 # include <signal.h>
 
 //signal receivers

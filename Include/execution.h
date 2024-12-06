@@ -13,7 +13,8 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# include "minishell.h"
+# include "envp.h"
+# include <stdlib.h>
 
 //concatanation
 char	*ft_stpcpy(char *restrict dst, const char *restrict src);
