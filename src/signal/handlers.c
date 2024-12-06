@@ -29,7 +29,7 @@ void	handle_child(int signum)
 	if (signum == SIGINT)
 		ft_putstr_fd("\n", 2);
 	else if (signum == SIGQUIT)
-		ft_putstr_fd("Quit: 3\n", 2);
+		ft_putstr_fd("Quit: (core dumped)\n", 2);
 	g_exit_status = 128 + signum;
 }
 
