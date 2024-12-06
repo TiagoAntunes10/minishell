@@ -35,12 +35,12 @@ OBJ_TEST_EXEC = $(SOURCES_TEST_EXEC:.c=.o)
 
 test_parser: $(NAME_TEST_PARSE)
 
-$(NAME_TEST_PARSE): $(OBJ_TEST_PARSE) $(OBJ) $(LIB)
+$(NAME_TEST_PARSE): $(OBJ) $(OBJ_TEST_PARSE) $(LIB)
 	cc $(FLAGS) -o $@ $^
 
 test_exec: $(NAME_TEST_EXEC)
 
-$(NAME_TEST_EXEC): $(OBJ_EXEC) $(OBJ_TEST_EXEC) $(OBJ) $(LIB)
+$(NAME_TEST_EXEC): $(OBJ) $(OBJ_EXEC) $(OBJ_TEST_EXEC) $(LIB)
 	cc $(FLAGS) -o $@ $^
 
 $(LIB):
