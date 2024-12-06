@@ -1,67 +1,40 @@
-# ================================= Files ======================================
+PRE = ./ft_printf/
+HEADER = ../includes
+FUNCTION = ./libft
 
-NAME	= libft.a
-SOURCE	= $(foreach dir, $(SOURCE_DIR), $(wildcard $(dir)/*.c)) 
-OBJS	= objs/*.o
-DEPFLG	= -MP -MD
+SOURCE = ft_printf.c utils.c write_c.c write_d_i.c\
+		write_p.c write_s.c write_spe.c write_u.c write_x_lower.c\
+		write_x_upper.c write_bonus.c utils_bonus.c write_d_i_bonus.c\
+		write_x_bonus.c write_X_bonus.c write_u_bonus.c
 
-# ============================ Folder Structures ===============================
+SOURCES = ${addprefix $(PRE), $(SOURCE)}
+BONUS_SOURCES = ${addprefix $(BONUS_DIR), $(BONUS)}
 
-HEADERS		= include/
-SOURCE_DIR	= libft/libft libft/libft/get_next_line/ libft/printf 
-OBJS_DIR	= objs/
+NAME = libftprintf.a
+LIB = $(FUNCTION)/libft.a
 
-# ============================ Commands & Flags ===============================
+CC = cc
+FLAGS = -Wall -Wextra -Werror -g
 
-CC			= cc
-RM			= rm -rf
-AR			= ar -rcs
-FLAGS		= -Wall -Werror -Wextra -I$(HEADERS) #$(DEPFLG)
-MAKE_FLAG	= --no-print-directory
-
-# =========================== Ansi Escape Codes ================================
-
-ULINE	= \e[4m
-BLINK	= \e[5m
-BLACK 	= \e[1;30m
-RED 	= \e[1;31m
-GREEN 	= \e[1;32m
-YELLOW 	= \e[1;33m
-BLUE	= \e[1;34m
-PURPLE 	= \e[1;35m
-CYAN 	= \e[1;36m
-WHITE 	= \e[1;37m
-RESET	= \e[0m
-
-# ================================ Rules =======================================
-
-vpath %.c $(SOURCE_DIR)
+OBJ = $(SOURCES:.c=.o)
+OBJ_BONUS = $(BONUS_SOURCES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-#	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)libft$(RESET)"
-#	echo "[$(CYAN)$(BLINK)Linking...$(RESET)]"
-	$(AR) $(NAME) $(OBJS)
-	echo "\n*************************$(GREEN)$(BLINK)    [Libft Sucessfull!]    $(RESET)*************************\n"
+$(NAME): $(OBJ)
+	$(MAKE) -C $(FUNCTION)
+	cp $(LIB) $@
+	ar rcs $@ $(OBJ)
 
-$(OBJS): 
-#	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)sources$(RESET)"
-	mkdir -p objs
-	$(CC) $(FLAGS) -c $(SOURCE)
-	mv *.o $(OBJS_DIR)
+.c.o:
+	$(CC) $(FLAGS) -I $(HEADER) -I $(FUNCTION) -c $< -o $(<:.c=.o)
 
-clean:
-	$(RM) $(OBJS)
-	$(RM) $(OBJS_DIR)
-#	echo "\n\n++++++++++++++    $(ULINE)$(GREEN)Objects have been removed sucessfully$(RESET)    +++++++++++++++\n\n"
-
+clean: 
+	rm -f $(OBJ) $(OBJ_BONUS)
+	$(MAKE) clean -C $(FUNCTION)
+        
 fclean: clean
-	$(RM) $(NAME)
-#	echo "\n\n++++++++++++++    $(ULINE)$(GREEN)Static library and programs removed successfully$(RESET)    +++++++++++++++\n\n"
+	rm -f $(NAME)
+	$(MAKE) fclean -C $(FUNCTION)
 
 re: fclean all
-
-.SILENT:
-
-.PHONY: all clean fclean re

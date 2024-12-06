@@ -26,17 +26,6 @@
 # include <readline/readline.h>
 # include "../libft/libft/ft_printf.h"
 # include "../../libft/libft.h"
-# include "tree.h"
-# include "parser.h"
-# include "cleanup.h"
-# include "macro.h"
-# include "execution.h"
-
-# define PIPE	1
-# define LIST	2
-# define DELIM	3
-# define CMD	4
-# define REDIR	5
 # include "./tree.h"
 # include "./parser.h"
 # include "./cleanup.h"

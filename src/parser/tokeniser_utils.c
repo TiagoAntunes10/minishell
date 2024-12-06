@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-<<<<<<< HEAD
-#include "minishell.h"
-=======
 #include "../../Include/minishell.h"
 
 static unsigned int	check_quotes(char **str, int len)
@@ -37,7 +34,6 @@ static unsigned int	check_quotes(char **str, int len)
 	}
 	return (len);
 }
->>>>>>> 91d655cd368eec5976dfca42dd733e0176863e75
 
 unsigned int	mod_strlen(char *str)
 {
