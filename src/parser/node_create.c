@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/01 16:42:51 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/06 21:55:30 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ t_tree	*redir_node(t_tree *tree, char ***input, int mode, t_envp *envp)
 	redir = (t_redir *) safe_alloc(sizeof(*redir), 1, tree, envp);
 	redir->type = REDIR;
 	redir->file = NULL;
+	if (mode == (O_WRONLY | O_CREAT))
+		check_outfile(**input, mode, tree, envp);
 	if (**input != NULL)
 	{
 		redir->file = malloc(ft_strlen(**input) + 1);

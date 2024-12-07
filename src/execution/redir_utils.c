@@ -6,17 +6,23 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:12:05 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/01 16:20:27 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:22:27 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
 // TODO: Write errors with perror
+// TODO: Verify the exit code if the file is NULL
 void	redir_read(t_redir *redir, t_envp *envp)
 {
-	int		redir_fd;
+	int	redir_fd;
 
+	if (redir->file == NULL)
+	{
+		perror("No such file or directory");
+		exit(1);
+	}
 	if (access(redir->file, F_OK | R_OK) == -1)
 		exit(errno);
 	redir_fd = open(redir->file, redir->mode);
@@ -34,7 +40,7 @@ void	redir_read(t_redir *redir, t_envp *envp)
 
 void	redir_write(t_redir *redir, t_envp *envp)
 {
-	int		redir_fd;
+	int	redir_fd;
 
 	redir_fd = open(redir->file, redir->mode, 0755);
 	if (redir_fd == -1)

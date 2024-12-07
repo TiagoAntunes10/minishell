@@ -88,6 +88,7 @@ static char	**test_tree(t_tree *tree, char **input)
 	return (NULL);
 }
 
+// TODO: Add case "< infile cat" - this should be handled like "cat < infile"
 int	main(int argc, char **argv, char **envp)
 {
 	t_tree	*tree;

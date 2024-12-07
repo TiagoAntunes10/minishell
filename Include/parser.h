@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:48:30 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/28 21:19:07 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/06 21:55:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ t_tree			*org_tree(t_tree *tree, t_tree *cmd);
 int				count_words(char *str);
 unsigned int	mod_strlen(char *str);
 char			**split_input(char *str);
+void	check_outfile(char *input, int mode, t_tree *tree, t_envp *envp);
 
 #endif

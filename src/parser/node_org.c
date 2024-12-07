@@ -6,11 +6,28 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/17 18:04:58 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:36:13 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+
+// TODO: Find how to clear input variable
+void	check_outfile(char *input, int mode, t_tree *tree, t_envp *envp)
+{
+	int	redir_fd;
+
+	if (access(input, F_OK) == 0)
+	{
+		if (unlink(input) == -1)
+			exit_failure(tree, -1, envp);
+	}
+	redir_fd = open(input, mode, 0755);
+	if (redir_fd == -1)
+		exit_failure(tree, -1, envp);
+	write(redir_fd, "\0", 1);
+	close(redir_fd);
+}
 
 static t_tree	*org_pipe(t_tree *tree, t_tree *cmd)
 {

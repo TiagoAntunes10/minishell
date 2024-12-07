@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 21:52:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/29 15:45:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:32:15 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	clear_pipe(t_tree *tree)
 	pipe = (t_pipe *) tree;
 	clear_tree(pipe->left);
 	clear_tree(pipe->right);
-	free(pipe);
+	free(tree);
 }
 
 static void	clear_delim(t_tree *tree)
@@ -29,7 +29,7 @@ static void	clear_delim(t_tree *tree)
 	delim = (t_delim *) tree;
 	clear_tree(delim->right);
 	free(delim->delim);
-	free(delim);
+	free(tree);
 }
 
 static void	clear_redir(t_tree *tree)
@@ -39,7 +39,7 @@ static void	clear_redir(t_tree *tree)
 	redir = (t_redir *) tree;
 	clear_tree(redir->right);
 	free(redir->file);
-	free(redir);
+	free(tree);
 }
 
 void	clear_tree(t_tree *tree)
@@ -62,6 +62,6 @@ void	clear_tree(t_tree *tree)
 			clear_arr(cmd->opt);
 		if (cmd->cmd != NULL)
 			free(cmd->cmd);
-		free(cmd);
+		free(tree);
 	}
 }
