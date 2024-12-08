@@ -88,7 +88,6 @@ static char	**test_tree(t_tree *tree, char **input)
 	return (NULL);
 }
 
-// TODO: Add case "< infile cat" - this should be handled like "cat < infile"
 int	main(int argc, char **argv, char **envp)
 {
 	t_tree	*tree;
@@ -166,5 +165,12 @@ int	main(int argc, char **argv, char **envp)
 	tree_cpy = tree;
 	char	*input10[3] = {"cat infile", "|", "wc -l"};
 	test_tree(tree_cpy, input10);
+	clear_tree(tree);
+
+	// Test "< infile cat" input
+	tree = tokenisation("< infile cat", envp_lst);
+	tree_cpy = tree;
+	char	*input11[3] = {"cat", "<", "infile"};
+	test_tree(tree_cpy, input11);
 	clear_tree(tree);
 }

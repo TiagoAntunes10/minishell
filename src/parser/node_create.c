@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/06 21:55:30 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:12:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ t_tree	*pipe_node(t_tree *tree, t_envp *envp)
 	return ((t_tree *) pipe);
 }
 
-// TODO: Create the outfile
 t_tree	*redir_node(t_tree *tree, char ***input, int mode, t_envp *envp)
 {
 	t_redir	*redir;

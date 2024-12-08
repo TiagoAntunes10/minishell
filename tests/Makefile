@@ -29,7 +29,7 @@ NAME_TEST_EXEC = exec_test
 LIB = $(FUNCTION)/libftprintf.a
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g 
+FLAGS = -Wall -Wextra -Werror -g
 
 OBJ = $(SOURCES:.c=.o)
 OBJ_EXEC = $(SOURCES_EXEC:.c=.o)

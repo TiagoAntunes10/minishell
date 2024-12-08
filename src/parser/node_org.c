@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/07 15:36:13 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:11:35 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ static t_tree	*org_pipe(t_tree *tree, t_tree *cmd)
 	return ((t_tree *) pipe);
 }
 
+static t_tree	*org_redir(t_tree *tree, t_tree *cmd)
+{
+	t_redir	*redir;
+
+	redir = (t_redir *) tree;
+	redir->right = cmd;
+	return ((t_tree *) redir);
+}
+
 // TODO: Not sure if it should return NULL
 t_tree	*org_tree(t_tree *tree, t_tree *cmd)
 {
@@ -45,5 +54,7 @@ t_tree	*org_tree(t_tree *tree, t_tree *cmd)
 		return ((t_tree *) cmd);
 	else if (tree->type == PIPE)
 		return (org_pipe(tree, cmd));
+	else if (tree->type == REDIR)
+		return (org_redir(tree, cmd));
 	return (NULL);
 }

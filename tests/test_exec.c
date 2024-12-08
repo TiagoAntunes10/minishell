@@ -44,16 +44,21 @@ int	main(int argc, char **argv, char **envp)
 	// execution(tree, -1, envp_lst);
 	// clear_tree(tree);
 
-	// TODO: Understand why this has still reachable leaks
-	// // Test "cat < infile | grep 'lk' | wc -l > outfile" input
-	// tree = tokenisation("cat < infile | grep 'lk' | wc -l > outfile", envp_lst);
+	// TODO: The leaks are problably due to a child process that ends without freeing the memory
+	// Test "cat < infile | grep 'lk' | wc -l > outfile" input
+	tree = tokenisation("cat < infile | grep 'lk' | wc -l > outfile", envp_lst);
+	execution(tree, -1, envp_lst);
+	clear_tree(tree);
+
+	// // Test "cat << delim" input
+	// tree = tokenisation("cat << delim", envp_lst);
 	// execution(tree, -1, envp_lst);
 	// clear_tree(tree);
 
-	// Test "cat << delim" input
-	tree = tokenisation("cat << delim", envp_lst);
-	execution(tree, -1, envp_lst);
-	clear_tree(tree);
+	// // Test "cat << delim | wc -l" input
+	// tree = tokenisation("cat << delim | wc -l", envp_lst);
+	// execution(tree, -1, envp_lst);
+	// clear_tree(tree);
 
 	// Test "cat < infile >> outfile" input
 	// tree = tokenisation("cat < infile >> outfile", envp_lst);
@@ -67,6 +72,11 @@ int	main(int argc, char **argv, char **envp)
 
 	// // Test "cat infile | cat infile | ls -l" input
 	// tree = tokenisation("cat infile | cat infile | ls -l", envp_lst);
+	// execution(tree, -1, envp_lst);
+	// clear_tree(tree);
+
+	// // Test "< infile cat" input
+	// tree = tokenisation("< infile cat", envp_lst);
 	// execution(tree, -1, envp_lst);
 	// clear_tree(tree);
 	clear_envp(envp_lst);

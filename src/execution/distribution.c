@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/07 22:30:49 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/08 22:07:40 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 			exit(1);
 		else if (id == 0)
 			exec_tree(tree, fd, envp);
-		waitpid(-1, &status, WNOHANG);
+		wait(&status);
 	}
 	else
 		exec_tree(tree, fd, envp);
