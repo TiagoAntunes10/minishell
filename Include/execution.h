@@ -21,7 +21,7 @@ char	*ft_stpcpy(char *restrict dst, const char *restrict src);
 void	*ft_mempcpy(void *dest, const void *src, size_t n);
 
 //memory safety
-void	ft_freematrix(char **matrix);
+void	*ft_freematrix(char **matrix);
 
 //builtins
 
