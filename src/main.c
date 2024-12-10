@@ -22,10 +22,9 @@ int	main(int argc, char **argv, char **env)
 	t_tree	*tree;
 	t_envp	*envp_lst;
 
-	input = readline(prompt);
-	(void) argc;
-	(void) argv;
+	((void) argc, (void) argv);
 	envp_lst = arr_to_lst(env);
+	input = readline(prompt);
 	while (input)
 	{
 		add_history(input);
@@ -37,4 +36,7 @@ int	main(int argc, char **argv, char **env)
 		clear_tree(tree);
 		input = readline(prompt);
 	}
+	rl_clear_history();
+	clear_envp(envp_lst);
+	ft_exit(1, 0);
 }

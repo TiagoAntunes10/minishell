@@ -68,6 +68,8 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	cmd_path = find_path(cmd->cmd, envp);
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 	{
+		ft_freematrix(envp_arr);
+		ft_free(cmd_path);
 		perror(strerror(errno));
 		exit(errno);
 	}
