@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/08 18:13:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/11 21:50:40 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,10 @@ void	exec_delim(t_tree *tree, t_envp *envp)
 void	exec_redir(t_tree *tree, t_envp *envp)
 {
 	t_redir	*redir;
-	int		id;
 
 	redir = (t_redir *) tree;
-	id = fork();
-	if (id == -1)
-		exit(errno);
-	else if (id == 0)
-	{
-		if (redir->mode == O_RDONLY)
-			redir_read(redir, envp);
-		else
-			redir_write(redir, envp);
-	}
+	if (redir->mode == O_RDONLY)
+		redir_read(redir, envp);
+	else
+		redir_write(redir, envp);
 }

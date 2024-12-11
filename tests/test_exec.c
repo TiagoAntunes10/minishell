@@ -44,7 +44,6 @@ int	main(int argc, char **argv, char **envp)
 	// execution(tree, -1, envp_lst);
 	// clear_tree(tree);
 
-	// TODO: The leaks are problably due to a child process that ends without freeing the memory
 	// Test "cat < infile | grep 'lk' | wc -l > outfile" input
 	tree = tokenisation("cat < infile | grep 'lk' | wc -l > outfile", envp_lst);
 	execution(tree, -1, envp_lst);
