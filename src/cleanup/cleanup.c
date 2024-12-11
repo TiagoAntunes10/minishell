@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/29 22:18:28 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/11 22:05:29 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,20 @@ void	exit_success(t_tree *tree, int fd, t_envp *envp)
 	exit(EXIT_SUCCESS);
 }
 
-//TODO: Maybe this function should handle closing pipes
-void	exit_failure(t_tree *tree, int fd, t_envp *envp)
+void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 {
+	int	i;
+
 	if (tree != NULL)
 		clear_tree(tree);
 	if (envp != NULL)
 		clear_envp(envp);
-	if (fd != -1)
-		close(fd);
+	if (fd != NULL)
+	{
+		i = 0;
+		while (i < 2)
+			close(fd[i]);
+	}
 	perror(strerror(errno));
 	exit(errno);
 }
