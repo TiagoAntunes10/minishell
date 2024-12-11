@@ -6,19 +6,18 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/01 17:29:33 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:50:00 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <stdlib.h>
 
 static int is_builtin(char *name)
 {
 	char	**bt;
 	int		i;
 
-	bt = (char (*[])){"exit", "pwd", "echo", "env", "export",
+	bt = (char (*[])){"pwd", "echo", "env", "export",
 		"unset", NULL};
 	i = -1;
 	while (bt[++i])
@@ -36,9 +35,9 @@ void	cmd_dist(t_tree *tree, t_envp *envp)
 
 	cmd = (t_cmd *) tree;
 	i = -1;
-	bt_name = (char (*[])){"exit", "pwd",
+	bt_name = (char (*[])){"pwd",
 		"echo", "env", "export", "unset", NULL};
-	bt_func = (int (*[])(t_cmd *, t_envp *)){ft_exit, ft_pwd, ft_echo,
+	bt_func = (int (*[])(t_cmd *, t_envp *)){ft_pwd, ft_echo,
 		ft_env, ft_export, ft_unset, NULL};
 	if (!is_builtin(cmd->cmd))
 		std_cmd(cmd, envp);
@@ -73,6 +72,8 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 		cmd = (t_cmd *) tree;
 		if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
 			ft_cd(cmd, envp);
+		else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
+			ft_exit(tree, envp);
 	}
 	id = fork();
 	signal_child();
