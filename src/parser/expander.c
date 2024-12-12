@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exit.c                                         :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 15:21:01 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/10 15:31:40 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/12/11 23:15:07 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-extern int g_exit_code;
+//TODO: check if replacing cmd->cmd instead of opt is the best way to do this
+extern int	g_exit_code;
 
-int	ft_exit(t_tree *tree, t_envp *envp)
+void	expand_variable(t_cmd *cmd, t_envp *envp)
 {
-	if (envp != NULL)
-		clear_envp(envp);
-	if (tree != NULL)
-		clear_tree(tree);
-	return (g_exit_code);
+	char	*value;
+	char	*key;
+
+	key = ft_strdup(cmd->cmd + 1);
+	if (!ft_strncmp(cmd->cmd, "$?", ft_strlen(cmd->cmd)))
+		value = ft_itoa(g_exit_code);
+	else
+		value = ft_strdup(search_envp(envp, key)->value);
+	ft_free(cmd->cmd);
+	cmd->cmd = value;
+	ft_free(key);
 }

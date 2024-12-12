@@ -35,7 +35,6 @@
 # include "sighandler.h"
 # include "macro.h"
 
-
 # define PIPE	1
 # define DELIM	2
 # define CMD	3

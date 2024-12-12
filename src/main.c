@@ -14,7 +14,7 @@
 #include "../Include/execution.h"
 #include "../Include/cleanup.h"
 
-int	g_exit_status;
+//int	g_exit_status;
 //TODO: Verify if fd 1 is a terminal (that should be the standard)
 //TODO: Check if this is the best way to have access to the envirenment variables
 //TODO: cd must execute in the parent process (it does not work with pipes and ';'), all other cmds execute in child processes

@@ -12,6 +12,8 @@
 
 #include "../../Include/minishell.h"
 
+extern int	g_exit_code;
+
 static int is_builtin(char *name)
 {
 	char	**bt;
@@ -82,7 +84,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 	else if (id == 0)
 		exec_tree(tree, fd, envp);
 	waitpid(-1, &status, WNOHANG);
-	signal_parent();
 	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
+		g_exit_code = WEXITSTATUS(status);
+	signal_parent();
 }

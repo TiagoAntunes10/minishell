@@ -13,15 +13,16 @@
 # ================================= Files ======================================
 
 NAME	= minishell
-LIBFT	= -L ./libft/libft
+LIBFT	= -L ./libft/libft -lft
 SOURCE	= $(foreach dir, $(SOURCE_DIR), $(wildcard $(dir)/*.c)) 
-OBJS	= objs/*.o
+OBJS	= $(SOURCE:.c=.o)
 DEPFLG	= -MP -MD
 
 # ============================ Folder Structures ===============================
 
 HEADERS		= Include
-SOURCE_DIR	= src
+SOURCE_DIR	= src/main.c src/builtin src/cleanup src/envp src/execution src/mem_alloc \
+			  src/parser src/signal src/utils
 LIBFT_DIR	= libft
 OBJS_DIR	= objs
 
@@ -32,8 +33,7 @@ RM			= rm -rf
 AR			= ar -rcs
 FLAGS		= -I$(HEADERS) -g -O3 -fsanitize=thread #$(DEPFLG)
 MAKE_FLAG	= --no-print-directory
-LDLIBS		= -lft -lreadline
-
+LDLIBS		= -lreadline $(LIBFT) 
 # =========================== Ansi Escape Codes ================================
 
 ULINE	= \e[4m
@@ -59,16 +59,17 @@ $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(LIBFT) -o $@ $^ $(LDLIBS)
 	echo "\n*************************$(GREEN)$(BLINK)    [Compilation Sucessfull!]    $(RESET)*************************\n"
 
-$(OBJS): 
+$(OBJS):
 	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)sources$(RESET)"
-	mkdir -p objs
-	$(CC) $(FLAGS) -c $(SOURCE) -I $(HEADERS)
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(FLAGS) -C $(SOURCE) -I $(HEADERS) $(LDLIBS)
 	mv *.o $(OBJS_DIR)
 
 clean:
 	make clean $(MAKE_FLAG) -C $(LIBFT_DIR)
 	$(RM) $(OBJS)
 	$(RM) $(OBJS_DIR)
+#	rm *.o
 	echo "\n\n++++++++++++++    $(ULINE)$(GREEN)Minishell Objects have been removed sucessfully$(RESET)    +++++++++++++++\n\n"
 
 fclean: clean
