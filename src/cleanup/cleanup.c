@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/11 22:05:29 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:35:33 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	**clear_arr(char **arr)
 	return (NULL);
 }
 
-//TODO: Check if there are cases where more than one fd is open
 //TODO: Maybe this function does not need to close fds
 void	exit_success(t_tree *tree, int fd, t_envp *envp)
 {

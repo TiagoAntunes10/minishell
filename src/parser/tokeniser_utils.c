@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/23 16:33:11 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:40:44 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,14 @@ int	count_words(char *str)
 	return (count);
 }
 
-// TODO: Reduce lines
-char	**split_input(char *str)
+char	**split_input(char *str, t_envp *envp)
 {
 	char			**word_arr;
 	char			**word_arr_cp;
 	unsigned int	len;
 
-	word_arr = malloc((count_words(str) + 1) * sizeof(char *));
-	//TODO: Maybe create an error handling function that terminates the program
-	if (word_arr == NULL)
-		return (NULL);
+	word_arr = (char **) safe_alloc(count_words(str) + 1, sizeof(char *),
+								 NULL, envp);
 	word_arr_cp = word_arr;
 	while (*str != 0)
 	{
@@ -92,10 +89,7 @@ char	**split_input(char *str)
 		len = mod_strlen(str);
 		if (*str == '"' || *str == '\'' || *str == '(')
 			str++;
-		*word_arr_cp = malloc(len + 1);
-		//TODO: Maybe create an error handling function that terminates the program
-		if (*word_arr_cp == NULL)
-			return (clear_arr(word_arr));
+		*word_arr_cp = (char *) split_alloc(len + 1, 1, word_arr, envp);
 		ft_strlcpy(*word_arr_cp, str, len + 1);
 		word_arr_cp++;
 		str += len;

@@ -6,13 +6,12 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:12:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/28 21:22:18 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:39:44 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-// TODO: Think how this should be applied because of the error handling
 void	*safe_alloc(unsigned int size, unsigned int type,
 					t_tree *tree, t_envp *envp)
 {
@@ -20,7 +19,22 @@ void	*safe_alloc(unsigned int size, unsigned int type,
 
 	var = malloc(size * type);
 	if (var == NULL)
-		exit_failure(tree, -1, envp);
+		exit_failure(tree, NULL, envp);
+	ft_bzero(var, size * type);
+	return (var);
+}
+
+void	*split_alloc(unsigned int size, unsigned int type,
+					char **arr, t_envp *envp)
+{
+	void	*var;
+
+	var = malloc(size * type);
+	if (var == NULL)
+	{
+		clear_arr(arr);
+		exit_failure(NULL, NULL, envp);
+	}
 	ft_bzero(var, size * type);
 	return (var);
 }
