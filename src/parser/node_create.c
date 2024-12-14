@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/08 15:12:04 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:10:00 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	get_opt(t_cmd *cmd, t_tree *tree, char ***input, t_envp *envp)
 	if (cmd->opt == NULL)
 	{
 		clear_tree((t_tree *) cmd);
-		exit_failure(tree, -1, envp);
+		exit_failure(tree, NULL, envp);
 	}
 	i = 0;
 	while (i < opt_num)
@@ -31,7 +31,7 @@ static void	get_opt(t_cmd *cmd, t_tree *tree, char ***input, t_envp *envp)
 		if (cmd->opt == NULL)
 		{
 			clear_tree((t_tree *) cmd);
-			exit_failure(tree, -1, envp);
+			exit_failure(tree, NULL, envp);
 		}
 		ft_strlcpy(cmd->opt[i++], **input, ft_strlen(**input) + 1);
 		(*input)++;
@@ -68,7 +68,7 @@ t_tree	*delim_node(t_tree *tree, char ***input, t_envp *envp)
 	if (delim->delim == NULL)
 	{
 		free(delim);
-		exit_failure(tree, -1, envp);
+		exit_failure(tree, NULL, envp);
 	}
 	ft_strlcpy(delim->delim, **input, ft_strlen(**input) + 1);
 	delim->right = tree;
@@ -103,7 +103,7 @@ t_tree	*redir_node(t_tree *tree, char ***input, int mode, t_envp *envp)
 		if (redir->file == NULL)
 		{
 			free(redir);
-			exit_failure(tree, -1, envp);
+			exit_failure(tree, NULL, envp);
 		}
 		ft_strlcpy(redir->file, **input, ft_strlen(**input) + 1);
 		(*input)++;

@@ -6,11 +6,11 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 19:03:38 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/08 11:23:34 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:25:37 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Include/minishell.h"
 
 //TODO: heredoc?
 

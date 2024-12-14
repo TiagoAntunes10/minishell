@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 15:57:26 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/04 22:59:11 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:06:11 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	**lst_to_arr(t_envp *envp)
 		if (arr[i] == NULL)
 		{
 			clear_arr(arr);
-			exit_failure(NULL, -1, envp_cpy);
+			exit_failure(NULL, NULL, envp_cpy);
 		}
 		ft_strlcat(arr[i], envp->key, ft_strlen(envp->key) + 1);
 		ft_strlcat(arr[i], "=", ft_strlen(envp->key) + 2);

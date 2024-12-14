@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:42:28 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/08 12:46:54 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:02:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_export(t_cmd *cmd, t_envp *envp);
 int		ft_cd(t_cmd *cmd, t_envp *envp);
 int		ft_env(t_cmd *cmd, t_envp *envp);
 int		ft_echo(t_cmd *cmd, t_envp *envp);
-int		ft_pwd(t_cmd *cmd, t_envp *envp);
+int		ft_pwd(void);
 
 //useful functions
 

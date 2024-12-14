@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/08 15:11:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:10:40 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	check_outfile(char *input, int mode, t_tree *tree, t_envp *envp)
 	if (access(input, F_OK) == 0)
 	{
 		if (unlink(input) == -1)
-			exit_failure(tree, -1, envp);
+			exit_failure(tree, NULL, envp);
 	}
 	redir_fd = open(input, mode, 0755);
 	if (redir_fd == -1)
-		exit_failure(tree, -1, envp);
+		exit_failure(tree, NULL, envp);
 	write(redir_fd, "\0", 1);
 	close(redir_fd);
 }
