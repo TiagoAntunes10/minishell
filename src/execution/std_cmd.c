@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/05 21:37:21 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:10:25 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	cmd_path = find_path(cmd->cmd, envp);
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 	{
-		ft_freematrix(envp_arr);
-		ft_free(cmd_path);
-		perror(strerror(errno));
-		exit(errno);
+		exit_failure(envp->root, -1, envp);
 	}
 }
