@@ -13,24 +13,23 @@
 # ================================= Files ======================================
 
 NAME	= minishell
-LIBFT	= -L ./libft #-lft
-SOURCE	= src 
+LIBFT	= $(LIBFT_DIR)/libftprintf.a
 DEPFLG	= -MP -MD
-FILES	= cmd_cd cmd_echo cmd_env cmd_exit cmd_export cmd_pwd cmd_unset main \
+#FILES	= cmd_cd cmd_echo cmd_env cmd_exit cmd_export cmd_pwd cmd_unset main \
 		  cleanup tree_cleanup envp_search envp_split envp_utils distribution \
 		  exec_utils pipe_utils redir_utils std_cmd safe_alloc expander \
-		  node_create node_org tokenizer tokenizer_utils handlers \
+		  node_create node_org tokeniser tokeniser_utils handlers \
 		  signal_sorting ft_freematrix ft_stpcpy ft_strcspn tree_utils
+OBJS	= objs/*.o
 
 # ============================ Folder Structures ===============================
 
 HEADERS		= Include
-SOURCE_DIR	= builtin cleanup envp execution mem_alloc parser signal utils
+SOURCE		= $(foreach dir, $(SOURCE_DIR), $(wildcard $(dir)/*.c)) 
+SOURCE_DIR	= src src/builtin src/cleanup src/envp src/execution src/mem_alloc \
+			  src/parser src/signal src/utils
 LIBFT_DIR	= libft
-VPATH		= $(SOURCE) $(addprefix $(SOURCE)/, $(SOURCE_DIR))
-OBJS		= $(FILES:%=%.o)
 OBJS_DIR	= objs
-TARGET		= $(addprefix $(OBJS_DIR)/, $(OBJS))
 
 # ============================ Commands & Flags ===============================
 
@@ -57,30 +56,27 @@ RESET	= \e[0m
 
 # ================================ Rules =======================================
 #vpath %.c $(SOURCE) $(addprefix $(SOURCE)/, $(SOURCE_DIR))
-
 all: $(NAME)
 
-$(NAME): $(OBJS_DIR) $(TARGET)
-	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)libft$(RESET)"
-	$(MAKE) $(MAKE_FLAG) -C $(LIBFT_DIR)
+$(NAME): $(OBJS) $(LIBFT)
 	echo "[$(CYAN)$(BLINK)Linking...$(RESET)]"
-	$(CC) $(FLAGS) $(TARGET) -o $@ -I $(HEADERS) $(LDLIBS) $(LIBFT)
+	$(CC) $(FLAGS) $(LIBFT) -o $@ $^ $(LDLIBS)
 	echo "\n*************************$(GREEN)$(BLINK)    [Compilation Sucessfull!]    $(RESET)*************************\n"
 
-$(OBJS_DIR)/%.o : %.c
+$(OBJS):
 	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)sources$(RESET)"
-	@echo "Compiling $< to $@"
-	$(CC) $(FLAGS) -c $< -o $@ -I $(HEADERS)
-#	mv *.o $(OBJS_DIR)
-
-$(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
+	$(CC) $(FLAGS) -c $(SOURCE) -I $(HEADERS)
+	mv *.o $(OBJS_DIR)
+
+$(LIBFT):
+	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)libft$(RESET)"
+	make $(MAKE_FLAG) -C $(LIBFT_DIR)
 
 clean:
 	make clean $(MAKE_FLAG) -C $(LIBFT_DIR)
 	$(RM) $(OBJS)
 	$(RM) $(OBJS_DIR)
-#	rm *.o
 	echo "\n\n++++++++++++++    $(ULINE)$(GREEN)Minishell Objects have been removed sucessfully$(RESET)    +++++++++++++++\n\n"
 
 fclean: clean
