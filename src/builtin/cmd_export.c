@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Include/minishell.h"
 
 //NOTE: bash treats multiple args as different envs to be exported, therefore
 //all args should just contain NAME or NAME[=VALUE] format. VALUE can contain
@@ -79,7 +79,6 @@ static int	node_check(char *key, char *value, t_envp *envp)
 
 int	export_env(char *var, t_envp *envp)
 {
-	t_envp	*node;
 	char	*key;
 	char	*value;
 	int		i;

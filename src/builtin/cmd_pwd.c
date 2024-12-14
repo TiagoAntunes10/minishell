@@ -16,7 +16,7 @@ int	ft_pwd(t_cmd *cmd, t_envp *envp)
 {
 	char	*cwd;
 
-	(void)envp;
+	((void)envp, (void)cmd);
 	cwd = getcwd(NULL, 4096);
 	if (printf("%s\n", cwd) < 0)
 		return (free(cwd), ft_putstr_fd(RED PWD_NO_PRNT RST, 2), 2);
