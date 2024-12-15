@@ -43,5 +43,8 @@
 //ECHO ERRORS
 
 
+//Prompt
+
+# define LOWER_PROMPT "\e[1;35mMinishell $->\e[0m"
 
 #endif
