@@ -23,6 +23,7 @@ static char	*get_prompt(t_envp *envp)
 	char	*prompt;
 	char	*pwd;
 	char	*tmp;
+	char	*tmp2;
 
 	pwd = search_envp(envp, "PWD")->value;
 	tmp = ft_calloc(1, 
@@ -30,8 +31,10 @@ static char	*get_prompt(t_envp *envp)
 	if (!tmp)
 		return (NULL);
 	ft_stpcpy(tmp, pwd);
-	prompt = ft_strjoin(tmp, "\n"LOWER_PROMPT);
+	tmp2 = ft_strjoin(UPPER_PROMPT, pwd);
+	prompt = ft_strjoin(tmp2, "\n"LOWER_PROMPT);
 	free(tmp);
+	free(tmp2);
 	return (prompt);
 }
 

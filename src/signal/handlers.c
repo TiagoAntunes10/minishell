@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Include/minishell.h"
 //NOTE: signal child needs to be called before forking, and signal parent
 //needs to be restored after the waitpid;
 //TODO: heredoc signal handling?
@@ -25,15 +25,22 @@ void	handle_parent(int signum)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
-	g_exit_code= 130;
+	g_exit_code = 130;
 }
 
 void	handle_child(int signum)
 {
 	if (signum == SIGINT)
-		ft_putstr_fd("\n", 2);
+		ft_putstr_fd("\n", STDERR_FILENO);
 	else if (signum == SIGQUIT)
-		ft_putstr_fd("Quit: (core dumped)\n", 2);
-	g_exit_code= 128 + signum;
+		ft_putstr_fd("Quit: (core dumped)\n", STDERR_FILENO);
+	g_exit_code = 128 + signum;
 }
 
+void	handle_heredoc(int signum)
+{
+	if (signum != SIGINT)
+		return ;
+	write(1, "\n", 1);
+	g_exit_code = 130;
+}

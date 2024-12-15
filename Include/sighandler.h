@@ -26,5 +26,6 @@ void	signal_ignore(void);
 
 void	handle_parent(int signum);
 void	handle_child(int signum);
+void	handle_heredoc(int signum);
 
 #endif

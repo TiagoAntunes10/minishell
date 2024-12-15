@@ -45,8 +45,9 @@ void	cmd_dist(t_tree *tree, t_envp *envp)
 		std_cmd(cmd, envp);
 	else
 		while (bt_name[++i])
-			if (cmd->cmd && !ft_strncmp(bt_name[i], cmd->cmd, ft_strlen(cmd->cmd)))
-				bt_func[i](cmd, envp);
+			if (cmd->cmd &&
+					!ft_strncmp(bt_name[i], cmd->cmd, ft_strlen(cmd->cmd)))
+				g_exit_code = bt_func[i](cmd, envp);
 }
 
 static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
@@ -74,7 +75,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 	{
 		cmd = (t_cmd *) tree;
 		if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
-			ft_cd(cmd, envp);
+			g_exit_code = ft_cd(cmd, envp);
 		else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
 			ft_exit(tree, envp);
 	}
@@ -90,7 +91,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 	}
 	else
 		exec_tree(tree, fd, envp);
+	signal_parent();
 	if (WIFEXITED(status))
 		g_exit_code = WEXITSTATUS(status);
-	signal_parent();
 }
