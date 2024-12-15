@@ -1,61 +1,94 @@
-PRE = ./src/parser ./src/cleanup ./src/envp ./src/mem_alloc
-INCLUDE = ./Include
-FUNCTION = ./libft
-BONUS = ./bonus/
-TEST = ./tests
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/07 09:38:27 by rapcampo          #+#    #+#              #
+#    Updated: 2024/08/17 16:07:49 by rapcampo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SOURCE = tokeniser.c cleanup.c lst_op.c tokeniser_utils.c \
-		 node_create.c node_org.c tree_cleanup.c
+# ================================= Files ======================================
 
-# SOURCE_BON = fractol_bonus.c errors_bonus.c ft_atod.c mlx_utils.c mlx_hooks.c \
-# 		utils.c mandel_bonus.c julia_bonus.c utils_bonus.c tricorn.c
+NAME	= minishell
+LIBFT	= $(LIBFT_DIR)/libftprintf.a
+DEPFLG	= -MP -MD
+OBJS	= objs/*.o
 
-SOURCE_TEST = tests.c
+# ============================ Folder Structures ===============================
 
-SOURCES = $(foreach dir, $(PRE), $(wildcard $(dir)/*.c))
-SOURCES_BON = ${addprefix $(PRE), $(SOURCE_BON)}
-SOURCES_TEST = $(foreach dir, $(TEST), $(wildcard $(dir)/*.c))
+HEADERS		= Include
+SOURCE		= $(foreach dir, $(SOURCE_DIR), $(wildcard $(dir)/*.c)) 
+SOURCE_DIR	= src src/builtin src/cleanup src/envp src/execution src/mem_alloc \
+			  src/parser src/signal src/utils
+LIBFT_DIR	= libft
+OBJS_DIR	= objs
 
-NAME = fractol
-NAME_BONUS = fractol_bonus
-NAME_TEST = test_result
-LIB = $(FUNCTION)/libftprintf.a
+# ============================ Commands & Flags ===============================
 
-CC = cc
-FLAGS = -Wall -Wextra -Werror -g 
+CC			= cc
+RM			= rm -rf
+AR			= ar -rcs
+FLAGS		= -g -O3 -fsanitize=thread #$(DEPFLG)
+MAKE_FLAG	= --no-print-directory
+LDLIBS		= -lreadline 
 
-OBJ = $(SOURCES:.c=.o)
-OBJ_BON = $(SOURCES_BON:.c=.o)
-OBJ_TEST = $(SOURCES_TEST:.c=.o)
+# =========================== Ansi Escape Codes ================================
 
+ULINE	= \e[4m
+BLINK	= \e[5m
+BLACK 	= \e[1;30m
+RED 	= \e[1;31m
+GREEN 	= \e[1;32m
+YELLOW 	= \e[1;33m
+BLUE	= \e[1;34m
+PURPLE 	= \e[1;35m
+CYAN 	= \e[1;36m
+WHITE 	= \e[1;37m
+RESET	= \e[0m
+
+# ================================ Macros ======================================
+
+ST		= *************************
+COMP	= Compiling...
+CLN		= Minishell Objects have been removed sucessfully
+FCLN	= Minishell programs removed successfully
+SUCS	= [Compilation Sucessfull!]
+
+# ================================ Rules =======================================
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIB) $(MLX_COM)
-	cc $(FLAGS) -o $@ $^ $(MLX_FLAGS)
+$(NAME): $(OBJS) $(LIBFT)
+	echo "[$(CYAN)$(BLINK)Linking...$(RESET)]"
+	$(CC) $(FLAGS) $(LIBFT) -o $@ $^ $(LDLIBS)
+	echo "\n$(ST)          $(GREEN)$(BLINK)$(SUCS)$(RESET)          $(ST)\n"
 
-$(LIB):
-	$(MAKE) -C $(FUNCTION)
+$(OBJS):
+	echo "[$(PURPLE)$(BLINK)$(COMP)$(RESET)] $(YELLOW)sources$(RESET)"
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(FLAGS) -c $(SOURCE) -I $(HEADERS)
+	mv *.o $(OBJS_DIR)
 
-.c.o:
-		$(CC) $(FLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)
+$(LIBFT):
+	echo "[$(PURPLE)$(BLINK)$(COMP)$(RESET)] $(YELLOW)libft$(RESET)"
+	make $(MAKE_FLAG) -C $(LIBFT_DIR)
 
-bonus: $(NAME_BONUS)
+clean:
+	make clean $(MAKE_FLAG) -C $(LIBFT_DIR)
+	$(RM) $(OBJS)
+	$(RM) $(OBJS_DIR)
+	echo "\n\n$(ST)   $(ULINE)$(GREEN)$(CLN)$(RESET)   $(ST)\n\n"
 
-$(NAME_BONUS): $(OBJ_BON) $(LIB) $(MLX_COM)
-	cc $(FLAGS) -o $@ $^ $(MLX_FLAGS)
-
-test: $(NAME_TEST)
-
-$(NAME_TEST): $(OBJ_TEST) $(OBJ) $(LIB)
-	cc $(FLAGS) -o $@ $^
-
-clean: 
-	rm -f $(OBJ) $(OBJ_BON) $(OBJ_TEST)
-	$(MAKE) clean -C $(FUNCTION)
-        
 fclean: clean
-	rm -f $(NAME) $(NAME_BONUS) $(NAME_TEST)
-	$(MAKE) fclean -C $(FUNCTION)
+	make fclean $(MAKE_FLAG) -C $(LIBFT_DIR)
+	$(RM) $(NAME)
+	echo "\n\n$(ST)      $(ULINE)$(GREEN)$(FCLN)$(RESET)      $(ST)\n\n"
 
 re: fclean all
+
+.SILENT:
+
+.PHONY: all clean fclean re

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Include/minishell.h"
 
 void	*ft_freematrix(char **matrix)
 {
@@ -21,4 +21,11 @@ void	*ft_freematrix(char **matrix)
 		free(matrix[i]);
 	free(matrix);
 	return (NULL);
+}
+
+void	ft_free(void *ptr)
+{
+	if (ptr)
+		free(ptr);
+	ptr = NULL;
 }

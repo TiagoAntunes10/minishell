@@ -11,30 +11,59 @@
 /* ************************************************************************** */
 
 #include "../Include/minishell.h"
+#include <string.h>
 
 int	g_exit_code;
 //TODO: Verify if fd 1 is a terminal (that should be the standard)
 //TODO: Check if this is the best way to have access to the envirenment variables
 //TODO: cd must execute in the parent process (it does not work with pipes and ';'), all other cmds execute in child processes
+
+static char	*get_prompt(t_envp *envp)
+{
+	char	*prompt;
+	char	*pwd;
+	char	*tmp;
+
+	pwd = search_envp(envp, "PWD")->value;
+	tmp = ft_calloc(1, 
+			(ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2));
+	if (!tmp)
+		return (NULL);
+	ft_stpcpy(tmp, pwd);
+	prompt = ft_strjoin(tmp, "\n"LOWER_PROMPT);
+	free(tmp);
+	return (prompt);
+}
+
+static void	input_reader(t_envp *envp)
+{
+	t_tree	*tree;
+	char	*input;
+
+	input = readline(get_prompt(envp));
+	while (1)
+	{
+		signal_parent();
+		if (!input)
+			break ;	
+		add_history(input);
+		tree = tokenisation(input, envp);
+		save_root(envp, tree);
+		ft_free(input);
+		execution(tree, -1, envp);
+		clear_tree(tree);
+		input = readline(get_prompt(envp));
+	}
+
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	char	*input;
-	t_tree	*tree;
 	t_envp	*envp_lst;
 
-	input = readline(prompt);
-	(void) argc;
-	(void) argv;
+	((void)argc, (void)argv);
 	envp_lst = arr_to_lst(env);
-	while (input)
-	{
-		add_history(input);
-		signal_parent();
-		tree = tokenisation(input);
-		save_root(envp_lst, tree);
-		free(input);
-		execution(tree, -1, envp_lst);
-		clear_tree(tree);
-		input = readline(prompt);
-	}
+	input_reader(envp_lst);
+	rl_clear_history();
+	return (EXIT_SUCCESS);
 }

@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_pwd.c                                          :+:      :+:    :+:   */
+/*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 20:51:45 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/14 21:06:06 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/12/10 15:21:01 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/12/10 15:31:40 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-int	ft_pwd(t_cmd *cmd, t_envp *envp)
-{
-	char	*cwd;
+extern int g_exit_code;
 
-	((void)envp, (void)cmd);
-	cwd = getcwd(NULL, 4096);
-	if (printf("%s\n", cwd) < 0)
-		return (free(cwd), ft_putstr_fd(RED PWD_NO_PRNT RST, 2), 2);
-	if (cwd)
-		free(cwd);
-	return (0);
+int	ft_exit(t_tree *tree, t_envp *envp)
+{
+	if (envp != NULL)
+		clear_envp(envp);
+	if (tree != NULL)
+		clear_tree(tree);
+	return (g_exit_code);
 }

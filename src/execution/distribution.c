@@ -6,34 +6,47 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/08 22:07:40 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:50:00 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
+extern int	g_exit_code;
+
+static int is_builtin(char *name)
+{
+	char	**bt;
+	int		i;
+
+	bt = (char (*[])){"pwd", "echo", "env", "export",
+		"unset", NULL};
+	i = -1;
+	while (bt[++i])
+		if (name && !ft_strncmp(bt[i], name, ft_strlen(name)))
+			return (1);
+	return (0);
+}
+
 void	cmd_dist(t_tree *tree, t_envp *envp)
 {
 	t_cmd	*cmd;
+	int		i;
+	char	**bt_name;
+	int		(**bt_func)(t_cmd *, t_envp *);
 
 	cmd = (t_cmd *) tree;
-	// if (ft_strncmp(cmd->cmd, "$", ft_strlen(cmd->cmd)))
-	// 	dollar_sub(cmd, 0);
-	// if (ft_strncmp(cmd->cmd, "echo", ft_strlen(cmd->cmd)))
-	// 	ft_echo(cmd);
-	// else if (ft_strncmp(cmd->cmd, "pwd", ft_strlen(cmd->cmd)))
-	// 	ft_pwd(fd);
-	// else if (ft_strncmp(cmd->cmd, "export", ft_strlen(cmd->cmd)))
-	// 	ft_export(cmd);
-	// else if (ft_strncmp(cmd->cmd, "unset", ft_strlen(cmd->cmd)))
-	// 	ft_unset(cmd);
-	// else if (ft_strncmp(cmd->cmd, "env", ft_strlen(cmd->cmd)))
-	// 	ft_env(cmd);
-	// // TODO: The exit function will not be able to free the whole tree
-	// else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)))
-	// 	exit_success((t_tree *) cmd, 0);
-	// else
-	std_cmd(cmd, envp);
+	i = -1;
+	bt_name = (char (*[])){"pwd",
+		"echo", "env", "export", "unset", NULL};
+	bt_func = (int (*[])(t_cmd *, t_envp *)){ft_pwd, ft_echo,
+		ft_env, ft_export, ft_unset, NULL};
+	if (!is_builtin(cmd->cmd))
+		std_cmd(cmd, envp);
+	else
+		while (bt_name[++i])
+			if (cmd->cmd && !ft_strncmp(bt_name[i], cmd->cmd, ft_strlen(cmd->cmd)))
+				bt_func[i](cmd, envp);
 }
 
 static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
@@ -52,21 +65,24 @@ static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 
 void	execution(t_tree *tree, int fd, t_envp *envp)
 {
-	// t_cmd	*cmd;
+	t_cmd	*cmd;
 	int		id;
 	int		status;
 
-	// cmd = NULL;
-	// if (tree->type == CMD)
-	// {
-	// 	cmd = (t_cmd *) tree;
-	// 	if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
-	// 		ft_cd(tree);
-	// }
+	cmd = NULL;
+	if (tree->type == CMD)
+	{
+		cmd = (t_cmd *) tree;
+		if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
+			ft_cd(cmd, envp);
+		else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
+			ft_exit(tree, envp);
+	}
+	signal_child();
 	if (fd == -1)
 	{
 		id = fork();
-		if (id == -1)
+		if (-1 == id)
 			exit(1);
 		else if (id == 0)
 			exec_tree(tree, fd, envp);
@@ -74,4 +90,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 	}
 	else
 		exec_tree(tree, fd, envp);
+	if (WIFEXITED(status))
+		g_exit_code = WEXITSTATUS(status);
+	signal_parent();
 }

@@ -38,3 +38,5 @@ fclean: clean
 	$(MAKE) fclean -C $(FUNCTION)
 
 re: fclean all
+
+.SILENT:

@@ -15,13 +15,17 @@
 //needs to be restored after the waitpid;
 //TODO: heredoc signal handling?
 
+extern	int	g_exit_code;
+
 void	handle_parent(int signum)
 {
+	if (signum != SIGINT)
+		return ;
 	rl_replace_line("", 0);
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
-	g_exit_status = 130;
+	g_exit_code= 130;
 }
 
 void	handle_child(int signum)
@@ -30,6 +34,6 @@ void	handle_child(int signum)
 		ft_putstr_fd("\n", 2);
 	else if (signum == SIGQUIT)
 		ft_putstr_fd("Quit: (core dumped)\n", 2);
-	g_exit_status = 128 + signum;
+	g_exit_code= 128 + signum;
 }
 

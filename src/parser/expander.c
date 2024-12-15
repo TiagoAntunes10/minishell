@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_pwd.c                                          :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 20:51:45 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/14 21:06:06 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/12/11 23:15:07 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-int	ft_pwd(t_cmd *cmd, t_envp *envp)
-{
-	char	*cwd;
+//TODO: check if replacing cmd->cmd instead of opt is the best way to do this
+extern int	g_exit_code;
 
-	((void)envp, (void)cmd);
-	cwd = getcwd(NULL, 4096);
-	if (printf("%s\n", cwd) < 0)
-		return (free(cwd), ft_putstr_fd(RED PWD_NO_PRNT RST, 2), 2);
-	if (cwd)
-		free(cwd);
-	return (0);
+void	expand_variable(t_cmd *cmd, t_envp *envp)
+{
+	char	*value;
+	char	*key;
+
+	key = ft_strdup(cmd->cmd + 1);
+	if (!ft_strncmp(cmd->cmd, "$?", ft_strlen(cmd->cmd)))
+		value = ft_itoa(g_exit_code);
+	else
+		value = ft_strdup(search_envp(envp, key)->value);
+	ft_free(cmd->cmd);
+	cmd->cmd = value;
+	ft_free(key);
 }

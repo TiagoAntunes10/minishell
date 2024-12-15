@@ -67,5 +67,7 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
+	{
 		exit_failure(envp->root, -1, envp);
+	}
 }

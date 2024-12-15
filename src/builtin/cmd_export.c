@@ -54,24 +54,20 @@ static	void	append_node(t_envp *head, t_envp *new_node)
 	temp->next = new_node;
 }
 
-int	export_env(char *var, t_envp *envp)
+static int	node_check(char *key, char *value, t_envp *envp)
 {
 	t_envp	*node;
-	char	*key;
-	char	*value;
-	int		i;
 
-	i = ft_strcspn(var, "=");
-	if (!(key = ft_substr(var, 0, i)))
-		return (-1);
-	if (!(value = ft_substr(var, i + 1, ft_strlen(var + i))))
-		return (free(key), -1);
-	if (!(node = search_envp(envp, key)))
+	node = search_envp(envp, key);
+	if (node == NULL)
 	{
-		if (!(node = ft_calloc(1, sizeof(*envp))))
+		node = ft_calloc(1, sizeof(*envp));
+		if (!node)
 			return (-1);
 		node->key = key;
 		node->value = value;
+		node->next = NULL;
+		node->root = NULL;
 		append_node(envp, node);
 	}
 	else
@@ -79,6 +75,31 @@ int	export_env(char *var, t_envp *envp)
 		free(key);
 		free(node->value);
 		node->value = value;
+	}
+	return (0);
+}
+
+int	export_env(char *var, t_envp *envp)
+{
+	char	*key;
+	char	*value;
+	int		i;
+
+	i = ft_strcspn(var, "=");
+	key = ft_substr(var, 0, i);
+	if (!key)
+		return (-1);
+	value = ft_substr(var, i + 1, ft_strlen(var + i));
+	if (!value)
+	{
+		free(key);
+		return (-1);
+	}
+	if (node_check(key, value, envp) == -1)
+	{
+		free(key);
+		free(value);
+		return (-1);
 	}
 	return (EXIT_SUCCESS);
 }
