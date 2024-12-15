@@ -6,12 +6,13 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/12 22:19:09 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/14 23:09:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/minishell.h"
 
+// TODO: Update SHLEVEL environmental variable
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
