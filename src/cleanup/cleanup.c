@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 18:04:03 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:58:58 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	clear_envp(t_envp *envp)
 			free(envp->key);
 		if (envp->value != NULL)
 			free(envp->value);
+		if (envp->input_arr != NULL)
+			clear_arr(envp->input_arr);
 		envp_cpy = envp->next;
 		free(envp);
 		envp = envp_cpy;

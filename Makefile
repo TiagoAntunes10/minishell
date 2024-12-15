@@ -55,6 +55,12 @@ $(NAME): $(BUILTIN_OBJ) $(CLEANUP_OBJ) $(ENVP_OBJ) $(EXEC_OBJ) $(MEM_OBJ) \
 	$(PARSER_OBJ) $(SIG_OBJ) $(UTILS_OBJ) $(OBJ) $(LIB)
 	cc $(FLAGS) -o $@ $^ $(RD_LINE_FLAG)
 
+$(LIB):
+	$(MAKE) -C $(FUNCTION)
+
+.c.o:
+		$(CC) $(FLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)
+
 clean: 
 	rm -f $(BUILTIN_OBJ) $(CLEANUP_OBJ) $(ENVP_OBJ) $(EXEC_OBJ) $(MEM_OBJ) \
 	$(PARSER_OBJ) $(SIG_OBJ) $(UTILS_OBJ) $(OBJ)
@@ -65,7 +71,5 @@ fclean: clean
 	$(MAKE) fclean -C $(FUNCTION)
 
 re: fclean all
-
-.SILENT:
 
 .PHONY: all clean fclean re

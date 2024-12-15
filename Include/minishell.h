@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/14 22:14:20 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 21:27:35 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	exec_list(t_tree *tree, int fd, t_envp *envp);
 void	exec_redir(t_tree *tree, t_envp *envp);
 void	redir_read(t_redir *redir, t_envp *envp);
 void	redir_write(t_redir *redir, t_envp *envp);
+void	check_dolla(t_cmd *cmd, t_envp *envp);
 void	std_cmd(t_cmd *cmd, t_envp *envp);
 
 #endif

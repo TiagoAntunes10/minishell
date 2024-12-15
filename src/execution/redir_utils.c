@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:12:05 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/11 22:30:44 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:31:28 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	redir_read(t_redir *redir, t_envp *envp)
 	if (redir->file == NULL)
 	{
 		perror("No such file or directory");
-		exit(1);
+		exit(ENOENT);
 	}
 	if (access(redir->file, F_OK | R_OK) == -1)
 		exit_failure(envp->root, NULL, envp);

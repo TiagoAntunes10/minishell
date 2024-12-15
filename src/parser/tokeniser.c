@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/13 18:40:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:58:06 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int	count_opt(char **tokens)
 t_tree	*tokenisation(char *input, t_envp *envp)
 {
 	t_tree	*tree;
-	char	**cmd_lst;
 	char	**arr_cpy;
 
-	cmd_lst = split_input(input, envp);
-	arr_cpy = cmd_lst;
+	envp->input_arr = split_input(input, envp);
+	arr_cpy = envp->input_arr;
 	tree = NULL;
 	while (*arr_cpy != NULL)
 	{
@@ -55,6 +54,6 @@ t_tree	*tokenisation(char *input, t_envp *envp)
 		else
 			tree = cmd_node(tree, &arr_cpy, envp);
 	}
-	clear_arr(cmd_lst);
+	clear_arr(envp->input_arr);
 	return (tree);
 }

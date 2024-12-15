@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 17:54:14 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:40:58 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,18 @@ static char	*find_path(char *cmd, t_envp *envp)
 	char	*cmd_path;
 	char	**envp_path;
 
-	envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
 	if (access(cmd, F_OK) == -1)
+	{
+		envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
 		cmd_path = search_path(cmd, envp_path, envp);
+	}
 	else
 	{
 		if (access(cmd, X_OK) == -1)
 			exit_failure(envp->root, NULL, envp);
 		cmd_path = ft_substr(cmd, 0, ft_strlen(cmd));
+		if (cmd_path == NULL)
+			exit_failure(envp->root, NULL, envp);
 	}
 	return (cmd_path);
 }

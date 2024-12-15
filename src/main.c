@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 18:08:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:36:02 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_prompt(t_envp *envp)
 			(ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2));
 	if (!tmp)
 		return (NULL);
-	ft_stpcpy(tmp, pwd);
+	ft_strlcpy(tmp, pwd, ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2);
 	prompt = ft_strjoin(tmp, "\n"LOWER_PROMPT);
 	free(tmp);
 	return (prompt);
@@ -50,7 +50,7 @@ static void	input_reader(t_envp *envp)
 		add_history(input);
 		tree = tokenisation(input, envp);
 		save_root(envp, tree);
-		ft_free(input);
+		free(input);
 		execution(tree, -1, envp);
 		clear_tree(tree);
 		input = readline(get_prompt(envp));
