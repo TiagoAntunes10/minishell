@@ -39,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.SILENT: all
+.SILENT:

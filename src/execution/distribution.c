@@ -43,9 +43,10 @@ void	cmd_dist(t_tree *tree, t_envp *envp)
 		ft_env, ft_export, ft_unset, NULL};
 	if (!is_builtin(cmd->cmd))
 		std_cmd(cmd, envp);
-	while (bt_name[++i])
-		if (cmd->cmd && !ft_strncmp(bt_name[i], cmd->cmd, ft_strlen(cmd->cmd)))
-			bt_func[i](cmd, envp);
+	else
+		while (bt_name[++i])
+			if (cmd->cmd && !ft_strncmp(bt_name[i], cmd->cmd, ft_strlen(cmd->cmd)))
+				bt_func[i](cmd, envp);
 }
 
 static void	exec_tree(t_tree *tree, int fd, t_envp *envp)

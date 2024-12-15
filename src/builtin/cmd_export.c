@@ -59,13 +59,15 @@ static int	node_check(char *key, char *value, t_envp *envp)
 	t_envp	*node;
 
 	node = search_envp(envp, key);
-	if (!node)
+	if (node == NULL)
 	{
 		node = ft_calloc(1, sizeof(*envp));
 		if (!node)
 			return (-1);
 		node->key = key;
 		node->value = value;
+		node->next = NULL;
+		node->root = NULL;
 		append_node(envp, node);
 	}
 	else
