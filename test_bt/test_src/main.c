@@ -1,4 +1,5 @@
 #include "../includes/macro.h"
+#include <readline/readline.h>
 
 char	*cat_path(char *tpath,char *path, char *name)
 {
@@ -24,21 +25,26 @@ void err(char *str)
 		(void)!write(2, str++, 1);
 }
 
-int is_builtin(char *str)
+int is_builtin(char *name)
 {
-	char **builtins = (char *[]){"exit", "cd", "pwd", "echo", "env", "export", "unset",  NULL};
-	int i = -1;
-	while (builtins[++i])
-		if (str && !ft_strcmp(builtins[i], str))
+	char	**bt;
+	int		i;
+
+	bt = (char (*[])){"exit", "cd", "pwd", "echo", "env", "export",
+		"unset", NULL};
+	i = -1;
+	while (bt[++i])
+		if (name && !ft_strncmp(bt[i], name, ft_strlen(name)))
 			return (1);
 	return (0);
 }
 
-int b_exit(t_cmd *cmd, t_envp *envp)
+int ft_exit(t_cmd *cmd, t_envp *envp)
 {
 	int ext = 0;
 	if (cmd->opt[0] && !cmd->opt[1])
 	{
+		rl_clear_history();
 		clear_envp(envp);
 		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);
@@ -48,6 +54,7 @@ int b_exit(t_cmd *cmd, t_envp *envp)
 	else if (cmd->opt[1])
 	{
 		ext = ft_atoi(cmd->opt[1]);
+		rl_clear_history();
 		clear_envp(envp);
 		ft_free(&cmd->cmd);
 		ft_freematrix(cmd->opt);
@@ -59,12 +66,18 @@ int b_exit(t_cmd *cmd, t_envp *envp)
 
 int builtin(t_cmd *cmd, t_envp *envp)
 {
-	char **builtins = (char *[]){"exit", "cd", "pwd", "echo", "env", "export", "unset",  NULL};
-	t_builtin_fn bt_fn = {b_exit, ft_cd, ft_pwd, ft_echo, ft_env, ft_export, ft_unset, NULL};
-	int i = -1;
-	while (builtins[++i])
-		if (cmd->cmd && !ft_strcmp(builtins[i], cmd->cmd))
-			return (bt_fn[i](cmd, envp));
+	int		i;
+	int		(**bt_func)(t_cmd *, t_envp *);
+	char	**bt_name;
+
+	bt_name = (char (*[])){"exit", "cd", "pwd",
+		"echo", "env", "export", "unset", NULL};
+	bt_func = (int (*[])(t_cmd *, t_envp *)){ft_exit, ft_cd, ft_pwd, ft_echo,
+		ft_env, ft_export, ft_unset, NULL};
+	i = -1;
+	while (bt_name[++i])
+		if (cmd->cmd && !ft_strcmp(bt_name[i], cmd->cmd))
+			return (bt_func[i](cmd, envp));
 	return (0);
 }
 
@@ -108,6 +121,7 @@ int exec(t_cmd *cmd, t_envp *envp, char **ev)
 	{
 		execve(path, cmd->opt, env);
 		ft_free(&path);
+		ft_freematrix(env);
 		err("ERROR\n");
 		exit(1);
 	}

@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freematrix.c                                    :+:      :+:    :+:   */
+/*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 17:24:03 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/10/30 17:25:25 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/12/10 15:21:01 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/12/10 15:31:40 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-void	*ft_freematrix(char **matrix)
-{
-	int i;
+extern int g_exit_code;
 
-	i = -1;
-	while (matrix[++i])
-		free(matrix[i]);
-	free(matrix);
-	return (NULL);
-}
-
-void	ft_free(void *ptr)
+int	ft_exit(t_tree *tree, t_envp *envp)
 {
-	if (ptr)
-		free(ptr);
-	ptr = NULL;
+	if (envp != NULL)
+		clear_envp(envp);
+	if (tree != NULL)
+		clear_tree(tree);
+	return (g_exit_code);
 }

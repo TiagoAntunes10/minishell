@@ -6,11 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/13 18:35:33 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:04:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+
+extern int	g_exit_code;
 
 void	clear_envp(t_envp *envp)
 {
@@ -66,6 +68,11 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 		while (i < 2)
 			close(fd[i]);
 	}
-	perror(strerror(errno));
-	exit(errno);
+	if (errno == 0)
+		exit(g_exit_code);
+	else
+	{
+		perror(strerror(errno));
+		exit(errno);
+	}
 }

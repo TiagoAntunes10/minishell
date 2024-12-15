@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/14 23:02:21 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:10:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 			exit_success((t_tree *) cmd, -1, envp);
 		else
 		{
+			signal_child();
 			if (fd == -1)
 			{
 				id = fork();
@@ -77,5 +78,8 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 			else
 				exec_tree(tree, fd, envp);
 		}
+	if (WIFEXITED(status))
+		g_exit_code = WEXITSTATUS(status);
+	signal_parent();
 	}
 }

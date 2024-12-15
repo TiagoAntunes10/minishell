@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freematrix.c                                    :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 17:24:03 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/10/30 17:25:25 by rapcampo         ###   ########.fr       */
+/*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/12/11 23:15:07 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-void	*ft_freematrix(char **matrix)
-{
-	int i;
+//TODO: check if replacing cmd->cmd instead of opt is the best way to do this
+extern int	g_exit_code;
 
-	i = -1;
-	while (matrix[++i])
-		free(matrix[i]);
-	free(matrix);
-	return (NULL);
-}
-
-void	ft_free(void *ptr)
+void	expand_variable(t_cmd *cmd, t_envp *envp)
 {
-	if (ptr)
-		free(ptr);
-	ptr = NULL;
+	char	*value;
+	char	*key;
+
+	key = ft_strdup(cmd->cmd + 1);
+	if (!ft_strncmp(cmd->cmd, "$?", ft_strlen(cmd->cmd)))
+		value = ft_itoa(g_exit_code);
+	else
+		value = ft_strdup(search_envp(envp, key)->value);
+	ft_free(cmd->cmd);
+	cmd->cmd = value;
+	ft_free(key);
 }

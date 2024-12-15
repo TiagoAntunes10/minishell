@@ -49,23 +49,11 @@ SIG_OBJ = $(SIG_SOURCES:.c=.o)
 UTILS_OBJ = $(UTILS_SOURCES:.c=.o)
 OBJ = $(SOURCES:.c=.o)
 
-
 all: $(NAME)
 
 $(NAME): $(BUILTIN_OBJ) $(CLEANUP_OBJ) $(ENVP_OBJ) $(EXEC_OBJ) $(MEM_OBJ) \
 	$(PARSER_OBJ) $(SIG_OBJ) $(UTILS_OBJ) $(OBJ) $(LIB)
 	cc $(FLAGS) -o $@ $^ $(RD_LINE_FLAG)
-
-$(LIB):
-	$(MAKE) -C $(FUNCTION)
-
-.c.o:
-		$(CC) $(FLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)
-
-# bonus: $(NAME_BONUS)
-
-# $(NAME_BONUS): $(OBJ_BON) $(LIB) $(MLX_COM)
-# 	cc $(FLAGS) -o $@ $^ $(MLX_FLAGS)
 
 clean: 
 	rm -f $(BUILTIN_OBJ) $(CLEANUP_OBJ) $(ENVP_OBJ) $(EXEC_OBJ) $(MEM_OBJ) \
@@ -77,3 +65,7 @@ fclean: clean
 	$(MAKE) fclean -C $(FUNCTION)
 
 re: fclean all
+
+.SILENT:
+
+.PHONY: all clean fclean re
