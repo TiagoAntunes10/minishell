@@ -20,5 +20,5 @@ int	ft_exit(t_tree *tree, t_envp *envp)
 		clear_envp(envp);
 	if (tree != NULL)
 		clear_tree(tree);
-	return (g_exit_code);
+	return (g_exit_code = 0);
 }

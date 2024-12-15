@@ -113,7 +113,6 @@ int	ft_export(t_cmd *cmd, t_envp *envp)
 		export_print(envp);
 	while (cmd->opt[++i])
 		if ((export_env(cmd->opt[i], envp)) == -1)
-			return (ft_putstr_fd("export: memory allocation failure", 2),
-				STDERR_FILENO);
+			return (ft_putstr_fd(RED MEM_ALLOC RST, STDERR_FILENO), 126);
 	return (EXIT_SUCCESS);
 }

@@ -63,9 +63,9 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 		if (ft_changedir(cmd->opt[1], envp) == -1)
 		{
 			if (errno == EACCES)
-				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 2);
+				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 126);
 			else
-				return (ft_putstr_fd(RED CD_GEN_ERR RST, STDERR_FILENO), 127);
+				return (ft_putstr_fd(RED CD_GEN_ERR RST, STDERR_FILENO), 1);
 		}
 	}
 	else
