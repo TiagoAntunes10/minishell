@@ -13,6 +13,17 @@
 #ifndef MACRO_H 
 # define MACRO_H 
 
+//Linux key exit codes are as folows
+//0: Success
+//1: General error
+//2: Missuse of builtins
+//126: Command cannot execute: no perms or insuficient memory etc
+//127: Command not found
+//128: Invalid exit argument
+//128 + signum: fatal signal, ex 137 = SIGKILL + 128
+//130: control C termination SIGINT
+//255: exit status out of range (valid is 0 to 254)
+
 //colour prints
 
 # define RST "\e[0m"
@@ -40,8 +51,9 @@
 # define PWD_ERR_ARG "pwd: Too many arguments\n"
 # define PWD_NO_PRNT "pwd: could not print current directory\n"
 
-//ECHO ERRORS
+//EXPORT ERRORS
 
+# define MEM_ALLOC "export: memory allocation failure\n"
 
 //Prompt
 
