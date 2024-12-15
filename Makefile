@@ -15,11 +15,6 @@
 NAME	= minishell
 LIBFT	= $(LIBFT_DIR)/libftprintf.a
 DEPFLG	= -MP -MD
-#FILES	= cmd_cd cmd_echo cmd_env cmd_exit cmd_export cmd_pwd cmd_unset main \
-		  cleanup tree_cleanup envp_search envp_split envp_utils distribution \
-		  exec_utils pipe_utils redir_utils std_cmd safe_alloc expander \
-		  node_create node_org tokeniser tokeniser_utils handlers \
-		  signal_sorting ft_freematrix ft_stpcpy ft_strcspn tree_utils
 OBJS	= objs/*.o
 
 # ============================ Folder Structures ===============================
@@ -54,35 +49,43 @@ CYAN 	= \e[1;36m
 WHITE 	= \e[1;37m
 RESET	= \e[0m
 
+# ================================ Macros ======================================
+
+ST		= *************************
+COMP	= Compiling...
+CLN		= Minishell Objects have been removed sucessfully
+FCLN	= Minishell programs removed successfully
+SUCS	= [Compilation Sucessfull!]
+
 # ================================ Rules =======================================
-#vpath %.c $(SOURCE) $(addprefix $(SOURCE)/, $(SOURCE_DIR))
+
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	echo "[$(CYAN)$(BLINK)Linking...$(RESET)]"
 	$(CC) $(FLAGS) $(LIBFT) -o $@ $^ $(LDLIBS)
-	echo "\n*************************$(GREEN)$(BLINK)    [Compilation Sucessfull!]    $(RESET)*************************\n"
+	echo "\n$(ST)          $(GREEN)$(BLINK)$(SUCS)$(RESET)          $(ST)\n"
 
 $(OBJS):
-	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)sources$(RESET)"
+	echo "[$(PURPLE)$(BLINK)$(COMP)$(RESET)] $(YELLOW)sources$(RESET)"
 	mkdir -p $(OBJS_DIR)
 	$(CC) $(FLAGS) -c $(SOURCE) -I $(HEADERS)
 	mv *.o $(OBJS_DIR)
 
 $(LIBFT):
-	echo "[$(PURPLE)$(BLINK)Compiling...$(RESET)] $(YELLOW)libft$(RESET)"
+	echo "[$(PURPLE)$(BLINK)$(COMP)$(RESET)] $(YELLOW)libft$(RESET)"
 	make $(MAKE_FLAG) -C $(LIBFT_DIR)
 
 clean:
 	make clean $(MAKE_FLAG) -C $(LIBFT_DIR)
 	$(RM) $(OBJS)
 	$(RM) $(OBJS_DIR)
-	echo "\n\n++++++++++++++    $(ULINE)$(GREEN)Minishell Objects have been removed sucessfully$(RESET)    +++++++++++++++\n\n"
+	echo "\n\n$(ST)   $(ULINE)$(GREEN)$(CLN)$(RESET)   $(ST)\n\n"
 
 fclean: clean
 	make fclean $(MAKE_FLAG) -C $(LIBFT_DIR)
 	$(RM) $(NAME)
-	echo "\n\n++++++++++++++    $(ULINE)$(GREEN)Minishell Static library and programs removed successfully$(RESET)    +++++++++++++++\n\n"
+	echo "\n\n$(ST)      $(ULINE)$(GREEN)$(FCLN)$(RESET)      $(ST)\n\n"
 
 re: fclean all
 
