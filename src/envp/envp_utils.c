@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 15:57:26 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/04 22:59:11 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:57:16 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static t_envp	*create_lst(char *envp)
 	ft_strlcat(envp_lst->value, key_value[1], size);
 	envp_lst->next = NULL;
 	envp_lst->root = NULL;
+	envp_lst->input_arr = NULL;
 	clear_arr(key_value);
 	return (envp_lst);
 }
@@ -51,6 +52,7 @@ static void	add_envp(char *envp, t_envp *envp_lst)
 	envp_lst->next = envp_node;
 	envp_node->next = NULL;
 	envp_node->root = NULL;
+	envp_node->input_arr = NULL;
 	clear_arr(key_value);
 }
 
@@ -95,7 +97,7 @@ char	**lst_to_arr(t_envp *envp)
 		if (arr[i] == NULL)
 		{
 			clear_arr(arr);
-			exit_failure(NULL, -1, envp_cpy);
+			exit_failure(NULL, NULL, envp_cpy);
 		}
 		ft_strlcat(arr[i], envp->key, ft_strlen(envp->key) + 1);
 		ft_strlcat(arr[i], "=", ft_strlen(envp->key) + 2);

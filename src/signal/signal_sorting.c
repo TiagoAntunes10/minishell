@@ -6,11 +6,11 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 19:03:38 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/15 17:46:02 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/16 20:53:04 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Include/minishell.h"
 
 void	signal_parent(void)
 {

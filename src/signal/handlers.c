@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:27:18 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/08 11:31:45 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:03:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //needs to be restored after the waitpid;
 //TODO: heredoc signal handling?
 
-extern	int	g_exit_code;
+extern int	g_exit_code;
 
 void	handle_parent(int signum)
 {

@@ -6,13 +6,12 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/28 21:43:55 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:58:06 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-// TODO: Handle parenthesis
 int	count_opt(char **tokens)
 {
 	int		count;
@@ -31,16 +30,13 @@ int	count_opt(char **tokens)
 	return (count);
 }
 
-// TODO: Reduce number of lines
-// TODO: Check if the flags for the open fuction are passed correctly (var type problem???)
 t_tree	*tokenisation(char *input, t_envp *envp)
 {
 	t_tree	*tree;
-	char	**cmd_lst;
 	char	**arr_cpy;
 
-	cmd_lst = split_input(input);
-	arr_cpy = cmd_lst;
+	envp->input_arr = split_input(input, envp);
+	arr_cpy = envp->input_arr;
 	tree = NULL;
 	while (*arr_cpy != NULL)
 	{
@@ -58,6 +54,6 @@ t_tree	*tokenisation(char *input, t_envp *envp)
 		else
 			tree = cmd_node(tree, &arr_cpy, envp);
 	}
-	clear_arr(cmd_lst);
+	clear_arr(envp->input_arr);
 	return (tree);
 }

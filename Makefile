@@ -1,94 +1,75 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/07 09:38:27 by rapcampo          #+#    #+#              #
-#    Updated: 2024/08/17 16:07:49 by rapcampo         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+BUILTIN = ./src/builtin/
+CLEANUP = ./src/cleanup/
+ENVP = ./src/envp/
+EXEC = ./src/execution/
+MEM = ./src/mem_alloc/
+PARSER = ./src/parser/
+SIG = ./src/signal/
+UTILS = ./src/utils/
+INCLUDE = ./Include
+FUNCTION = ./libft
+PRE = ./src/
 
-# ================================= Files ======================================
+BUILTIN_SOURCE = cmd_cd.c cmd_echo.c cmd_env.c cmd_export.c cmd_pwd.c \
+				 cmd_unset.c
+CLEANUP_SOURCE = cleanup.c tree_cleanup.c
+ENVP_SOURCE = envp_search.c envp_split.c envp_utils.c
+EXEC_SOURCE = distribution.c exec_utils.c pipe_utils.c redir_utils.c \
+			  std_cmd.c
+MEM_SOURCE = safe_alloc.c
+PARSER_SOURCE = node_create.c node_org.c tokeniser.c tokeniser_utils.c
+SIG_SOURCE = handlers.c signal_sorting.c
+UTILS_SOURCE = tree_utils.c ft_strcspn.c
+SOURCE = main.c
 
-NAME	= minishell
-LIBFT	= $(LIBFT_DIR)/libftprintf.a
-DEPFLG	= -MP -MD
-OBJS	= objs/*.o
+BUILTIN_SOURCES = ${addprefix $(BUILTIN), $(BUILTIN_SOURCE)}
+CLEANUP_SOURCES = ${addprefix $(CLEANUP), $(CLEANUP_SOURCE)}
+ENVP_SOURCES = ${addprefix $(ENVP), $(ENVP_SOURCE)}
+EXEC_SOURCES = ${addprefix $(EXEC), $(EXEC_SOURCE)}
+MEM_SOURCES = ${addprefix $(MEM), $(MEM_SOURCE)}
+PARSER_SOURCES = ${addprefix $(PARSER), $(PARSER_SOURCE)}
+SIG_SOURCES = ${addprefix $(SIG), $(SIG_SOURCE)}
+UTILS_SOURCES = ${addprefix $(UTILS), $(UTILS_SOURCE)}
+SOURCES = ${addprefix $(PRE), $(SOURCE)}
 
-# ============================ Folder Structures ===============================
+NAME = minishell
+LIB = $(FUNCTION)/libftprintf.a
 
-HEADERS		= Include
-SOURCE		= $(foreach dir, $(SOURCE_DIR), $(wildcard $(dir)/*.c)) 
-SOURCE_DIR	= src src/builtin src/cleanup src/envp src/execution src/mem_alloc \
-			  src/parser src/signal src/utils
-LIBFT_DIR	= libft
-OBJS_DIR	= objs
+CC = cc
+FLAGS = -Wall -Wextra -Werror -g
+RD_LINE_FLAG = -lreadline
 
-# ============================ Commands & Flags ===============================
-
-CC			= cc
-RM			= rm -rf
-AR			= ar -rcs
-FLAGS		= -g -O3 -fsanitize=thread #$(DEPFLG)
-MAKE_FLAG	= --no-print-directory
-LDLIBS		= -lreadline 
-
-# =========================== Ansi Escape Codes ================================
-
-ULINE	= \e[4m
-BLINK	= \e[5m
-BLACK 	= \e[1;30m
-RED 	= \e[1;31m
-GREEN 	= \e[1;32m
-YELLOW 	= \e[1;33m
-BLUE	= \e[1;34m
-PURPLE 	= \e[1;35m
-CYAN 	= \e[1;36m
-WHITE 	= \e[1;37m
-RESET	= \e[0m
-
-# ================================ Macros ======================================
-
-ST		= *************************
-COMP	= Compiling...
-CLN		= Minishell Objects have been removed sucessfully
-FCLN	= Minishell programs removed successfully
-SUCS	= [Compilation Sucessfull!]
-
-# ================================ Rules =======================================
+BUILTIN_OBJ = $(BUILTIN_SOURCES:.c=.o)
+CLEANUP_OBJ = $(CLEANUP_SOURCES:.c=.o)
+ENVP_OBJ = $(ENVP_SOURCES:.c=.o)
+EXEC_OBJ = $(EXEC_SOURCES:.c=.o)
+MEM_OBJ = $(MEM_SOURCES:.c=.o)
+PARSER_OBJ = $(PARSER_SOURCES:.c=.o)
+SIG_OBJ = $(SIG_SOURCES:.c=.o)
+UTILS_OBJ = $(UTILS_SOURCES:.c=.o)
+OBJ = $(SOURCES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	echo "[$(CYAN)$(BLINK)Linking...$(RESET)]"
-	$(CC) $(FLAGS) $(LIBFT) -o $@ $^ $(LDLIBS)
-	echo "\n$(ST)          $(GREEN)$(BLINK)$(SUCS)$(RESET)          $(ST)\n"
+$(NAME): $(BUILTIN_OBJ) $(CLEANUP_OBJ) $(ENVP_OBJ) $(EXEC_OBJ) $(MEM_OBJ) \
+	$(PARSER_OBJ) $(SIG_OBJ) $(UTILS_OBJ) $(OBJ) $(LIB)
+	cc $(FLAGS) -o $@ $^ $(RD_LINE_FLAG)
 
-$(OBJS):
-	echo "[$(PURPLE)$(BLINK)$(COMP)$(RESET)] $(YELLOW)sources$(RESET)"
-	mkdir -p $(OBJS_DIR)
-	$(CC) $(FLAGS) -c $(SOURCE) -I $(HEADERS)
-	mv *.o $(OBJS_DIR)
+$(LIB):
+	$(MAKE) -C $(FUNCTION)
 
-$(LIBFT):
-	echo "[$(PURPLE)$(BLINK)$(COMP)$(RESET)] $(YELLOW)libft$(RESET)"
-	make $(MAKE_FLAG) -C $(LIBFT_DIR)
+.c.o:
+		$(CC) $(FLAGS) -I $(INCLUDE) -c $< -o $(<:.c=.o)
 
-clean:
-	make clean $(MAKE_FLAG) -C $(LIBFT_DIR)
-	$(RM) $(OBJS)
-	$(RM) $(OBJS_DIR)
-	echo "\n\n$(ST)   $(ULINE)$(GREEN)$(CLN)$(RESET)   $(ST)\n\n"
-
+clean: 
+	rm -f $(BUILTIN_OBJ) $(CLEANUP_OBJ) $(ENVP_OBJ) $(EXEC_OBJ) $(MEM_OBJ) \
+	$(PARSER_OBJ) $(SIG_OBJ) $(UTILS_OBJ) $(OBJ)
+	$(MAKE) clean -C $(FUNCTION)
+        
 fclean: clean
-	make fclean $(MAKE_FLAG) -C $(LIBFT_DIR)
-	$(RM) $(NAME)
-	echo "\n\n$(ST)      $(ULINE)$(GREEN)$(FCLN)$(RESET)      $(ST)\n\n"
+	rm -f $(NAME)
+	$(MAKE) fclean -C $(FUNCTION)
 
 re: fclean all
-
-.SILENT:
 
 .PHONY: all clean fclean re

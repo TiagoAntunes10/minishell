@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 22:48:09 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/04 22:51:25 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:02:58 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**envp_split(char *str, t_envp *envp)
 	if (key_value[0] == NULL)
 	{
 		free(key_value);
-		exit_failure(NULL, -1, envp);
+		exit_failure(NULL, NULL, envp);
 	}
 	ft_strlcat(key_value[0], str, size + 1);
 	str += size + 1;
@@ -45,7 +45,7 @@ char	**envp_split(char *str, t_envp *envp)
 	if (key_value[1] == NULL)
 	{
 		clear_arr(key_value);
-		exit_failure(NULL, -1, envp);
+		exit_failure(NULL, NULL, envp);
 	}
 	ft_strlcat(key_value[1], str, size + 1);
 	key_value[2] = NULL;
