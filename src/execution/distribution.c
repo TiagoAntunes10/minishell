@@ -79,9 +79,9 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 		else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
 			ft_exit(tree, envp);
 	}
-	signal_child();
 	if (fd == -1)
 	{
+		signal_child();
 		id = fork();
 		if (-1 == id)
 			exit(1);
@@ -90,8 +90,10 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 		wait(&status);
 	}
 	else
+	{
+		signal_parent();
 		exec_tree(tree, fd, envp);
-	signal_parent();
+	}
 	if (WIFEXITED(status))
 		g_exit_code = WEXITSTATUS(status);
 }
