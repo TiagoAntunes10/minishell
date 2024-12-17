@@ -20,7 +20,7 @@
 void	signal_parent(void);
 void	signal_child(void);
 void	signal_ignore(void);
-//void	signal_heredoc(void);
+void	signal_heredoc(void);
 
 //signal handlers
 

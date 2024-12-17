@@ -87,8 +87,6 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 	signal_parent();
 }
 
-//note probably broken regular programs
-
 void	execution(t_tree *tree, int fd, t_envp *envp)
 {
 	t_cmd	*cmd;

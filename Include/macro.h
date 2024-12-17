@@ -54,6 +54,7 @@
 //EXPORT ERRORS
 
 # define MEM_ALLOC "export: memory allocation failure\n"
+# define INVAL_ID "is an invalid identifier\n"
 
 //PROMPT
 
