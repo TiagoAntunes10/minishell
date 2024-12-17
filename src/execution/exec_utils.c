@@ -38,13 +38,13 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 {
 	char	*line;
 	
-	line = get_next_line(0);
+	line = readline("heredoc>");
 	while (ft_strncmp(delim, line, ft_strlen(line) - 1) != 0)
 	{
 		if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
 			exit_failure(envp->root, inp_pipe, envp);
 		free(line);
-		line = get_next_line(0);
+		line = readline(">");
 	}
 	free(line);
 }
