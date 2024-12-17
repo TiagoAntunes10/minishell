@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/12 22:10:00 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/17 22:48:35 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_tree	*delim_node(t_tree *tree, char ***input, t_envp *envp)
 	delim = (t_delim *) safe_alloc(sizeof(*delim), 1, tree, envp);
 	delim->type = DELIM;
 	delim->delim = malloc(ft_strlen(**input) + 1);
+	bzero(delim->delim, ft_strlen(**input) + 1);
 	if (delim->delim == NULL)
 	{
 		free(delim);

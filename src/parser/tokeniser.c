@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 20:58:06 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:59:05 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ t_tree	*tokenisation(char *input, t_envp *envp)
 		else
 			tree = cmd_node(tree, &arr_cpy, envp);
 	}
-	clear_arr(envp->input_arr);
+	envp->input_arr = clear_arr(envp->input_arr);
 	return (tree);
 }
