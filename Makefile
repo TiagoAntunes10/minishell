@@ -36,7 +36,7 @@ NAME = minishell
 LIB = $(FUNCTION)/libftprintf.a
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 RD_LINE_FLAG = -lreadline
 
 BUILTIN_OBJ = $(BUILTIN_SOURCES:.c=.o)

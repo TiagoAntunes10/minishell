@@ -59,7 +59,7 @@ static int	node_check(char *key, char *value, t_envp *envp)
 	t_envp	*node;
 
 	node = search_envp(envp, key);
-	if (node == NULL)
+	if (!node)
 	{
 		node = ft_calloc(1, sizeof(*envp));
 		if (!node)
@@ -68,6 +68,7 @@ static int	node_check(char *key, char *value, t_envp *envp)
 		node->value = value;
 		node->next = NULL;
 		node->root = NULL;
+		node->input_arr = NULL;
 		append_node(envp, node);
 	}
 	else
@@ -89,12 +90,14 @@ int	export_env(char *var, t_envp *envp)
 	key = ft_substr(var, 0, i);
 	if (!key)
 		return (-1);
+	printf("key: %s\n", key);
 	value = ft_substr(var, i + 1, ft_strlen(var + i));
 	if (!value)
 	{
 		free(key);
 		return (-1);
 	}
+	printf("value: %s\n", value);
 	if (node_check(key, value, envp) == -1)
 	{
 		free(key);
@@ -112,7 +115,9 @@ int	ft_export(t_cmd *cmd, t_envp *envp)
 	if (!cmd->opt[1])
 		export_print(envp);
 	while (cmd->opt[++i])
+	{
 		if ((export_env(cmd->opt[i], envp)) == -1)
 			return (ft_putstr_fd(RED MEM_ALLOC RST, STDERR_FILENO), 126);
+	}
 	return (EXIT_SUCCESS);
 }

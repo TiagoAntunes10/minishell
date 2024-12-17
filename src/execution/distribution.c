@@ -27,24 +27,25 @@ static unsigned int	lencmp(char *s1, char *s2)
 		return (len2);
 }
 
-static void	cmd_dist(t_tree *tree, t_envp *envp)
+static int	cmd_dist(t_tree *tree, t_envp *envp)
 {
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *) tree;
 	// check_dolla(cmd, envp);
 	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
-		ft_echo(cmd, envp);
+		return (g_exit_code = ft_echo(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)
-		ft_pwd();
+		return (g_exit_code = ft_pwd(), 1);
 	else if (ft_strncmp(cmd->cmd, "export", lencmp(cmd->cmd, "export")) == 0)
-		ft_export(cmd, envp);
+		return (g_exit_code = ft_export(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "unset", lencmp(cmd->cmd, "unset")) == 0)
-		ft_unset(cmd, envp);
+		return (g_exit_code = ft_unset(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "env", lencmp(cmd->cmd, "env")) == 0)
-		ft_env(cmd, envp);
-	else
-		std_cmd(cmd, envp);
+		return (g_exit_code = ft_env(cmd, envp), 1);
+	else if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
+		return (g_exit_code = ft_cd(cmd, envp), 1);
+	return (0);
 }
 
 static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
@@ -58,7 +59,7 @@ static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 	else if (tree->type == REDIR)
 		exec_redir(tree, envp);
 	else if (tree->type == CMD)
-		cmd_dist(tree, envp);
+		std_cmd((t_cmd *)tree, envp);
 }
 
 static void	child_exec(t_tree *tree, int fd, t_envp *envp)
@@ -86,16 +87,23 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 	signal_parent();
 }
 
+//note probably broken regular programs
+
 void	execution(t_tree *tree, int fd, t_envp *envp)
 {
 	t_cmd	*cmd;
 
 	cmd = NULL;
+	if (tree == NULL)
+	{
+		clear_tree(tree);
+		return ;
+	}
 	if (tree->type == CMD)
 	{
 		cmd = (t_cmd *) tree;
-		if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
-			g_exit_code = ft_cd(cmd, envp);
+		if (cmd_dist(tree, envp) == 1)
+			return ;
 		else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
 			exit_success((t_tree *) cmd, -1, envp);
 		else

@@ -43,7 +43,6 @@ static void	input_reader(t_envp *envp)
 	input = readline(get_prompt(envp));
 	while (1)
 	{
-		signal_parent();
 		if (!input)
 			break ;	
 		add_history(input);
@@ -54,7 +53,7 @@ static void	input_reader(t_envp *envp)
 		clear_tree(tree);
 		input = readline(get_prompt(envp));
 	}
-
+	rl_clear_history();
 }
 
 int	main(int argc, char **argv, char **env)
@@ -63,8 +62,8 @@ int	main(int argc, char **argv, char **env)
 
 	((void)argc, (void)argv);
 	envp_lst = arr_to_lst(env);
+	signal_parent();
 	input_reader(envp_lst);
-	rl_clear_history();
 	clear_envp(envp_lst);
 	return (EXIT_SUCCESS);
 }
