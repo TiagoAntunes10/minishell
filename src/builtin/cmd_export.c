@@ -90,14 +90,12 @@ int	export_env(char *var, t_envp *envp)
 	key = ft_substr(var, 0, i);
 	if (!key)
 		return (-1);
-	printf("key: %s\n", key);
 	value = ft_substr(var, i + 1, ft_strlen(var + i));
 	if (!value)
 	{
 		free(key);
 		return (-1);
 	}
-	printf("value: %s\n", value);
 	if (node_check(key, value, envp) == -1)
 	{
 		free(key);

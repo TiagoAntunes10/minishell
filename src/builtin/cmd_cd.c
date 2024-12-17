@@ -53,7 +53,8 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 		return (ft_putstr_fd(RED CD_ERR_ARG RST, STDERR_FILENO), 2);
 	if (!cmd->opt[1] || !ft_strncmp(cmd->opt[1], "~", 1))
 	{
-		if (ft_changedir(search_envp(envp, "HOME")->value, envp) == -1)
+		if (!search_envp(envp, "HOME")
+			|| ft_changedir(search_envp(envp, "HOME")->value, envp) == -1)
 			return (ft_putstr_fd(RED CD_GEN_ERR RST, STDERR_FILENO), 127);
 		return (EXIT_SUCCESS);
 	}

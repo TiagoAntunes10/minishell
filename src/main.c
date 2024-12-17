@@ -18,13 +18,15 @@ int	g_exit_code;
 //TODO: Check if this is the best way to have access to the envirenment variables
 //TODO: cd must execute in the parent process (it does not work with pipes and ';'), all other cmds execute in child processes
 
-static char	*get_prompt(t_envp *envp)
+static char	*get_prompt(void)
 {
 	char	*prompt;
 	char	*pwd;
 	char	*tmp;
 
-	pwd = search_envp(envp, "PWD")->value;
+	pwd = getcwd(NULL, 4096);
+	if (!pwd)
+		return (LOWER_PROMPT);
 	tmp = ft_calloc(1, 
 			(ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2));
 	if (!tmp)
@@ -32,6 +34,7 @@ static char	*get_prompt(t_envp *envp)
 	ft_strlcpy(tmp, pwd, ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2);
 	prompt = ft_strjoin(tmp, "\n"LOWER_PROMPT);
 	free(tmp);
+	free(pwd);
 	return (prompt);
 }
 
@@ -40,20 +43,19 @@ static void	input_reader(t_envp *envp)
 	t_tree	*tree;
 	char	*input;
 
-	input = readline(get_prompt(envp));
+	input = readline(get_prompt());
 	while (1)
 	{
 		if (!input)
-			break ;	
+			return ;	
 		add_history(input);
 		tree = tokenisation(input, envp);
 		save_root(envp, tree);
 		free(input);
 		execution(tree, -1, envp);
 		clear_tree(tree);
-		input = readline(get_prompt(envp));
+		input = readline(get_prompt());
 	}
-	rl_clear_history();
 }
 
 int	main(int argc, char **argv, char **env)
@@ -64,6 +66,8 @@ int	main(int argc, char **argv, char **env)
 	envp_lst = arr_to_lst(env);
 	signal_parent();
 	input_reader(envp_lst);
+	rl_clear_history();
 	clear_envp(envp_lst);
+	printf("exit\n");
 	return (EXIT_SUCCESS);
 }
