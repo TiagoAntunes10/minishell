@@ -16,7 +16,7 @@ EXEC_SOURCE = exec_utils.c distribution.c std_cmd.c pipe_utils.c \
 
 EXP_SOURCE = expander.c
 
-SOURCE_UTILS = tree_utils.c
+SOURCE_UTILS = tree_utils.c lencmp.c conc_str.c
 
 SOURCE_PARSE = test_parse.c
 

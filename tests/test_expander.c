@@ -60,5 +60,17 @@ int	main(int argc, char **argv, char **env)
 	printf("cmd: %s\nopt: %s\n", cmd->cmd, cmd->opt[0]);
 	clear_tree(tree);
 
+	tree = tokenisation("'kldsajfkl adsjf $?dkajfklj $PWD kdljaflk'", envp);
+	cmd = (t_cmd *) tree;
+	check_dolla(cmd, envp);
+	printf("cmd: %s\nopt: %s\n", cmd->cmd, cmd->opt[0]);
+	clear_tree(tree);
+
+	tree = tokenisation("'$SHLVL kldsajfkl $PWDadsjf $?dkajfklj $PWD kdljaflk'", envp);
+	cmd = (t_cmd *) tree;
+	check_dolla(cmd, envp);
+	printf("cmd: %s\nopt: %s\n", cmd->cmd, cmd->opt[0]);
+	clear_tree(tree);
+
 	clear_envp(envp);
 }

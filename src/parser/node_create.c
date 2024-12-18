@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/17 22:48:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:58:46 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	get_opt(t_cmd *cmd, t_tree *tree, char ***input, t_envp *envp)
 	cmd->opt[i] = NULL;
 }
 
-// TODO: Clean input variable
 t_tree	*cmd_node(t_tree *tree, char ***input, t_envp *envp)
 {
 	t_cmd	*cmd;

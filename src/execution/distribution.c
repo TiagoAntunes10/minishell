@@ -6,26 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/18 15:06:30 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:48:32 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
 extern int	g_exit_code;
-
-static unsigned int	lencmp(char *s1, char *s2)
-{
-	unsigned int	len1;
-	unsigned int	len2;
-
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	if (len1 >= len2)
-		return (len1);
-	else
-		return (len2);
-}
 
 static void	cmd_dist(t_tree *tree, t_envp *envp)
 {
