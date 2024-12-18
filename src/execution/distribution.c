@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 22:01:44 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:06:30 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	cmd_dist(t_tree *tree, t_envp *envp)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *) tree;
-	// check_dolla(cmd, envp);
+	check_dolla(cmd, envp);
 	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
 		ft_echo(cmd, envp);
 	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)
