@@ -69,5 +69,5 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	clear_envp(envp_lst);
 	printf("exit\n");
-	return (EXIT_SUCCESS);
+	return (g_exit_code);
 }

@@ -50,7 +50,7 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 	struct stat	stats;
 
 	if (cmd->opt[1] && cmd->opt[2])
-		return (ft_putstr_fd(RED CD_ERR_ARG RST, STDERR_FILENO), 2);
+		return (ft_putstr_fd(RED CD_ERR_ARG RST, STDERR_FILENO), 1);
 	if (!cmd->opt[1] || !ft_strncmp(cmd->opt[1], "~", 1))
 	{
 		if (!search_envp(envp, "HOME")

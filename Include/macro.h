@@ -63,6 +63,11 @@
 
 //HEREDOC ERRORS
 
-# define SYNTAX_ERR "heredoc: syntax error near unexpected token `newline'"
+# define SYNTAX_ERR "heredoc: syntax error near unexpected token `newline'\n"
+
+//EXIT ERRORS
+
+# define EX_MANY_ARG "exit: too many arguments\n"
+# define EX_ALPHA_ERR "exit: numeric argument required\n"
 
 #endif

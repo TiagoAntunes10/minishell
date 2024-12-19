@@ -11,7 +11,7 @@ FUNCTION = ./libft
 PRE = ./src/
 
 BUILTIN_SOURCE = cmd_cd.c cmd_echo.c cmd_env.c cmd_export.c cmd_pwd.c \
-				 cmd_unset.c
+				 cmd_unset.c cmd_exit.c
 CLEANUP_SOURCE = cleanup.c tree_cleanup.c
 ENVP_SOURCE = envp_search.c envp_split.c envp_utils.c
 EXEC_SOURCE = distribution.c exec_utils.c pipe_utils.c redir_utils.c \

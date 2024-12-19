@@ -53,7 +53,7 @@ void	exit_success(t_tree *tree, int fd, t_envp *envp)
 	if (fd != -1)
 		close(fd);
 	printf("exit\n");
-	exit(EXIT_SUCCESS);
+	exit(g_exit_code);
 }
 
 void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
