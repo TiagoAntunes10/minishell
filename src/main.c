@@ -42,19 +42,26 @@ static void	input_reader(t_envp *envp)
 {
 	t_tree	*tree;
 	char	*input;
+	char	*prompt;
 
-	input = readline(get_prompt());
+	prompt = get_prompt();
+	input = readline(prompt);
 	while (1)
 	{
 		if (!input)
+		{
+			free(prompt);
 			return ;	
+		}
 		add_history(input);
 		tree = tokenisation(input, envp);
 		save_root(envp, tree);
 		free(input);
+		free(prompt);
 		execution(tree, -1, envp);
 		clear_tree(tree);
-		input = readline(get_prompt());
+		prompt = get_prompt();
+		input = readline(prompt);
 	}
 }
 

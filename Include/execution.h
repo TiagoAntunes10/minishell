@@ -32,7 +32,7 @@ int		ft_cd(t_cmd *cmd, t_envp *envp);
 int		ft_env(t_cmd *cmd, t_envp *envp);
 int		ft_echo(t_cmd *cmd, t_envp *envp);
 int		ft_pwd(void);
-void		ft_exit(t_cmd *cmd, t_envp *envp);
+void		ft_exit(t_tree *tree, t_envp *envp);
 
 //useful functions
 

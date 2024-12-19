@@ -32,9 +32,12 @@ static int	arg_isnum(char *arg)
 	return (1);
 }
 
-void	ft_exit(t_cmd *cmd, t_envp *envp)
+void	ft_exit(t_tree *tree, t_envp *envp)
 {
-	if (cmd->opt[2])
+	t_cmd	*cmd;
+
+	cmd = (t_cmd *)tree;
+	if (cmd->opt[1] && cmd->opt[2])
 	{
 		ft_putstr_fd(RED EX_MANY_ARG RST, STDERR_FILENO);
 		g_exit_code = 1;
@@ -44,9 +47,9 @@ void	ft_exit(t_cmd *cmd, t_envp *envp)
 	{
 		ft_putstr_fd(RED EX_ALPHA_ERR RST, STDERR_FILENO);
 		g_exit_code = 2;
-		exit_failure((t_tree *)cmd, NULL, envp);
+		exit_failure((t_tree*)cmd, NULL, envp);
 	}
 	else if (cmd->opt[1] && arg_isnum(cmd->opt[1]))
 		g_exit_code = ft_atoi(cmd->opt[1]) % 256;
-	exit_success((t_tree *)cmd, -1, envp);
+	exit_success((t_tree*)cmd, -1, envp);
 }

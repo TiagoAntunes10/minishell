@@ -90,7 +90,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 		if (cmd_dist(tree, envp) == 1)
 			return ;
 		else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
-			ft_exit(cmd, envp);
+			ft_exit((t_tree *)cmd, envp);
 		else
 			child_exec(tree, fd, envp);
 	}
