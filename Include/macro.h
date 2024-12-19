@@ -61,4 +61,8 @@
 # define UPPER_PROMPT "╭─"
 # define LOWER_PROMPT "╰─\e[1;35mMinishell \e[1;33m$->\e[0m"
 
+//HEREDOC ERRORS
+
+# define SYNTAX_ERR "heredoc: syntax error near unexpected token `newline'"
+
 #endif
