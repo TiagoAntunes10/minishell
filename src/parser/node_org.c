@@ -6,13 +6,12 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/12 22:10:40 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:58:58 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-// TODO: Find how to clear input variable
 void	check_outfile(char *input, int mode, t_tree *tree, t_envp *envp)
 {
 	int	redir_fd;

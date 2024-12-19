@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 20:58:58 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:14:26 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	clear_envp(t_envp *envp)
 {
 	t_envp	*envp_cpy;
 
-	envp_cpy = envp->next;
 	while (envp != NULL)
 	{
 		if (envp->key != NULL)
