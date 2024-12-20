@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 08:52:36 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/17 18:10:13 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:42:36 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 			return (NULL);
 		str[0] = '\0';
 		return (str);
-	}
-	if (*s == '"' || *s == '\'')
-	{
-		s++;
-		len--;
 	}
 	if (len <= (size_t)(ft_strlen(s) - start))
 		str = malloc(len + 1);

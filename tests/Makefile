@@ -78,4 +78,8 @@ fclean: clean
 	rm -f $(NAME_TEST_PARSE) $(NAME_TEST_EXEC) $(NAME_TEST_EXP)
 	$(MAKE) fclean -C $(FUNCTION)
 
-re: fclean all
+re_test_parser: fclean test_parser
+
+re_test_exec: fclean test_exec
+
+re_test_expand: fclean test_expand

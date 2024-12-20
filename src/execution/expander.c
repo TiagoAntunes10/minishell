@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/18 22:07:40 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 17:31:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,21 @@ void	check_dolla(t_cmd *cmd, t_envp *envp)
 	int	pos;
 	int	i;
 
-	pos = find_dolla(cmd->cmd);
-	while (pos != -1)
-		pos = expand_str(&cmd->cmd, envp, pos);
+	if (*(cmd->cmd) != '\'')
+	{
+		pos = find_dolla(cmd->cmd);
+		while (pos != -1)
+			pos = expand_str(&cmd->cmd, envp, pos);
+	}
 	i = 0;
 	while (cmd->opt[i] != NULL)
 	{
-		pos = find_dolla(cmd->opt[i]);
-		while (pos != -1)
-			pos = expand_str(&cmd->opt[i], envp, pos);
+		if (*(cmd->opt[i]) != '\'')
+		{
+			pos = find_dolla(cmd->opt[i]);
+			while (pos != -1)
+				pos = expand_str(&cmd->opt[i], envp, pos);
+		}
 		i++;
 	}
 }

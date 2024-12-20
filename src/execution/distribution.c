@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/18 20:48:32 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:51:40 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,39 @@
 
 extern int	g_exit_code;
 
+static void check_str_lit(t_cmd *cmd)
+{
+	char	*str;
+	int		i;
+
+	if (*(cmd->cmd) == '\'' || *(cmd->cmd) == '"')
+	{
+		str = ft_substr(cmd->cmd, 1, ft_strlen(cmd->cmd) - 2);
+		free(cmd->cmd);
+		cmd->cmd = ft_substr(str, 0, ft_strlen(str));
+		free(str);
+	}
+	i = 0;
+	while (cmd->opt[i] != NULL)
+	{
+		if (*(cmd->opt[i]) == '\'' || *(cmd->opt[i]) == '"')
+		{
+			str = ft_substr(cmd->opt[i], 1, ft_strlen(cmd->opt[i]) - 2);
+			free(cmd->opt[i]);
+			cmd->opt[i] = ft_substr(str, 0, ft_strlen(str));
+			free(str);
+		}
+		i++;
+	}
+}
+
 static int	cmd_dist(t_tree *tree, t_envp *envp)
 {
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *) tree;
 	check_dolla(cmd, envp);
+	check_str_lit(cmd);
 	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
 		return (g_exit_code = ft_echo(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)
