@@ -12,6 +12,8 @@
 
 #include "../../Include/minishell.h"
 
+extern int g_exit_code;
+
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 {
 	int		inp_pipe[2];
@@ -37,7 +39,13 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 {
 	char	*line;
-	
+
+	if (delim == NULL || *delim == '\0' || *delim == '\n')
+	{
+		ft_putstr_fd(RED SYNTAX_ERR RST, 2);
+		g_exit_code = 2;
+		return ;
+	}
 	line = get_next_line(0);
 	while (ft_strncmp(delim, line, ft_strlen(line) - 1) != 0)
 	{
@@ -57,6 +65,7 @@ void	exec_delim(t_tree *tree, t_envp *envp)
 	delim = (t_delim *) tree;
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
+	signal_heredoc();
 	read_here_doc(delim->delim, inp_pipe, envp);
 	if (dup2(inp_pipe[0], 0) == -1)
 		exit_failure(envp->root, inp_pipe, envp);

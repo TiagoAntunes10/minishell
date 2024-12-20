@@ -6,11 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:39:23 by tialbert          #+#    #+#             */
-/*   Updated: 2023/10/03 11:39:24 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:57:53 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(char const *s, int c)
+#include "libft.h"
+
+/*char	*ft_strchr(char const *s, int c)
 {
 	char	*cs;
 
@@ -26,6 +28,19 @@ char	*ft_strchr(char const *s, int c)
 		return (cs);
 	else
 		return ("\0");
+}*/
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (unsigned char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((unsigned char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }
 
 /*

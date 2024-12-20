@@ -12,6 +12,7 @@
 
 #include "../../Include/minishell.h"
 
+extern int g_exit_code;
 
 static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 {
@@ -67,5 +68,10 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
+	{
+		ft_putstr_fd(strerror(errno), 2);
+		printf("\n");
+		g_exit_code = 127;
 		exit_failure(envp->root, NULL, envp);
+	}
 }

@@ -20,11 +20,12 @@
 void	signal_parent(void);
 void	signal_child(void);
 void	signal_ignore(void);
-//void	signal_heredoc(void);
+void	signal_heredoc(void);
 
 //signal handlers
 
 void	handle_parent(int signum);
 void	handle_child(int signum);
+void	handle_heredoc(int signum);
 
 #endif
