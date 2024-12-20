@@ -6,11 +6,12 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/17 18:14:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:27:04 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+#include <unistd.h>
 
 extern int	g_exit_code;
 
@@ -58,7 +59,11 @@ void	exit_success(t_tree *tree, int fd, t_envp *envp)
 void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 {
 	int	i;
+	t_cmd	*cmd;
 
+	cmd = (t_cmd *)tree;
+	if ((errno == ENOENT && g_exit_code != 127) || (errno != 0 && errno != 2))
+		perror(cmd->cmd);
 	if (tree != NULL)
 		clear_tree(tree);
 	if (envp != NULL)
@@ -67,13 +72,12 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 	{
 		i = 0;
 		while (i < 2)
+		{
 			close(fd[i]);
+			i++;
+		}
 	}
-	if (errno == 0)
-		exit(g_exit_code);
-	else
-	{
-		perror(strerror(errno));
-		exit(errno);
-	}
+	if (g_exit_code == 0)
+		g_exit_code = 1;
+	exit(g_exit_code);
 }
