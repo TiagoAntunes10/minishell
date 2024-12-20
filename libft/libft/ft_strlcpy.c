@@ -25,7 +25,7 @@ unsigned int	ft_strlcpy(char *dest, char const *src, size_t size)
 	unsigned int	i;
 
 	i = 1;
-	while (*src != '\0')
+	while (src != NULL && *src != '\0')
 	{
 		if (*src == '\\' && i > 1)
 		{
