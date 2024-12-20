@@ -30,7 +30,7 @@ static int	cmd_dist(t_tree *tree, t_envp *envp)
 		return (g_exit_code = ft_unset(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "env", lencmp(cmd->cmd, "env")) == 0)
 		return (g_exit_code = ft_env(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
+	else if (ft_strncmp(cmd->cmd, "cd", lencmp(cmd->cmd, "cd")) == 0)
 		return (g_exit_code = ft_cd(cmd, envp), 1);
 	return (0);
 }
@@ -89,7 +89,7 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 		cmd = (t_cmd *) tree;
 		if (cmd_dist(tree, envp) == 1)
 			return ;
-		else if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
+		else if (ft_strncmp(cmd->cmd, "exit", lencmp(cmd->cmd, "exit")) == 0)
 			ft_exit((t_tree *)cmd, envp);
 		else
 			child_exec(tree, fd, envp);

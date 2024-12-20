@@ -52,7 +52,6 @@ void	exit_success(t_tree *tree, int fd, t_envp *envp)
 		clear_envp(envp);
 	if (fd != -1)
 		close(fd);
-	printf("exit\n");
 	exit(g_exit_code);
 }
 

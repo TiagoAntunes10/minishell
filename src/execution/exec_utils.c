@@ -65,6 +65,7 @@ void	exec_delim(t_tree *tree, t_envp *envp)
 	delim = (t_delim *) tree;
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
+	signal_heredoc();
 	read_here_doc(delim->delim, inp_pipe, envp);
 	if (dup2(inp_pipe[0], 0) == -1)
 		exit_failure(envp->root, inp_pipe, envp);

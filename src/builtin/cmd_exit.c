@@ -12,7 +12,7 @@
 
 #include "../../Include/minishell.h"
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 //TODO: exit will call exit_success function for cleanup
 //TODO: should check for extra arguments more than 1 should give an error
@@ -47,9 +47,10 @@ void	ft_exit(t_tree *tree, t_envp *envp)
 	{
 		ft_putstr_fd(RED EX_ALPHA_ERR RST, STDERR_FILENO);
 		g_exit_code = 2;
-		exit_failure((t_tree*)cmd, NULL, envp);
+		exit_failure((t_tree *)cmd, NULL, envp);
 	}
 	else if (cmd->opt[1] && arg_isnum(cmd->opt[1]))
 		g_exit_code = ft_atoi(cmd->opt[1]) % 256;
-	exit_success((t_tree*)cmd, -1, envp);
+	printf("exit\n");
+	exit_success((t_tree *)cmd, -1, envp);
 }
