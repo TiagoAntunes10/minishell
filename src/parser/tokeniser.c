@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 14:59:52 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:33:12 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_opt(char **tokens)
 
 	count = 0;
 	token_cpy = tokens;
-	while (*token_cpy != NULL && **token_cpy != '>' && **token_cpy != ';' &&
+	while (*token_cpy != NULL && **token_cpy != '>' &&
 			**token_cpy != '|' && **token_cpy != '<' &&
 			ft_strncmp(*token_cpy, "<<", ft_strlen(*token_cpy)) != 0 &&
 			ft_strncmp(*token_cpy, ">>", ft_strlen(*token_cpy)) != 0)

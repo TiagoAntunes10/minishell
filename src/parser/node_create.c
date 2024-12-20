@@ -6,11 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 14:48:50 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 22:01:16 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+
+extern int	g_exit_code;
 
 static char	**get_opt(t_cmd *cmd, t_tree *tree, char **input, t_envp *envp)
 {

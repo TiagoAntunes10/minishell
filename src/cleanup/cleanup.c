@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/17 18:14:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:37:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 		exit(g_exit_code);
 	else
 	{
-		perror(strerror(errno));
+		ft_putstr_fd(strerror(errno), 2);
+		printf("\n");
 		exit(errno);
 	}
 }
