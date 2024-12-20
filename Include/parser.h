@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:48:30 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/13 18:29:57 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:44:34 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 /* ************************************************************************** */
 
 t_tree			*tokenisation(char *input, t_envp *envp);
+t_tree			*token_dist(t_tree *tree, t_envp *envp, char **input);
 int				count_opt(char **tokens);
-t_tree			*cmd_node(t_tree *tree, char ***input, t_envp *envp);
-t_tree			*delim_node(t_tree *tree, char ***input, t_envp *envp);
-t_tree			*pipe_node(t_tree *tree, t_envp *envp);
-t_tree			*redir_node(t_tree *tree, char ***input, int mode, t_envp *envp);
+t_tree			*cmd_node(t_tree *tree, char **input, t_envp *envp);
+t_tree			*delim_node(t_tree *tree, char **input, t_envp *envp);
+t_tree			*pipe_node(t_tree *tree, char **input, t_envp *envp);
+t_tree			*redir_node(t_tree *tree, char **input, int mode, t_envp *envp);
 t_tree			*org_tree(t_tree *tree, t_tree *cmd);
 
 /* ************************************************************************** */

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/17 20:59:05 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:59:52 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,32 @@ int	count_opt(char **tokens)
 	return (count);
 }
 
+t_tree	*token_dist(t_tree *tree, t_envp *envp, char **input)
+{	
+	if (*input == NULL)
+		return (tree);
+	if (**input == '<' && ft_strlen(*input) == 1)
+		return (redir_node(tree, input, O_RDONLY, envp));
+	else if (ft_strncmp(*input, "<<", ft_strlen(*input)) == 0)
+		return (delim_node(tree, input, envp));
+	else if (**input == '>' && ft_strlen(*input) == 1)
+		return (redir_node(tree, input, O_WRONLY | O_CREAT, envp));
+	else if (ft_strncmp(*input, ">>", ft_strlen(*input)) == 0)
+		return (redir_node(tree, input,
+							O_WRONLY | O_CREAT | O_APPEND, envp));
+	else if (**input == '|' && ft_strlen(*input) == 1)
+		return (pipe_node(tree, input, envp));
+	else
+		return (cmd_node(tree, input, envp));
+}
+
 t_tree	*tokenisation(char *input, t_envp *envp)
 {
 	t_tree	*tree;
-	char	**arr_cpy;
 
 	envp->input_arr = split_input(input, envp);
-	arr_cpy = envp->input_arr;
 	tree = NULL;
-	while (*arr_cpy != NULL)
-	{
-		if (**arr_cpy == '<' && ft_strlen(*arr_cpy) == 1)
-			tree = redir_node(tree, &arr_cpy, O_RDONLY, envp);
-		else if (ft_strncmp(*arr_cpy, "<<", ft_strlen(*arr_cpy)) == 0)
-			tree = delim_node(tree, &arr_cpy, envp);
-		else if (**arr_cpy == '>' && ft_strlen(*arr_cpy) == 1)
-			tree = redir_node(tree, &arr_cpy, O_WRONLY | O_CREAT, envp);
-		else if (ft_strncmp(*arr_cpy, ">>", ft_strlen(*arr_cpy)) == 0)
-			tree = redir_node(tree, &arr_cpy,
-								O_WRONLY | O_CREAT | O_APPEND, envp);
-		else if (**arr_cpy == '|' && ft_strlen(*(arr_cpy++)) == 1)
-			tree = pipe_node(tree, envp);
-		else
-			tree = cmd_node(tree, &arr_cpy, envp);
-	}
+	tree = token_dist(tree, envp, envp->input_arr);
 	envp->input_arr = clear_arr(envp->input_arr);
 	return (tree);
 }
