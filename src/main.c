@@ -14,9 +14,6 @@
 
 // TODO: Update SHLEVEL environmental variable
 int	g_exit_code;
-//TODO: Verify if fd 1 is a terminal (that should be the standard)
-//TODO: Check if this is the best way to have access to the envirenment variables
-//TODO: cd must execute in the parent process (it does not work with pipes and ';'), all other cmds execute in child processes
 
 static char	*get_prompt(void)
 {

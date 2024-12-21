@@ -62,7 +62,7 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)tree;
-	if ((errno == ENOENT && g_exit_code != 127) || (errno != 0 && errno != 2))
+	if (errno && !(errno == ENOENT && g_exit_code == 127))
 		perror(cmd->cmd);
 	if (tree != NULL)
 		clear_tree(tree);
@@ -72,10 +72,7 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 	{
 		i = 0;
 		while (i < 2)
-		{
-			close(fd[i]);
-			i++;
-		}
+			close(fd[i++]);
 	}
 	if (g_exit_code == 0)
 		g_exit_code = 1;

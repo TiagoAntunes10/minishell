@@ -45,6 +45,8 @@
 # define CD_GEN_ERR "cd: Could not change directory\n"
 # define CD_NOT_DIR "cd: File is not a directory\n"
 # define CD_ERR_ARG "cd: Too many arguments\n"
+# define CD_NO_HOME "cd: HOME not set\n"
+# define CD_OLDPWD "cd: OLDPWD not set\n"
 
 //PWD ERRORS
 

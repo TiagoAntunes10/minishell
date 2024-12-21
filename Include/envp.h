@@ -34,5 +34,6 @@ char	**envp_split(char *str, t_envp *envp);
 /*                            ENVP_SEARCH                                     */
 /* ************************************************************************** */
 t_envp	*search_envp(t_envp *envp, char *var);
+void	update_shlvl(t_envp *envp);
 
 #endif
