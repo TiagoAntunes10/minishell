@@ -83,10 +83,7 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 
 	if (fd == -1)
 	{
-		if (tree->type == DELIM)
-			signal_ignore();
-		else
-			signal_child();
+		signal_decider(tree);
 		id = fork();
 		if (id == -1)
 			exit_failure(tree, NULL, envp);
