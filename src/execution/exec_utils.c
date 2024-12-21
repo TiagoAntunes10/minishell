@@ -42,9 +42,9 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 
 	if (delim == NULL || *delim == '\0' || *delim == '\n')
 	{
-		ft_putstr_fd(RED SYNTAX_ERR RST, 2);
+		ft_putstr_fd(RED SYNTAX_ERR RST, STDERR_FILENO);
 		g_exit_code = 2;
-		return ;
+		exit_failure(envp->root, inp_pipe, envp);
 	}
 	line = get_next_line(0);
 	while (ft_strncmp(delim, line, ft_strlen(line) - 1) != 0)
