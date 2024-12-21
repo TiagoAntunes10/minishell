@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 19:40:58 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/20 22:57:56 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ static char	*find_path(char *cmd, t_envp *envp)
 	else
 	{
 		if (access(cmd, X_OK) == -1)
+		{
+			if (errno == EACCES)
+				g_exit_code = 126;
 			exit_failure(envp->root, NULL, envp);
+		}
 		cmd_path = ft_substr(cmd, 0, ft_strlen(cmd));
 		if (cmd_path == NULL)
 			exit_failure(envp->root, NULL, envp);
@@ -69,9 +73,15 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	cmd_path = find_path(cmd->cmd, envp);
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 	{
-		ft_putstr_fd(strerror(errno), 2);
-		printf("\n");
-		g_exit_code = 127;
+		if (errno == ENOENT)
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(cmd->cmd, STDERR_FILENO);
+			ft_putstr_fd(": command not found\n", STDERR_FILENO);
+			g_exit_code = 127;
+		}
+		else
+			g_exit_code = 126;
 		exit_failure(envp->root, NULL, envp);
 	}
 }

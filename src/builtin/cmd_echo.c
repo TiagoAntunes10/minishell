@@ -12,8 +12,18 @@
 
 #include "../../Include/minishell.h"
 
-//TODO: handle -nnnnnnn?
-//TODO: check how echo handles new lines withing an argument
+static int	is_nflag_valid(char *opt_str)
+{
+	int	i;
+
+	i = 0;
+	if (opt_str[0] != '-')
+		return (0);
+	while (opt_str[++i])
+		if (opt_str[i] != 'n')
+			return (0);
+	return (1);
+}
 
 int	ft_echo(t_cmd *cmd, t_envp *envp)
 {
@@ -23,7 +33,7 @@ int	ft_echo(t_cmd *cmd, t_envp *envp)
 	(void)envp;
 	i = 1;
 	nflag = 0;
-	if ((cmd->opt[1]) && !ft_strncmp(cmd->opt[1], "-n", 2))
+	if ((cmd->opt[1]) && is_nflag_valid(cmd->opt[1]))
 	{
 		nflag = 1;
 		i++;
