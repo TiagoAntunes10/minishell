@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **env)
 	((void)argc, (void)argv);
 	envp_lst = arr_to_lst(env);
 	signal_parent();
+	update_shlvl(envp_lst);
 	input_reader(envp_lst);
 	rl_clear_history();
 	clear_envp(envp_lst);

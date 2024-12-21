@@ -11,15 +11,22 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <stdlib.h>
-
-//TODO: update shlvl, value could be retrieved with getenv
-//TODO: if retrieved with getenv, just use export
-//TODO: if not, atoi and itoa needed for conversion of values
-//TODO: should receive envp, should pass the tree too for export
 
 void	update_shlvl(t_envp *envp)
 {
-	printf("%s", getenv("SHLVL"));
-	export_env(getenv("SHLVL"), envp);
+	int		shlvl;
+	char	*envshlvl;
+	char	*itoa_lvl;
+	
+	if (search_envp(envp, "SHLVL") && search_envp(envp, "SHLVL")->value)
+	{
+		shlvl = ft_atoi(search_envp(envp, "SHLVL")->value);
+		itoa_lvl = ft_itoa(shlvl + 1);
+		envshlvl = ft_strjoin("SHLVL=", itoa_lvl);
+		export_env(envshlvl, envp);
+		free(envshlvl);
+		free(itoa_lvl);
+	}
+	else
+		export_env("SHLVL=1", envp);
 }
