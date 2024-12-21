@@ -14,6 +14,7 @@
 # define SIGHANDLER_H
 
 # include <signal.h>
+# include "tree.h"
 
 //signal receivers
 
@@ -27,5 +28,6 @@ void	signal_heredoc(void);
 void	handle_parent(int signum);
 void	handle_child(int signum);
 void	handle_heredoc(int signum);
+void	signal_decider(t_tree *tree);
 
 #endif
