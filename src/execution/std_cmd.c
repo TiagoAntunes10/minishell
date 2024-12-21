@@ -6,13 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 22:57:56 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:42:59 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 {

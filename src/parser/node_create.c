@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 22:01:16 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:29:49 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	**get_opt(t_cmd *cmd, t_tree *tree, char **input, t_envp *envp)
 {
 	int		opt_num;
 	int		i;
-	
+
 	opt_num = count_opt(input);
 	cmd->opt = malloc((opt_num + 1) * sizeof(char *));
 	if (cmd->opt == NULL)

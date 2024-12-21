@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 21:33:12 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:40:12 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	count_opt(char **tokens)
 
 	count = 0;
 	token_cpy = tokens;
-	while (*token_cpy != NULL && **token_cpy != '>' &&
-			**token_cpy != '|' && **token_cpy != '<' &&
-			ft_strncmp(*token_cpy, "<<", ft_strlen(*token_cpy)) != 0 &&
-			ft_strncmp(*token_cpy, ">>", ft_strlen(*token_cpy)) != 0)
+	while (*token_cpy != NULL && **token_cpy != '>'
+		&& **token_cpy != '|' && **token_cpy != '<'
+		&& ft_strncmp(*token_cpy, "<<", ft_strlen(*token_cpy)) != 0
+		&& ft_strncmp(*token_cpy, ">>", ft_strlen(*token_cpy)) != 0)
 	{
 		count++;
 		token_cpy++;
@@ -31,7 +31,7 @@ int	count_opt(char **tokens)
 }
 
 t_tree	*token_dist(t_tree *tree, t_envp *envp, char **input)
-{	
+{
 	if (*input == NULL)
 		return (tree);
 	if (**input == '<' && ft_strlen(*input) == 1)
@@ -42,7 +42,7 @@ t_tree	*token_dist(t_tree *tree, t_envp *envp, char **input)
 		return (redir_node(tree, input, O_WRONLY | O_CREAT, envp));
 	else if (ft_strncmp(*input, ">>", ft_strlen(*input)) == 0)
 		return (redir_node(tree, input,
-							O_WRONLY | O_CREAT | O_APPEND, envp));
+				O_WRONLY | O_CREAT | O_APPEND, envp));
 	else if (**input == '|' && ft_strlen(*input) == 1)
 		return (pipe_node(tree, input, envp));
 	else

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 21:27:04 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:34:59 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	exit_success(t_tree *tree, int fd, t_envp *envp)
 
 void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 {
-	int	i;
+	int		i;
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)tree;

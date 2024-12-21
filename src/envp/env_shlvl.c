@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 23:21:27 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/21 14:05:25 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:44:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	update_shlvl(t_envp *envp)
 	int		shlvl;
 	char	*envshlvl;
 	char	*itoa_lvl;
-	
+
 	if (search_envp(envp, "SHLVL") && search_envp(envp, "SHLVL")->value)
 	{
 		shlvl = ft_atoi(search_envp(envp, "SHLVL")->value);

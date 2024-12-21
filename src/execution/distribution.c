@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 18:51:40 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:46:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_code;
 
-static void check_str_lit(t_cmd *cmd)
+static void	check_str_lit(t_cmd *cmd)
 {
 	char	*str;
 	int		i;
@@ -69,7 +69,7 @@ static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 	else if (tree->type == PIPE)
 		exec_pipe(tree, fd, envp);
 	else if (tree->type == DELIM)
-		exec_delim(tree, envp);	
+		exec_delim(tree, envp);
 	else if (tree->type == REDIR)
 		exec_redir(tree, envp);
 	else if (tree->type == CMD)
@@ -77,7 +77,7 @@ static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 }
 
 static void	child_exec(t_tree *tree, int fd, t_envp *envp)
-{	
+{
 	int	id;
 	int	status;
 

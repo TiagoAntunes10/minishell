@@ -6,13 +6,12 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 18:36:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:47:00 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/minishell.h"
 
-// TODO: Update SHLEVEL environmental variable
 int	g_exit_code;
 
 static char	*get_prompt(void)
@@ -24,7 +23,7 @@ static char	*get_prompt(void)
 	pwd = getcwd(NULL, 4096);
 	if (!pwd)
 		return (LOWER_PROMPT);
-	tmp = ft_calloc(1, 
+	tmp = ft_calloc(1,
 			(ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2));
 	if (!tmp)
 		return (NULL);
@@ -48,7 +47,7 @@ static void	input_reader(t_envp *envp)
 		if (!input)
 		{
 			free(prompt);
-			return ;	
+			return ;
 		}
 		add_history(input);
 		tree = tokenisation(input, envp);

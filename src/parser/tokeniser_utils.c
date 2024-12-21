@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/20 14:58:58 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:47:40 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static unsigned int	check_quotes(char **str, int len)
 		len++;
 		(*str)++;
 		if (((**str == '"' && quotes == 1)
-			|| (**str == '\'' && quotes == 2)) || **str == 0)
+				|| (**str == '\'' && quotes == 2)) || **str == 0)
 			break ;
 	}
 	return (len);
@@ -69,7 +69,7 @@ char	**split_input(char *str, t_envp *envp)
 	unsigned int	len;
 
 	word_arr = (char **) safe_alloc(count_words(str) + 1, sizeof(char *),
-								 NULL, envp);
+			NULL, envp);
 	word_arr_cp = word_arr;
 	while (*str != 0)
 	{

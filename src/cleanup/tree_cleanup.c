@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 21:52:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/06 15:32:15 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:34:21 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	clear_tree(t_tree *tree)
 	else if (tree->type == PIPE)
 		clear_pipe(tree);
 	else if (tree->type == DELIM)
-		clear_delim(tree);	
+		clear_delim(tree);
 	else if (tree->type == REDIR)
 		clear_redir(tree);
 	else if (tree->type == CMD)
