@@ -108,5 +108,26 @@ int	main(int argc, char **argv, char **env)
 	printf("cmd: %s\nopt: %s\n", cmd->cmd, cmd->opt[0]);
 	clear_tree(tree);
 
+	tree = tokenisation("\"'$USER'\"", envp);
+	cmd = (t_cmd *) tree;
+	check_dolla(cmd, envp);
+	check_str_lit(cmd);
+	printf("cmd: %s\nopt: %s\n", cmd->cmd, cmd->opt[0]);
+	clear_tree(tree);
+
+	tree = tokenisation("\"ksdljf daskfj kjdf '$USER'\"", envp);
+	cmd = (t_cmd *) tree;
+	check_dolla(cmd, envp);
+	check_str_lit(cmd);
+	printf("cmd: %s\nopt: %s\n", cmd->cmd, cmd->opt[0]);
+	clear_tree(tree);
+
+	tree = tokenisation("\"ksdljf daskfj kjdf $USER\"", envp);
+	cmd = (t_cmd *) tree;
+	check_dolla(cmd, envp);
+	check_str_lit(cmd);
+	printf("cmd: %s\nopt: %s\n", cmd->cmd, cmd->opt[0]);
+	clear_tree(tree);
+
 	clear_envp(envp);
 }

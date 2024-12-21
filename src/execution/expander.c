@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/20 17:31:07 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 11:40:35 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ static char	*get_key(char *str)
 	char	*key;
 	int		size;
 
-	if (*str == '\\')
-		return (NULL);
 	str++;
 	if (*str == '?')
 		return (ft_substr(str, 0, 1));
 	size = 0;
-	while (str[size] != 0 && str[size] != ' ')
+	while (str[size] != 0 && str[size] != ' ' && str[size] != '\'' &&
+		str[size] != '"')
 		size++;
 	key = ft_substr(str, 0, size);
 	return (key);
@@ -69,9 +68,7 @@ static int	find_dolla(char *str)
 		return (pos);
 	while (*str != 0)
 	{
-		if (*(str + 1) == '$' && *str == '\\')
-			return (pos);
-		else if (*str == '$')
+		if (*str == '$')
 			return (pos);
 		pos++;
 		str++;
