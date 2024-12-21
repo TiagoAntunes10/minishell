@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:46:03 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:40:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 extern int	g_exit_code;
 
+// TODO: Remove "" and '' from any part of the str
+// TODO: Check if the "" or '' are closed
 static void	check_str_lit(t_cmd *cmd)
 {
 	char	*str;

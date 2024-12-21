@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:13:57 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/13 21:40:46 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:46:10 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,9 @@
 
 # define EX_MANY_ARG "exit: too many arguments\n"
 # define EX_ALPHA_ERR "exit: numeric argument required\n"
+
+//PIPE ERRORS
+//
+# define PIPE_ERR "pipe: syntax error near unexpected token `|'\n"
 
 #endif

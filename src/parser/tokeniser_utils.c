@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:47:40 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 22:27:32 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,19 @@ unsigned int	mod_strlen(char *str)
 	unsigned int	len;
 
 	len = 0;
-	while (*str != ' ' && *str != 0)
+	while (*str != ' ' && *str != 0 && *str != '|' && *str != '<'
+		&& *str != '>')
 	{
 		len = check_quotes(&str, len);
 		if (*str != ' ' && *str != '(' && *str != ')')
 			len++;
 		str++;
 	}
+	if ((ft_strncmp(str, "<<", 2) == 0 || ft_strncmp(str, ">>", 2) == 0)
+			&& len == 0)
+		len = 2;
+	else if ((*str == '|' || *str == '<' || *str == '>') && len == 0)
+		len = 1;
 	return (len);
 }
 

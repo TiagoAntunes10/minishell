@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:29:49 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 22:11:13 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ t_tree	*cmd_node(t_tree *tree, char **input, t_envp *envp)
 	cmd->cmd = (char *) safe_alloc(ft_strlen(*input) + 1, 1, tree, envp);
 	ft_strlcpy(cmd->cmd, *input, ft_strlen(*input) + 1);
 	input = get_opt(cmd, tree, input, envp);
+	if (ft_strncmp(*input, "||", lencmp(*input, "||")) == 0)
+		input++;
 	if (tree != NULL)
 	{
 		tree = org_tree(tree, (t_tree *) cmd);
@@ -77,7 +79,8 @@ t_tree	*delim_node(t_tree *tree, char **input, t_envp *envp)
 	}
 	ft_strlcpy(delim->delim, *input, ft_strlen(*input) + 1);
 	delim->right = tree;
-	input++;
+	if (*input != NULL)
+		input++;
 	tree = token_dist((t_tree *) delim, envp, input);
 	return (tree);
 }
@@ -91,6 +94,14 @@ t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 	pipe->left = tree;
 	pipe->right = NULL;
 	input++;
+	if (**input == '|')
+	{
+		free(pipe);
+		clear_tree(tree);
+		ft_putstr_fd(RED PIPE_ERR RST, 2);
+		g_exit_code = 2;
+		return (NULL);
+	}
 	tree = token_dist((t_tree *) pipe, envp, input);
 	return (tree);
 }
