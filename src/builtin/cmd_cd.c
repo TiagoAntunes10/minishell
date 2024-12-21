@@ -72,6 +72,8 @@ static int	cd_checkups(char *path, t_envp *envp)
 			free(path);
 			if (errno == EACCES)
 				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 126);
+			else if (errno != 0)
+				return (ft_putstr_fd(strerror(errno), STDERR_FILENO), 1);
 			else
 				return (ft_putstr_fd(RED CD_GEN_ERR RST, STDERR_FILENO), 1);
 		}
