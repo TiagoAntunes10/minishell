@@ -41,6 +41,7 @@ void	handle_heredoc(int signum)
 {
 	if (signum != SIGINT)
 		return ;
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 	g_exit_code = 130;
+	exit(g_exit_code);
 }

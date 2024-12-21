@@ -46,15 +46,22 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 		g_exit_code = 2;
 		exit_failure(envp->root, inp_pipe, envp);
 	}
-	line = get_next_line(0);
-	while (ft_strncmp(delim, line, ft_strlen(line) - 1) != 0)
+	line = readline(">");
+	while (1)
 	{
+		if (!line)
+			break ;
+		if (g_exit_code == 130)
+			return (free(line));
+		if (ft_strncmp(delim, line, ft_strlen(line) - 1) == 0)
+			return (free(line));
 		if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
 			exit_failure(envp->root, inp_pipe, envp);
 		free(line);
-		line = get_next_line(0);
+		line = readline(">");
 	}
 	free(line);
+	printf(HEREDOC_EOF" (wanted '%s')\n", delim);
 }
 
 void	exec_delim(t_tree *tree, t_envp *envp)

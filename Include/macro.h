@@ -66,6 +66,7 @@
 //HEREDOC ERRORS
 
 # define SYNTAX_ERR "heredoc: syntax error near unexpected token `newline'\n"
+# define HEREDOC_EOF "minishell: warning: here-doc delimited by end-of-file"
 
 //EXIT ERRORS
 
