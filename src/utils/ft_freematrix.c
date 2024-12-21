@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:24:03 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/10/30 17:25:25 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:36:11 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_freematrix(char **matrix)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (matrix[++i])

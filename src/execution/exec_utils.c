@@ -6,13 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/11 22:33:42 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:42:37 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 {

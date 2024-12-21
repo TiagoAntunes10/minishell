@@ -6,11 +6,11 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:21:11 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/13 16:25:18 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:37:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Include/minishell.h"
 
 void	*ft_mempcpy(void *dest, const void *src, size_t n)
 {
@@ -23,7 +23,7 @@ void	*ft_mempcpy(void *dest, const void *src, size_t n)
 
 char	*ft_stpcpy(char *restrict dst, char const *restrict src)
 {
-	char *ptr;
+	char	*ptr;
+
 	return (ptr = ft_mempcpy(dst, src, ft_strlen(src)), *ptr = 0, ptr);
 }
-

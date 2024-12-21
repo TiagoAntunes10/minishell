@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/21 11:40:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:40:35 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static char	*get_key(char *str)
 	if (*str == '?')
 		return (ft_substr(str, 0, 1));
 	size = 0;
-	while (str[size] != 0 && str[size] != ' ' && str[size] != '\'' &&
-		str[size] != '"')
+	while (str[size] != 0 && str[size] != ' ' && str[size] != '\''
+		&& str[size] != '"')
 		size++;
 	key = ft_substr(str, 0, size);
 	return (key);
@@ -39,8 +39,8 @@ static char	*expand_variable(char *str, t_envp *envp, int pos)
 
 	key = get_key(str + pos);
 	prefix = ft_substr(str, 0, pos);
-	suffix = ft_substr(str, pos + ft_strlen(key) + 1, 
-					ft_strlen(str + pos + ft_strlen(key) + 1));
+	suffix = ft_substr(str, pos + ft_strlen(key) + 1,
+			ft_strlen(str + pos + ft_strlen(key) + 1));
 	envp_key = search_envp(envp, key);
 	free(str);
 	if (ft_strncmp(key, "?", lencmp(key, "?")) == 0)
@@ -79,7 +79,7 @@ static int	find_dolla(char *str)
 static int	expand_str(char **str, t_envp *envp, int pos)
 {
 	int	pos2;
-	
+
 	*str = expand_variable(*str, envp, pos);
 	if (**str == 0 || *(*str + pos) == 0)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 15:58:51 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/15 20:56:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:48:58 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "tree.h"
 
-typedef struct s_envp {
+typedef struct s_envp
+{
 	char			*key;
 	char			*value;
 	char			**input_arr;
