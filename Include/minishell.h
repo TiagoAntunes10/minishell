@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/22 21:40:12 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:09:37 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	std_cmd(t_cmd *cmd, t_envp *envp);
 /*                            EXPANDER                                        */
 /* ************************************************************************** */
 
+void	get_full_str(t_cmd *cmd, t_envp *envp);
 void	check_dolla(char **origin, t_envp *envp);
 void	quotes_pairs(char *str, t_envp *envp);
 char	*remove_quotes(char *origin, t_envp *envp);

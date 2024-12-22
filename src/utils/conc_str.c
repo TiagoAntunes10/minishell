@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/22 21:31:29 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:17:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ char	**str_divide(char *str, t_envp *envp, int pos)
 	return (arr);
 }
 
+static char	*add_str(char *s1, char *s2)
+{
+	if (s2 != NULL)
+	{
+		if (*s2 != 0)
+			ft_strlcat(s1, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	}
+	return (s1);
+}
+
 char	*conc_str(char **str_arr, t_envp *envp)
 {
 	int		len;
@@ -66,11 +76,7 @@ char	*conc_str(char **str_arr, t_envp *envp)
 	arr_cpy = str_arr;
 	while ((size--) > 0)
 	{
-		if (*arr_cpy != NULL)
-		{
-			if (**arr_cpy != 0)
-				ft_strlcat(str, *arr_cpy, ft_strlen(str) + ft_strlen(*arr_cpy) + 1);
-		}
+		add_str(str, *arr_cpy);
 		arr_cpy++;
 	}
 	return (str);

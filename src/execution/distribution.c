@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/22 21:39:55 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:09:19 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_code;
 
-static void	get_full_str(t_cmd *cmd, t_envp *envp)
+void	get_full_str(t_cmd *cmd, t_envp *envp)
 {
 	int		i;
 

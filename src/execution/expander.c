@@ -6,14 +6,13 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/22 21:51:00 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:11:20 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
 extern int	g_exit_code;
-
 
 static char	*expand_variable(char *str, t_envp *envp, int pos)
 {

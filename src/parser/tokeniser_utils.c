@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/22 11:33:30 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:10:48 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ unsigned int	mod_strlen(char *str)
 		str++;
 	}
 	if ((ft_strncmp(str, "<<", 2) == 0 || ft_strncmp(str, ">>", 2) == 0)
-			&& len == 0)
+		&& len == 0)
 		len = 2;
 	else if ((*str == '|' || *str == '<' || *str == '>') && len == 0)
 		len = 1;
