@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/21 15:40:35 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 21:51:00 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,33 @@
 
 extern int	g_exit_code;
 
-static char	*get_key(char *str)
-{
-	char	*key;
-	int		size;
-
-	str++;
-	if (*str == '?')
-		return (ft_substr(str, 0, 1));
-	size = 0;
-	while (str[size] != 0 && str[size] != ' ' && str[size] != '\''
-		&& str[size] != '"')
-		size++;
-	key = ft_substr(str, 0, size);
-	return (key);
-}
 
 static char	*expand_variable(char *str, t_envp *envp, int pos)
 {
-	char	*prefix;
-	char	*suffix;
-	char	*key;
 	t_envp	*envp_key;
+	char	**arr;
 
-	key = get_key(str + pos);
-	prefix = ft_substr(str, 0, pos);
-	suffix = ft_substr(str, pos + ft_strlen(key) + 1,
-			ft_strlen(str + pos + ft_strlen(key) + 1));
-	envp_key = search_envp(envp, key);
+	arr = str_divide(str, envp, pos);
+	envp_key = search_envp(envp, arr[1]);
 	free(str);
-	if (ft_strncmp(key, "?", lencmp(key, "?")) == 0)
+	if (envp_key == NULL)
 	{
-		free(key);
-		key = ft_itoa(g_exit_code);
-		str = conc_str(prefix, key, suffix, envp);
+		if (ft_strncmp(arr[1], "?", lencmp(arr[1], "?")) == 0)
+		{
+			free(arr[1]);
+			arr[1] = ft_itoa(g_exit_code);
+		}
+		else
+			*(arr[1]) = 0;
 	}
-	else if (envp_key != NULL)
-		str = conc_str(prefix, envp_key->value, suffix, envp);
 	else
-		str = conc_str(prefix, NULL, suffix, envp);
-	free(key);
-	free(prefix);
-	free(suffix);
+	{
+		free(arr[1]);
+		arr[1] = NULL;
+		arr[1] = ft_substr(envp_key->value, 0, ft_strlen(envp_key->value));
+	}
+	str = conc_str(arr, envp);
+	clear_arr(arr);
 	return (str);
 }
 
@@ -91,26 +76,14 @@ static int	expand_str(char **str, t_envp *envp, int pos)
 	return (pos);
 }
 
-void	check_dolla(t_cmd *cmd, t_envp *envp)
+void	check_dolla(char **origin, t_envp *envp)
 {
 	int	pos;
-	int	i;
 
-	if (*(cmd->cmd) != '\'')
+	if (**origin != '\'')
 	{
-		pos = find_dolla(cmd->cmd);
+		pos = find_dolla(*origin);
 		while (pos != -1)
-			pos = expand_str(&cmd->cmd, envp, pos);
-	}
-	i = 0;
-	while (cmd->opt[i] != NULL)
-	{
-		if (*(cmd->opt[i]) != '\'')
-		{
-			pos = find_dolla(cmd->opt[i]);
-			while (pos != -1)
-				pos = expand_str(&cmd->opt[i], envp, pos);
-		}
-		i++;
+			pos = expand_str(origin, envp, pos);
 	}
 }

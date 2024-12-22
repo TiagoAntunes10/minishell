@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 21:40:45 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 21:39:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,17 @@
 
 extern int	g_exit_code;
 
-// TODO: Remove "" and '' from any part of the str
-// TODO: Check if the "" or '' are closed
-static void	check_str_lit(t_cmd *cmd)
+static void	get_full_str(t_cmd *cmd, t_envp *envp)
 {
-	char	*str;
 	int		i;
 
-	if (*(cmd->cmd) == '\'' || *(cmd->cmd) == '"')
-	{
-		str = ft_substr(cmd->cmd, 1, ft_strlen(cmd->cmd) - 2);
-		free(cmd->cmd);
-		cmd->cmd = ft_substr(str, 0, ft_strlen(str));
-		free(str);
-	}
 	i = 0;
+	quotes_pairs(cmd->cmd, envp);
+	cmd->cmd = remove_quotes(cmd->cmd, envp);
 	while (cmd->opt[i] != NULL)
 	{
-		if (*(cmd->opt[i]) == '\'' || *(cmd->opt[i]) == '"')
-		{
-			str = ft_substr(cmd->opt[i], 1, ft_strlen(cmd->opt[i]) - 2);
-			free(cmd->opt[i]);
-			cmd->opt[i] = ft_substr(str, 0, ft_strlen(str));
-			free(str);
-		}
+		quotes_pairs(cmd->opt[i], envp);
+		cmd->opt[i] = remove_quotes(cmd->opt[i], envp);
 		i++;
 	}
 }
@@ -47,8 +34,7 @@ static int	cmd_dist(t_tree *tree, t_envp *envp)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *) tree;
-	check_dolla(cmd, envp);
-	check_str_lit(cmd);
+	get_full_str(cmd, envp);
 	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
 		return (g_exit_code = ft_echo(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)

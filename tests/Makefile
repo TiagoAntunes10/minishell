@@ -9,16 +9,13 @@ TEST_PARSE = ./
 TEST_EXEC = ./
 TEST_EXP = ./
 
-SOURCE = tokeniser.c cleanup.c lst_op.c tokeniser_utils.c \
-		 node_create.c node_org.c tree_cleanup.c
-
 EXEC_SOURCE = exec_utils.c distribution.c std_cmd.c pipe_utils.c \
-			  redir_utils.c
+			  redir_utils.c quotes.c
 
 BUILTIN_SOURCE = cmd_cd.c cmd_export.c cmd_exit.c cmd_env.c cmd_echo.c \
 				 cmd_pwd.c cmd_unset.c
 
-EXP_SOURCE = expander.c
+EXP_SOURCE = expander.c quotes.c
 
 SOURCE_UTILS = tree_utils.c lencmp.c conc_str.c
 

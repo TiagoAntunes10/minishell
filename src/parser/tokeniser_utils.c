@@ -6,15 +6,15 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 22:27:32 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:33:30 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-static unsigned int	check_quotes(char **str, int len)
+unsigned int	check_quotes(char **str, int len)
 {
-	int				quotes;
+	int	quotes;
 
 	quotes = 0;
 	if (**str == '"')

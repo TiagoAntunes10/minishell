@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:13:57 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/21 21:46:10 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 10:48:59 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@
 # define EX_ALPHA_ERR "exit: numeric argument required\n"
 
 //PIPE ERRORS
-//
+
 # define PIPE_ERR "pipe: syntax error near unexpected token `|'\n"
+
+//QUOTE ERRORS
+
+# define QUOTE_ERR "quotes: unclosed quotes\n"
 
 #endif
