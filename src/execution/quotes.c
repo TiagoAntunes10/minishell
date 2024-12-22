@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 10:42:51 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/22 21:52:50 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:27:44 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 extern int	g_exit_code;
 
+// TODO: Understand how to exit the program with quotes are open
 void	quotes_pairs(char *str, t_envp *envp)
 {
 	int	sin_quote;
