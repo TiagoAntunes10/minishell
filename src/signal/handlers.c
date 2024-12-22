@@ -41,6 +41,22 @@ void	handle_heredoc(int signum)
 {
 	if (signum != SIGINT)
 		return ;
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 	g_exit_code = 130;
+	exit(g_exit_code);
+}
+
+void	signal_decider(t_tree *tree)
+{
+	t_cmd	*cmd;
+
+	cmd = (t_cmd *)tree;
+	if (tree->type == DELIM)
+		signal_ignore();
+	else if (tree->type == CMD
+		&& !ft_strncmp(cmd->cmd, "./minishell",
+			lencmp(cmd->cmd, "./minishell")))
+		signal_ignore();
+	else
+		signal_child();
 }
