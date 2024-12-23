@@ -12,7 +12,7 @@
 
 #include "../../Include/minishell.h"
 
-int	quotes_pairs(char *str, t_envp *envp, int is_bt)
+int	quotes_pairs(char *str, t_envp *envp, int is_bt, int is_cmd)
 {
 	int	sin_quote;
 	int	dou_quote;
@@ -29,7 +29,8 @@ int	quotes_pairs(char *str, t_envp *envp, int is_bt)
 	}
 	if (dou_quote % 2 != 0 || sin_quote % 2 != 0)
 	{
-		stat_ret(RED QUOTE_ERR RST, 2);
+		if (!is_cmd)
+			stat_ret(RED QUOTE_ERR RST, 2);
 		if (is_bt)
 			return (-1);
 		exit_failure(envp->root, NULL, envp);

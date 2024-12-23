@@ -17,11 +17,11 @@ int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt)
 	int		i;
 
 	i = 0;
-	quotes_pairs(cmd->cmd, envp, is_bt);
+	quotes_pairs(cmd->cmd, envp, is_bt, 1);
 	cmd->cmd = remove_quotes(cmd->cmd, envp);
 	while (cmd->opt[i] != NULL)
 	{
-		if (quotes_pairs(cmd->opt[i], envp, is_bt) == -1)
+		if (quotes_pairs(cmd->opt[i], envp, is_bt, 0) == -1)
 			return (-1);
 		cmd->opt[i] = remove_quotes(cmd->opt[i], envp);
 		i++;
