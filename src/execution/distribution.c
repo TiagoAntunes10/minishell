@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/22 22:09:19 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:14:21 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 	int	id;
 	int	status;
 
+	status = 0;
 	if (fd == -1)
 	{
 		signal_decider(tree);

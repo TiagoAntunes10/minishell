@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/22 22:11:20 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:21:36 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ static int	expand_str(char **str, t_envp *envp, int pos)
 {
 	int	pos2;
 
-	*str = expand_variable(*str, envp, pos);
+	if (*(*str + pos + 1) != 0 && *(*str + pos + 1) != '"')
+	{
+		if (ft_strlen(*str + pos) > 1 && *(*str + pos + 1) != ' ')
+			*str = expand_variable(*str, envp, pos);
+	}
 	if (**str == 0 || *(*str + pos) == 0)
 		return (-1);
 	pos2 = find_dolla(*str + pos + 1);

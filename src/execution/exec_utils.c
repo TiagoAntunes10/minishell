@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:42:37 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:47:28 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (id == 0)
 		child_pipe(pipe_node, envp, inp_pipe);
-	waitpid(-1, &status, WNOHANG);
+	waitpid(0, &status, WNOHANG);
 	if (fd == 1 || fd == -1)
 		pipe_in_pipe(inp_pipe, fd, envp);
 	execution(pipe_node->right, 0, envp);
