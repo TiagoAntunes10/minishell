@@ -12,8 +12,6 @@
 
 #include "../../Include/minishell.h"
 
-extern int	g_exit_code;
-
 static void	check_str_lit(t_cmd *cmd)
 {
 	char	*str;
@@ -48,17 +46,17 @@ static int	cmd_dist(t_tree *tree, t_envp *envp)
 	check_dolla(cmd, envp);
 	check_str_lit(cmd);
 	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
-		return (g_exit_code = ft_echo(cmd, envp), 1);
+		return (ft_echo(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)
-		return (g_exit_code = ft_pwd(), 1);
+		return (ft_pwd(), 1);
 	else if (ft_strncmp(cmd->cmd, "export", lencmp(cmd->cmd, "export")) == 0)
-		return (g_exit_code = ft_export(cmd, envp), 1);
+		return (ft_export(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "unset", lencmp(cmd->cmd, "unset")) == 0)
-		return (g_exit_code = ft_unset(cmd, envp), 1);
+		return (ft_unset(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "env", lencmp(cmd->cmd, "env")) == 0)
-		return (g_exit_code = ft_env(cmd, envp), 1);
+		return (ft_env(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "cd", lencmp(cmd->cmd, "cd")) == 0)
-		return (g_exit_code = ft_cd(cmd, envp), 1);
+		return (ft_cd(cmd, envp), 1);
 	return (0);
 }
 

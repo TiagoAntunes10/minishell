@@ -12,8 +12,6 @@
 
 #include "../../Include/minishell.h"
 
-extern int	g_exit_code;
-
 static char	*get_key(char *str)
 {
 	char	*key;

@@ -22,5 +22,6 @@
 void			save_root(t_envp *envp, t_tree *root);
 unsigned int	lencmp(char *s1, char *s2);
 char			*conc_str(char *s1, char *s2, char *s3, t_envp *envp);
+int				stat_ret(char *msg, int ex_code);
 
 #endif

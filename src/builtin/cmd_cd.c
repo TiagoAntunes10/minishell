@@ -71,17 +71,17 @@ static int	cd_checkups(char *path, t_envp *envp)
 		{
 			free(path);
 			if (errno == EACCES)
-				return (ft_putstr_fd(RED CD_NO_PERM RST, STDERR_FILENO), 126);
+				return (stat_ret(RED CD_NO_PERM RST, 126));
 			else if (errno != 0)
-				return (ft_putstr_fd(strerror(errno), STDERR_FILENO), 1);
+				return (stat_ret(strerror(errno), 1));
 			else
-				return (ft_putstr_fd(RED CD_GEN_ERR RST, STDERR_FILENO), 1);
+				return (stat_ret(RED CD_GEN_ERR RST, 1));
 		}
 	}
 	else
 	{
 		free(path);
-		return (ft_putstr_fd(RED CD_NOT_DIR RST, STDERR_FILENO), 1);
+		return (stat_ret(RED CD_NOT_DIR RST, 1));
 	}
 	free(path);
 	return (EXIT_SUCCESS);
@@ -93,18 +93,18 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 
 	err = 0;
 	if (cmd->opt[1] && cmd->opt[2])
-		return (ft_putstr_fd(RED CD_ERR_ARG RST, STDERR_FILENO), 2);
+		return (stat_ret(RED CD_ERR_ARG RST, 2));
 	if (!cmd->opt[1] || !ft_strncmp(cmd->opt[1], "~", lencmp(cmd->opt[1], "~")))
 	{
 		if (!search_envp(envp, "HOME")
 			|| ft_changedir(search_envp(envp, "HOME")->value, envp) == -1)
-			return (ft_putstr_fd(RED CD_NO_HOME RST, STDERR_FILENO), 1);
+			return (stat_ret(RED CD_NO_HOME RST, 1));
 	}
 	else if (!ft_strncmp(cmd->opt[1], "-", lencmp(cmd->opt[1], "-")))
 	{
 		if (!search_envp(envp, "OLDPWD")
 			|| ft_changedir(search_envp(envp, "OLDPWD")->value, envp) == -1)
-			return (ft_putstr_fd(RED CD_OLDPWD RST, STDERR_FILENO), 1);
+			return (stat_ret(RED CD_OLDPWD RST, 1));
 	}
 	else
 	{
@@ -113,5 +113,5 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 		if (err)
 			return (err);
 	}
-	return (EXIT_SUCCESS);
+	return (stat_ret(NULL, 0));
 }
