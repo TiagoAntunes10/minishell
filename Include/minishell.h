@@ -40,6 +40,8 @@
 # define CMD	3
 # define REDIR	4
 
+extern int	g_exit_code;
+
 /* ************************************************************************** */
 /*                            EXECUTION                                       */
 /* ************************************************************************** */
@@ -59,9 +61,9 @@ void	std_cmd(t_cmd *cmd, t_envp *envp);
 /*                            EXPANDER                                        */
 /* ************************************************************************** */
 
-void	get_full_str(t_cmd *cmd, t_envp *envp);
+int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt);
 void	check_dolla(char **origin, t_envp *envp);
-void	quotes_pairs(char *str, t_envp *envp);
+int	quotes_pairs(char *str, t_envp *envp, int is_bt);
 char	*remove_quotes(char *origin, t_envp *envp);
 
 #endif

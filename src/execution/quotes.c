@@ -6,16 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 10:42:51 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/22 22:27:44 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:24:14 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-extern int	g_exit_code;
-
-// TODO: Understand how to exit the program with quotes are open
-void	quotes_pairs(char *str, t_envp *envp)
+int	quotes_pairs(char *str, t_envp *envp, int is_bt)
 {
 	int	sin_quote;
 	int	dou_quote;
@@ -32,10 +29,12 @@ void	quotes_pairs(char *str, t_envp *envp)
 	}
 	if (dou_quote % 2 != 0 || sin_quote % 2 != 0)
 	{
-		ft_putstr_fd(RED QUOTE_ERR RST, 2);
-		g_exit_code = 2;
+		stat_ret(RED QUOTE_ERR RST, 2);
+		if (is_bt)
+			return (-1);
 		exit_failure(envp->root, NULL, envp);
 	}
+	return (0);
 }
 
 static unsigned int	quotes_strlen(char *str)

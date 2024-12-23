@@ -16,7 +16,8 @@ int	ft_env(t_cmd *cmd, t_envp *envp)
 {
 	t_envp	*head;
 
-	(void)cmd;
+	if (cmd->opt[1])
+		return (stat_ret(RED ENV_NOFILE RST, 127));
 	head = envp;
 	while (head)
 	{
@@ -24,5 +25,5 @@ int	ft_env(t_cmd *cmd, t_envp *envp)
 			printf("%s=%s\n", head->key, head->value);
 		head = head->next;
 	}
-	return (EXIT_SUCCESS);
+	return (stat_ret(NULL, 0));
 }

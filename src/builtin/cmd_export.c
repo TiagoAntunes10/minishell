@@ -108,6 +108,7 @@ int	export_env(char *var, t_envp *envp)
 int	ft_export(t_cmd *cmd, t_envp *envp)
 {
 	int	i;
+	int	flag;
 
 	i = 0;
 	if (!cmd->opt[1])
@@ -117,10 +118,13 @@ int	ft_export(t_cmd *cmd, t_envp *envp)
 		if (ft_isdigit(cmd->opt[i][0]))
 		{
 			printf(RED"export: %s: %s"RST, cmd->opt[i], INVAL_ID);
+			flag++;
 			continue ;
 		}
 		if ((export_env(cmd->opt[i], envp)) == -1)
-			return (ft_putstr_fd(RED MEM_ALLOC RST, STDERR_FILENO), 126);
+			return (stat_ret(RED MEM_ALLOC RST, 126));
 	}
-	return (EXIT_SUCCESS);
+	if (flag)
+		return (stat_ret(NULL, 1));
+	return (stat_ret(NULL, 0));
 }

@@ -42,8 +42,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 
 	if (delim == NULL || *delim == '\0' || *delim == '\n')
 	{
-		ft_putstr_fd(RED SYNTAX_ERR RST, STDERR_FILENO);
-		g_exit_code = 2;
+		stat_ret(RED SYNTAX_ERR RST, 2);
 		exit_failure(envp->root, inp_pipe, envp);
 	}
 	line = readline(">");

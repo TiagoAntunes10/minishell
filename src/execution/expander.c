@@ -12,8 +12,6 @@
 
 #include "../../Include/minishell.h"
 
-extern int	g_exit_code;
-
 static char	*expand_variable(char *str, t_envp *envp, int pos)
 {
 	t_envp	*envp_key;
