@@ -15,7 +15,7 @@ BUILTIN_SOURCE = cmd_cd.c cmd_echo.c cmd_env.c cmd_export.c cmd_pwd.c \
 CLEANUP_SOURCE = cleanup.c tree_cleanup.c
 ENVP_SOURCE = envp_search.c envp_split.c envp_utils.c env_shlvl.c
 EXEC_SOURCE = distribution.c exec_utils.c pipe_utils.c redir_utils.c \
-			  std_cmd.c expander.c
+			  std_cmd.c expander.c quotes.c
 MEM_SOURCE = safe_alloc.c
 PARSER_SOURCE = node_create.c node_org.c tokeniser.c tokeniser_utils.c
 SIG_SOURCE = handlers.c signal_sorting.c
@@ -36,7 +36,7 @@ NAME = minishell
 LIB = $(FUNCTION)/libftprintf.a
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 RD_LINE_FLAG = -lreadline
 
 BUILTIN_OBJ = $(BUILTIN_SOURCES:.c=.o)

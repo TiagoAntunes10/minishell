@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/18 20:49:07 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:09:37 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,15 @@ void	exec_list(t_tree *tree, int fd, t_envp *envp);
 void	exec_redir(t_tree *tree, t_envp *envp);
 void	redir_read(t_redir *redir, t_envp *envp);
 void	redir_write(t_redir *redir, t_envp *envp);
-void	check_dolla(t_cmd *cmd, t_envp *envp);
 void	std_cmd(t_cmd *cmd, t_envp *envp);
+
+/* ************************************************************************** */
+/*                            EXPANDER                                        */
+/* ************************************************************************** */
+
+void	get_full_str(t_cmd *cmd, t_envp *envp);
+void	check_dolla(char **origin, t_envp *envp);
+void	quotes_pairs(char *str, t_envp *envp);
+char	*remove_quotes(char *origin, t_envp *envp);
 
 #endif

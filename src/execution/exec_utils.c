@@ -50,8 +50,6 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 	{
 		if (!line)
 			break ;
-		if (g_exit_code == 130)
-			return (free(line));
 		if (ft_strncmp(delim, line, ft_strlen(line) - 1) == 0)
 			return (free(line));
 		if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
