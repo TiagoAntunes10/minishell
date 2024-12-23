@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <unistd.h>
-
-extern int	g_exit_code;
 
 void	clear_envp(t_envp *envp)
 {

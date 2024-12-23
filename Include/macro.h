@@ -53,6 +53,10 @@
 # define PWD_ERR_ARG "pwd: Too many arguments\n"
 # define PWD_NO_PRNT "pwd: could not print current directory\n"
 
+//ENV ERRORS
+
+# define ENV_NOFILE "env: no such file or directory\n"
+
 //EXPORT ERRORS
 
 # define MEM_ALLOC "export: memory allocation failure\n"

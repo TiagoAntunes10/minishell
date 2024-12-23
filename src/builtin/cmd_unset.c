@@ -61,8 +61,8 @@ int	ft_unset(t_cmd *cmd, t_envp *envp)
 
 	i = 0;
 	if (cmd->opt[0] && !cmd->opt[1])
-		return (EXIT_SUCCESS);
+		return (stat_ret(NULL, 0));
 	while (cmd->opt[++i])
 		unset_env(cmd->opt[i], &envp);
-	return (EXIT_SUCCESS);
+	return (stat_ret(NULL, 0));
 }

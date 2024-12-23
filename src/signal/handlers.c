@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+
 //NOTE: signal child needs to be called before forking, and signal parent
 //needs to be restored after the waitpid;
 //TODO: heredoc signal handling?
-
-extern int	g_exit_code;
 
 void	handle_parent(int signum)
 {
@@ -41,8 +40,7 @@ void	handle_heredoc(int signum)
 {
 	if (signum != SIGINT)
 		return ;
-	write(STDOUT_FILENO, "\n", 1);
-	g_exit_code = 130;
+	stat_ret("\n", 130);
 	exit(g_exit_code);
 }
 

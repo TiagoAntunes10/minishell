@@ -12,8 +12,6 @@
 
 #include "../../Include/minishell.h"
 
-extern int	g_exit_code;
-
 static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 {
 	char	*cmd_path;
@@ -71,11 +69,10 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 
 	if (*(cmd->cmd) == ';' && ft_strlen(cmd->cmd) == 1)
 	{
-		g_exit_code = 2;
-		ft_putstr_fd("syntax error near unexpected token ';'\n", 2);
+		stat_ret("syntax error near unexpected token ';'\n", 2);
 		exit_failure(envp->root, NULL, envp);
 	}
-	get_full_str(cmd, envp);
+	get_full_str(cmd, envp, 0);
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)

@@ -47,5 +47,5 @@ int	ft_echo(t_cmd *cmd, t_envp *envp)
 	}
 	if (!nflag)
 		ft_putchar_fd(10, STDOUT_FILENO);
-	return (EXIT_SUCCESS);
+	return (stat_ret(NULL, 0));
 }

@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_pwd.c                                          :+:      :+:    :+:   */
+/*   print_stat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 20:51:45 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/15 17:55:59 by tialbert         ###   ########.fr       */
+/*   Created: 2024/12/22 13:50:36 by rapcampo          #+#    #+#             */
+/*   Updated: 2024/12/22 14:15:15 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-int	ft_pwd(void)
+int	stat_ret(char *msg, int ex_code)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 4096);
-	if (printf("%s\n", cwd) < 0)
-	{
-		free(cwd);
-		return (stat_ret(RED PWD_NO_PRNT RST, 126));
-	}
-	if (cwd)
-		free(cwd);
-	return (stat_ret(NULL, 0));
+	if (msg)
+		ft_putstr_fd(msg, STDERR_FILENO);
+	g_exit_code = ex_code;
+	return (ex_code);
 }

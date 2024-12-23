@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:42:28 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/21 15:50:16 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/23 02:19:46 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 # include <stdlib.h>
 
 //concatanation
+
 char	*ft_stpcpy(char *restrict dst, const char *restrict src);
 void	*ft_mempcpy(void *dest, const void *src, size_t n);
 
 //memory safety
+
 void	*ft_freematrix(char **matrix);
 void	ft_free(void *ptr);
 
