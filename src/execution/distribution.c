@@ -12,19 +12,21 @@
 
 #include "../../Include/minishell.h"
 
-void	get_full_str(t_cmd *cmd, t_envp *envp)
+int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt)
 {
 	int		i;
 
 	i = 0;
-	quotes_pairs(cmd->cmd, envp);
+	quotes_pairs(cmd->cmd, envp, is_bt);
 	cmd->cmd = remove_quotes(cmd->cmd, envp);
 	while (cmd->opt[i] != NULL)
 	{
-		quotes_pairs(cmd->opt[i], envp);
+		if (quotes_pairs(cmd->opt[i], envp, is_bt) == -1)
+			return (-1);
 		cmd->opt[i] = remove_quotes(cmd->opt[i], envp);
 		i++;
 	}
+	return (0);
 }
 
 static int	cmd_dist(t_tree *tree, t_envp *envp)
@@ -32,7 +34,8 @@ static int	cmd_dist(t_tree *tree, t_envp *envp)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *) tree;
-	get_full_str(cmd, envp);
+	if (get_full_str(cmd, envp, 1) == -1)
+		return (1);
 	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
 		return (ft_echo(cmd, envp), 1);
 	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)
