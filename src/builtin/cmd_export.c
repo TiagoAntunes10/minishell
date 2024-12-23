@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 00:34:49 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/26 00:57:09 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:30:19 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	ft_export(t_cmd *cmd, t_envp *envp)
 	int	flag;
 
 	i = 0;
+	flag = 0;
 	if (!cmd->opt[1])
 		export_print(envp);
 	while (cmd->opt[++i])
