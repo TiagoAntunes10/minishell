@@ -19,9 +19,13 @@ int	is_valid_identifier(char *keyvalue)
 	i = 0;
 	if (!keyvalue || (!ft_isalpha(keyvalue[i]) && keyvalue[i] != '_'))
 		return (0);
-	while (keyvalue[++i])
+	while (keyvalue[++i] && keyvalue[i] != '=')
 		if (!ft_isalnum(keyvalue[i])
 			&& keyvalue[i] != '_' && keyvalue[i] != '=')
+			return (0);
+	i--;
+	while (keyvalue[++i])
+		if (!ft_isprint(keyvalue[i]))
 			return (0);
 	return (1);
 }
