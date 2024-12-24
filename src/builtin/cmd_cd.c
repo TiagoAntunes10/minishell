@@ -45,8 +45,6 @@ static int	cd_err_handler(void)
 {
 	if (errno == EACCES)
 		return (stat_ret(RED CD_NO_PERM RST, 126));
-	else if (errno == ENOENT)
-		return (stat_ret(RED CD_NOT_FND RST, 127));
 	else if (errno != 0)
 	{
 		stat_ret(strerror(errno), 1);
@@ -80,7 +78,8 @@ static int	cd_checkups(char *path, t_envp *envp)
 {
 	struct stat	stats;
 
-	stat(path, &stats);
+	if (stat(path, &stats) == -1)
+		return (stat_ret(RED CD_NOT_FND RST, 127));
 	if (S_ISDIR(stats.st_mode))
 	{
 		if (ft_changedir(path, envp) == -1)
