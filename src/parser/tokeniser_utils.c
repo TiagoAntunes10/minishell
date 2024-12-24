@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 22:20:19 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/23 12:34:48 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:40:48 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	count_words(char *str)
 	{
 		str += mod_strlen(str);
 		count++;
-		while (*str == ' ' || *str == ')')
+		while (*str == ' ' || *str == ')' || *str == '(')
 			str++;
 	}
 	return (count);
