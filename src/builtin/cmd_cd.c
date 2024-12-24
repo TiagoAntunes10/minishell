@@ -110,13 +110,13 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 	if (!cmd->opt[1] || !ft_strncmp(cmd->opt[1], "~", lencmp(cmd->opt[1], "~")))
 	{
 		if (!search_envp(envp, "HOME")
-				|| ft_changedir(search_envp(envp, "HOME")->value, envp) == -1)
+			|| ft_changedir(search_envp(envp, "HOME")->value, envp) == -1)
 			return (stat_ret(RED CD_NO_HOME RST, 1));
 	}
 	else if (!ft_strncmp(cmd->opt[1], "-", lencmp(cmd->opt[1], "-")))
 	{
 		if (!search_envp(envp, "OLDPWD")
-				|| ft_changedir(search_envp(envp, "OLDPWD")->value, envp) == -1)
+			|| ft_changedir(search_envp(envp, "OLDPWD")->value, envp) == -1)
 			return (stat_ret(RED CD_OLDPWD RST, 1));
 	}
 	else
