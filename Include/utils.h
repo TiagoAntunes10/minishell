@@ -24,5 +24,5 @@ unsigned int	lencmp(char *s1, char *s2);
 int				stat_ret(char *msg, int ex_code);
 char			*conc_str(char **str_arr, t_envp *envp);
 char			**str_divide(char *str, t_envp *envp, int pos);
-
+int				is_valid_identifier(char *keyvalue);
 #endif
