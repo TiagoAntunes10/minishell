@@ -79,7 +79,10 @@ static int	cd_checkups(char *path, t_envp *envp)
 	struct stat	stats;
 
 	if (stat(path, &stats) == -1)
+	{
+		free(path);
 		return (stat_ret(RED CD_NOT_FND RST, 127));
+	}
 	if (S_ISDIR(stats.st_mode))
 	{
 		if (ft_changedir(path, envp) == -1)
