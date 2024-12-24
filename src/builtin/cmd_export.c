@@ -116,13 +116,12 @@ int	ft_export(t_cmd *cmd, t_envp *envp)
 		export_print(envp);
 	while (cmd->opt[++i])
 	{
-		if (ft_isdigit(cmd->opt[i][0]))
+		if (!is_valid_identifier(cmd->opt[i]))
 		{
 			printf(RED"export: %s: %s"RST, cmd->opt[i], INVAL_ID);
 			flag++;
-			continue ;
 		}
-		if ((export_env(cmd->opt[i], envp)) == -1)
+		else if ((export_env(cmd->opt[i], envp)) == -1)
 			return (stat_ret(RED MEM_ALLOC RST, 126));
 	}
 	if (flag)

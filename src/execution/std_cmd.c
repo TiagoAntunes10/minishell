@@ -44,6 +44,8 @@ static char	*find_path(char *cmd, t_envp *envp)
 
 	if (access(cmd, F_OK) == -1)
 	{
+		if (!search_envp(envp, "PATH"))
+			exit_failure(envp->root, NULL, envp);
 		envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
 		cmd_path = search_path(cmd, envp_path, envp);
 	}
