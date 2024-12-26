@@ -95,6 +95,8 @@ char	*remove_quotes(char *origin, t_envp *envp, int here_doc)
 	char			**origin_split;
 	char			**split_cpy;
 
+	if (!origin)
+		return (free(origin), NULL);
 	origin_split = split_arg(origin, envp);
 	split_cpy = origin_split;
 	while (*split_cpy != NULL)
