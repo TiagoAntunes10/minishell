@@ -12,8 +12,6 @@
 
 #include "../../Include/minishell.h"
 
-extern int	g_exit_code;
-
 static char	**get_opt(t_cmd *cmd, t_tree *tree, char **input, t_envp *envp)
 {
 	int		opt_num;
