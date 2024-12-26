@@ -6,13 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 16:55:54 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:25:29 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-
-extern int	g_exit_code;
 
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 {
@@ -51,6 +49,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 		stat_ret(RED SYNTAX_ERR RST, 2);
 		exit_failure(envp->root, inp_pipe, envp);
 	}
+	end_heredoc(envp, inp_pipe, 0);
 	line = readline(">");
 	line = remove_quotes(line, envp);
 	while (1)

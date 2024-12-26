@@ -41,7 +41,7 @@ void	handle_heredoc(int signum)
 	if (signum != SIGINT)
 		return ;
 	stat_ret("\n", 130);
-	exit(g_exit_code);
+	end_heredoc(NULL, NULL, 1);
 }
 
 void	signal_decider(t_tree *tree)
