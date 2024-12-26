@@ -20,7 +20,7 @@ MEM_SOURCE = safe_alloc.c
 PARSER_SOURCE = node_create.c node_org.c tokeniser.c tokeniser_utils.c
 SIG_SOURCE = handlers.c signal_sorting.c
 UTILS_SOURCE = tree_utils.c ft_strcspn.c lencmp.c conc_str.c stat_ret.c \
-			   export_identifiers.c
+			   export_identifiers.c end_heredoc.c
 SOURCE = main.c
 
 BUILTIN_SOURCES = ${addprefix $(BUILTIN), $(BUILTIN_SOURCE)}
@@ -37,7 +37,7 @@ NAME = minishell
 LIB = $(FUNCTION)/libftprintf.a
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 RD_LINE_FLAG = -lreadline
 
 BUILTIN_OBJ = $(BUILTIN_SOURCES:.c=.o)

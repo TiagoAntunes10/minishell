@@ -25,5 +25,6 @@ char	**clear_arr(char **arr);
 void	clear_tree(t_tree *tree);
 void	exit_success(t_tree *tree, int fd, t_envp *envp);
 void	exit_failure(t_tree *tree, int *fd, t_envp *envp);
+void	end_heredoc(t_envp *envp, int *inp_pipe, int endflag);
 
 #endif
