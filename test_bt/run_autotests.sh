@@ -1,5 +1,5 @@
+#!/bin/bash/
 set -x
-#!bin/bash
 
 test_file="inputs.txt"
 
