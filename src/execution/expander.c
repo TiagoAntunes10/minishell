@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 22:44:56 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/23 12:21:36 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:32:37 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,17 @@ static int	expand_str(char **str, t_envp *envp, int pos)
 	return (pos);
 }
 
-void	check_dolla(char **origin, t_envp *envp)
+void	check_dolla(char **origin, t_envp *envp, int here_doc)
 {
 	int	pos;
 
-	if (**origin != '\'')
+	if (**origin != '\'' && here_doc == 0)
+	{
+		pos = find_dolla(*origin);
+		while (pos != -1)
+			pos = expand_str(origin, envp, pos);
+	}
+	else if (here_doc == 1)
 	{
 		pos = find_dolla(*origin);
 		while (pos != -1)

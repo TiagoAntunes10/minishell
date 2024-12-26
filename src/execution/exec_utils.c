@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 17:25:29 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:35:54 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	exit_success(envp->root, 0, envp);
 }
 
-// TODO: Modify expander for here_doc
 static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 {
 	char	*line;
@@ -51,7 +50,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 	}
 	end_heredoc(envp, inp_pipe, 0);
 	line = readline(">");
-	line = remove_quotes(line, envp);
+	line = remove_quotes(line, envp, 1);
 	while (1)
 	{
 		if (!line)
@@ -64,7 +63,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 			exit_failure(envp->root, inp_pipe, envp);
 		free(line);
 		line = readline(">");
-		line = remove_quotes(line, envp);
+		line = remove_quotes(line, envp, 1);
 	}
 	free(line);
 	printf(HEREDOC_EOF" (wanted '%s')\n", delim);
