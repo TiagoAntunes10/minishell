@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 11:33:01 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 16:55:54 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	waitpid(0, &status, WNOHANG);
 	if (fd == 1 || fd == -1)
 		pipe_in_pipe(inp_pipe, fd, envp);
-	execution(pipe_node->right, 0, envp);
+	id = fork();
+	if (id == -1)
+		exit_failure(envp->root, inp_pipe, envp);
+	else if (id == 0)
+		execution(pipe_node->right, 0, envp);
+	waitpid(0, &status, 0);
 	exit_success(envp->root, 0, envp);
 }
 
+// TODO: Modify expander for here_doc
 static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 {
 	char	*line;
@@ -46,6 +52,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 		exit_failure(envp->root, inp_pipe, envp);
 	}
 	line = readline(">");
+	line = remove_quotes(line, envp);
 	while (1)
 	{
 		if (!line)
@@ -54,8 +61,11 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 			return (free(line));
 		if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
 			exit_failure(envp->root, inp_pipe, envp);
+		if (write(inp_pipe[1], "\n", 1) == -1)
+			exit_failure(envp->root, inp_pipe, envp);
 		free(line);
 		line = readline(">");
+		line = remove_quotes(line, envp);
 	}
 	free(line);
 	printf(HEREDOC_EOF" (wanted '%s')\n", delim);

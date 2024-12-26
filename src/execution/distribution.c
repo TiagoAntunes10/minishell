@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 12:12:15 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:23:51 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt)
 	int		i;
 
 	i = 0;
-	quotes_pairs(cmd->cmd, envp, is_bt, 1);
+	if (quotes_pairs(cmd->cmd, envp, is_bt, 1) == -1)
+		return (-1);
 	cmd->cmd = remove_quotes(cmd->cmd, envp);
 	while (cmd->opt[i] != NULL)
 	{
