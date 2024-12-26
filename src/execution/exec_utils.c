@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 17:35:54 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:03:33 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,8 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 			break ;
 		if (ft_strncmp(delim, line, ft_strlen(line) - 1) == 0)
 			return (free(line));
-		if (write(inp_pipe[1], line, ft_strlen(line)) == -1)
-			exit_failure(envp->root, inp_pipe, envp);
-		if (write(inp_pipe[1], "\n", 1) == -1)
+		if (write(inp_pipe[1], line, ft_strlen(line)) == -1
+			|| write(inp_pipe[1], "\n", 1) == -1)
 			exit_failure(envp->root, inp_pipe, envp);
 		free(line);
 		line = readline(">");

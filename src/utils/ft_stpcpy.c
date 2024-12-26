@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:21:11 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/21 15:37:04 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:03:26 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ char	*ft_stpcpy(char *restrict dst, char const *restrict src)
 {
 	char	*ptr;
 
-	return (ptr = ft_mempcpy(dst, src, ft_strlen(src)), *ptr = 0, ptr);
+	ptr = ft_mempcpy(dst, src, ft_strlen(src));
+	*ptr = 0;
+	return (ptr);
 }
