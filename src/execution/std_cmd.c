@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 11:33:22 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 22:06:41 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 		free(cmd_path);
 		i++;
 	}
+	if (envp_path[i] == NULL)
+		return (clear_arr(envp_path), NULL);
 	clear_arr(envp_path);
 	return (cmd_path);
 }
@@ -64,6 +66,23 @@ static char	*find_path(char *cmd, t_envp *envp)
 	return (cmd_path);
 }
 
+static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
+				char *cmd)
+{
+		if (errno == ENOENT)
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(cmd, STDERR_FILENO);
+			ft_putstr_fd(": command not found\n", STDERR_FILENO);
+			g_exit_code = 127;
+		}
+		else
+			g_exit_code = 126;
+		free(cmd_path);
+		clear_arr(envp_arr);
+		exit_failure(envp_lst->root, NULL, envp_lst);
+}
+
 void	std_cmd(t_cmd *cmd, t_envp *envp)
 {
 	char	**envp_arr;
@@ -76,17 +95,11 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	}
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
-	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
+	if (cmd_path == NULL)
 	{
-		if (errno == ENOENT)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(cmd->cmd, STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			g_exit_code = 127;
-		}
-		else
-			g_exit_code = 126;
+		clear_arr(envp_arr);
 		exit_failure(envp->root, NULL, envp);
 	}
+	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
+		exec_error(envp, cmd_path, envp_arr, cmd->cmd);
 }

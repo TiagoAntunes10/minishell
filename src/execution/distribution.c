@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 17:35:31 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:06:02 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 	{
 		signal_decider(tree);
 		id = fork();
+		envp->child_proc++;
 		if (id == -1)
 			exit_failure(tree, NULL, envp);
 		else if (id == 0)
