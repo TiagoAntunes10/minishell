@@ -67,20 +67,20 @@ static char	*find_path(char *cmd, t_envp *envp)
 }
 
 static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
-				char *cmd)
+		char *cmd)
 {
-		if (errno == ENOENT)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(cmd, STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			g_exit_code = 127;
-		}
-		else
-			g_exit_code = 126;
-		free(cmd_path);
-		clear_arr(envp_arr);
-		exit_failure(envp_lst->root, NULL, envp_lst);
+	if (errno == ENOENT)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		g_exit_code = 127;
+	}
+	else
+		g_exit_code = 126;
+	free(cmd_path);
+	clear_arr(envp_arr);
+	exit_failure(envp_lst->root, NULL, envp_lst);
 }
 
 void	std_cmd(t_cmd *cmd, t_envp *envp)
