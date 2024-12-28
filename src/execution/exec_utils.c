@@ -12,6 +12,9 @@
 
 #include "../../Include/minishell.h"
 
+//commenting child_proc-- seems to trigger first try cat|cat|ls,
+//but leaves hanging
+
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 {
 	int		inp_pipe[2];
@@ -28,8 +31,8 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (id == 0)
 		child_pipe(pipe_node, envp, inp_pipe);
-	waitpid(0, &status, WNOHANG);
-	envp->child_proc--;
+	waitpid(id, &status, WNOHANG);
+//	envp->child_proc--;
 	if (fd == 1 || fd == -1)
 		pipe_in_pipe(inp_pipe, fd, envp);
 	id = fork();
@@ -37,7 +40,7 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (id == 0)
 		execution(pipe_node->right, 0, envp);
-	while (envp->child_proc != 0)
+	while (envp->child_proc)
 	{
 		wait(0);
 		envp->child_proc--;
