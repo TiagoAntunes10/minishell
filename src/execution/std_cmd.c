@@ -71,9 +71,9 @@ static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 {
 	if (errno == ENOENT)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		ft_putstr_fd(": command not found\n" RST, STDERR_FILENO);
 		g_exit_code = 127;
 	}
 	else
