@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 22:06:41 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/29 02:00:10 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,15 @@ static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 {
 	if (errno == ENOENT)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		ft_putstr_fd(": command not found\n" RST, STDERR_FILENO);
 		g_exit_code = 127;
 	}
 	else
 		g_exit_code = 126;
-	free(cmd_path);
+	if (cmd_path)
+		free(cmd_path);
 	clear_arr(envp_arr);
 	exit_failure(envp_lst->root, NULL, envp_lst);
 }
@@ -96,10 +97,7 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
 	if (cmd_path == NULL)
-	{
-		clear_arr(envp_arr);
-		exit_failure(envp->root, NULL, envp);
-	}
+		exec_error(envp, NULL, envp_arr, cmd->cmd);
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 		exec_error(envp, cmd_path, envp_arr, cmd->cmd);
 }

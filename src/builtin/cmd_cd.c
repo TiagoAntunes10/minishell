@@ -81,7 +81,7 @@ static int	cd_checkups(char *path, t_envp *envp)
 	if (stat(path, &stats) == -1)
 	{
 		free(path);
-		return (stat_ret(RED CD_NOT_FND RST, 127));
+		return (stat_ret(RED CD_NOT_FND RST, 1));
 	}
 	if (S_ISDIR(stats.st_mode))
 	{
@@ -106,7 +106,7 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 
 	err = 0;
 	if (cmd->opt[1] && cmd->opt[2])
-		return (stat_ret(RED CD_ERR_ARG RST, 2));
+		return (stat_ret(RED CD_ERR_ARG RST, 1));
 	if (!cmd->opt[1] || !ft_strncmp(cmd->opt[1], "~", lencmp(cmd->opt[1], "~")))
 	{
 		if (!search_envp(envp, "HOME")
@@ -124,7 +124,7 @@ int	ft_cd(t_cmd *cmd, t_envp *envp)
 		err = cd_checkups(get_truepath(search_envp(envp, "HOME")->value,
 					cmd->opt[1]), envp);
 		if (err)
-			return (err);
+			return (stat_ret(NULL, err));
 	}
 	return (stat_ret(NULL, 0));
 }

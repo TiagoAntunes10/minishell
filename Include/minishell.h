@@ -63,7 +63,7 @@ void	std_cmd(t_cmd *cmd, t_envp *envp);
 
 int		get_full_str(t_cmd *cmd, t_envp *envp, int is_bt);
 void	check_dolla(char **origin, t_envp *envp, int here_doc);
-int		quotes_pairs(char *str, t_envp *envp, int is_bt, int is_cmd);
+int		quotes_pairs(char *str, t_envp *envp, int is_bt);
 char	*remove_quotes(char *origin, t_envp *envp, int here_doc);
 
 #endif

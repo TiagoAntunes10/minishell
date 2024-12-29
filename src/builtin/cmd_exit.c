@@ -48,7 +48,7 @@ static int	arg_isnum(char *arg)
 	int	i;
 
 	i = -1;
-	if (arg[0] == '-')
+	if (arg[0] == '-' || arg[0] == '+')
 		i++;
 	while (arg[++i])
 	{
