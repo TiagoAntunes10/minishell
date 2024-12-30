@@ -12,6 +12,9 @@
 
 #include "../../Include/minishell.h"
 
+//NOTE: adding dup2 for stdin seems to make it go back to the cat in cat|cat|ls
+//however process doesnt close, need to find solution
+
 void	child_pipe(t_pipe *pipe_node, t_envp *envp, int *inp_pipe)
 {
 	if (dup2(inp_pipe[1], 1) == -1)

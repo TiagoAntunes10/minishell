@@ -12,7 +12,7 @@
 
 #include "../../Include/minishell.h"
 
-int	quotes_pairs(char *str, t_envp *envp, int is_bt, int is_cmd)
+int	quotes_pairs(char *str, t_envp *envp, int is_bt)
 {
 	int	sin_quote;
 	int	dou_quote;
@@ -29,8 +29,7 @@ int	quotes_pairs(char *str, t_envp *envp, int is_bt, int is_cmd)
 	}
 	if (dou_quote % 2 != 0 || sin_quote % 2 != 0)
 	{
-		if (!is_cmd)
-			stat_ret(RED QUOTE_ERR RST, 2);
+		stat_ret(RED QUOTE_ERR RST, 2);
 		if (is_bt)
 			return (-1);
 		exit_failure(envp->root, NULL, envp);
@@ -95,6 +94,8 @@ char	*remove_quotes(char *origin, t_envp *envp, int here_doc)
 	char			**origin_split;
 	char			**split_cpy;
 
+	if (!origin)
+		return (free(origin), NULL);
 	origin_split = split_arg(origin, envp);
 	split_cpy = origin_split;
 	while (*split_cpy != NULL)

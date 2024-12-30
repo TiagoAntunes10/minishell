@@ -118,7 +118,9 @@ int	ft_export(t_cmd *cmd, t_envp *envp)
 	{
 		if (!is_valid_identifier(cmd->opt[i]))
 		{
-			printf(RED"export: %s: %s"RST, cmd->opt[i], INVAL_ID);
+			ft_putstr_fd(RED"export: ", 2);
+			ft_putstr_fd(cmd->opt[i], 2);
+			ft_putstr_fd(INVAL_ID RST, 2);
 			flag++;
 		}
 		else if ((export_env(cmd->opt[i], envp)) == -1)
