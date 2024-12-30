@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:51:07 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/13 18:35:14 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/30 21:08:17 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 /*                            CLEANUP                                         */
 /* ************************************************************************** */
 
+void	clean_cmd(t_tree *cmd, t_tree *tree, t_envp *envp);
 void	clear_envp(t_envp *envp);
 char	**clear_arr(char **arr);
 void	clear_tree(t_tree *tree);

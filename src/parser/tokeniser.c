@@ -6,11 +6,29 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:04 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:40:12 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:10:12 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+
+char	**ignore_redir(char ***input, char **input_cpy)
+{
+	if (input_cpy == NULL)
+		input_cpy = *input;
+	(*input)++;
+	return (input_cpy);
+}
+
+char	**ignore_opt(char **input)
+{
+	while (*input != NULL && **input != '|'
+		&& **input != '<' && **input != '>'
+		&& ft_strncmp(*input, "<<", ft_strlen(*input)) != 0
+		&& ft_strncmp(*input, ">>", ft_strlen(*input)) != 0)
+		input++;
+	return (input);
+}
 
 int	count_opt(char **tokens)
 {
@@ -19,13 +37,14 @@ int	count_opt(char **tokens)
 
 	count = 0;
 	token_cpy = tokens;
-	while (*token_cpy != NULL && **token_cpy != '>'
-		&& **token_cpy != '|' && **token_cpy != '<'
-		&& ft_strncmp(*token_cpy, "<<", ft_strlen(*token_cpy)) != 0
-		&& ft_strncmp(*token_cpy, ">>", ft_strlen(*token_cpy)) != 0)
+	while (*token_cpy != NULL && **token_cpy != '|')
 	{
-		count++;
-		token_cpy++;
+		if (redir_check(*token_cpy) == 0)
+			count++;
+		else
+			token_cpy++;
+		if (*token_cpy != NULL)
+			token_cpy++;
 	}
 	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 22:06:41 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:10:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,18 @@ static char	*find_path(char *cmd, t_envp *envp)
 static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 				char *cmd)
 {
-		if (errno == ENOENT)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(cmd, STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			g_exit_code = 127;
-		}
-		else
-			g_exit_code = 126;
-		free(cmd_path);
-		clear_arr(envp_arr);
-		exit_failure(envp_lst->root, NULL, envp_lst);
+	if (errno == ENOENT)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		g_exit_code = 127;
+	}
+	else
+		g_exit_code = 126;
+	free(cmd_path);
+	clear_arr(envp_arr);
+	exit_failure(envp_lst->root, NULL, envp_lst);
 }
 
 void	std_cmd(t_cmd *cmd, t_envp *envp)

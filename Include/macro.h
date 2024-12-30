@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:13:57 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/22 10:48:59 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/29 22:09:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,9 @@
 //QUOTE ERRORS
 
 # define QUOTE_ERR "quotes: unclosed quotes\n"
+
+//REDIR ERRORS
+
+# define REDIR_ERR "minishell: syntax error near unexpected token `newline'\n"
 
 #endif

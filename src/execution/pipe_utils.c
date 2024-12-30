@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:00 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 11:18:52 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/28 23:14:18 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	child_pipe(t_pipe *pipe_node, t_envp *envp, int *inp_pipe)
 	if (dup2(inp_pipe[1], 1) == -1)
 		exit_failure(envp->root, inp_pipe, envp);
 	close(inp_pipe[1]);
-	execution(pipe_node->left, 1, envp);
 	close(inp_pipe[0]);
+	execution(pipe_node->left, 1, envp);
 	close(1);
 	exit(0);
 }

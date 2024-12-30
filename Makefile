@@ -20,7 +20,7 @@ MEM_SOURCE = safe_alloc.c
 PARSER_SOURCE = node_create.c node_org.c tokeniser.c tokeniser_utils.c
 SIG_SOURCE = handlers.c signal_sorting.c
 UTILS_SOURCE = tree_utils.c ft_strcspn.c lencmp.c conc_str.c stat_ret.c \
-			   export_identifiers.c end_heredoc.c
+			   export_identifiers.c end_heredoc.c redir_check.c
 SOURCE = main.c
 
 BUILTIN_SOURCES = ${addprefix $(BUILTIN), $(BUILTIN_SOURCE)}
