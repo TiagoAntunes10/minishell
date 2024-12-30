@@ -25,6 +25,8 @@ static void	ft_delnode(t_envp *node)
 		free(node->key);
 	if (node->value)
 		free(node->value);
+	if (node->input_arr)
+		clear_arr(node->input_arr);
 	if (node)
 		free(node);
 }
@@ -63,6 +65,10 @@ int	ft_unset(t_cmd *cmd, t_envp *envp)
 	if (cmd->opt[0] && !cmd->opt[1])
 		return (stat_ret(NULL, 0));
 	while (cmd->opt[++i])
+	{
+		if (!search_envp(envp, cmd->opt[i]))
+			continue ;
 		unset_env(cmd->opt[i], &envp);
+	}
 	return (stat_ret(NULL, 0));
 }

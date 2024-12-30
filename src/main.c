@@ -6,13 +6,13 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:47:00 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/30 13:52:25 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/minishell.h"
 
-int	g_exit_code = 0;
+int	g_exit_code;
 
 static char	*get_prompt(void)
 {

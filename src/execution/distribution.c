@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+#include <sys/wait.h>
 
 int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt)
 {
@@ -93,21 +94,36 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 	signal_parent();
 }
 
+static void	resolve_child(int fd, t_envp *envp)
+{
+	int	status;
+
+	status = 0;
+	waitpid(0, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_code = WEXITSTATUS(status);
+	if (fd != -1 && g_exit_code)
+		exit_failure(envp->root, NULL, envp);
+	else if (fd != -1 && !g_exit_code) 
+		exit_success(envp->root, fd, envp);
+}
+
 void	execution(t_tree *tree, int fd, t_envp *envp)
 {
 	t_cmd	*cmd;
 
 	cmd = NULL;
 	if (tree == NULL)
-	{
-		clear_tree(tree);
 		return ;
-	}
 	if (tree->type == CMD)
 	{
 		cmd = (t_cmd *) tree;
 		if (cmd_dist(tree, envp) == 1)
+		{
+			if (fd != -1)
+				resolve_child(fd, envp);
 			return ;
+		}
 		else if (ft_strncmp(cmd->cmd, "exit", lencmp(cmd->cmd, "exit")) == 0)
 			ft_exit((t_tree *)cmd, envp);
 		else
