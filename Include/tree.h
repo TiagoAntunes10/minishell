@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:15:44 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:50:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/30 21:10:09 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd
 	int		type;
 	char	*cmd;
 	char	**opt;
+	int		num_opt;
 }				t_cmd;
 
 typedef struct s_redir

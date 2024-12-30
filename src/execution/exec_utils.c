@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 18:03:33 by rapcampo         ###   ########.fr       */
+/*   Updated: 2024/12/27 10:42:58 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	if (fd == 1 || fd == -1)
 		pipe_in_pipe(inp_pipe, fd, envp);
 	id = fork();
+	envp->child_proc++;
 	if (id == -1)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (id == 0)

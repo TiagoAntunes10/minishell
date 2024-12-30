@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/23 11:15:30 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:06:50 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 static char	**get_opt(t_cmd *cmd, t_tree *tree, char **input, t_envp *envp)
 {
-	int		opt_num;
 	int		i;
+	char	**input_cpy;
 
-	opt_num = count_opt(input);
-	cmd->opt = malloc((opt_num + 1) * sizeof(char *));
-	if (cmd->opt == NULL)
-	{
-		clear_tree((t_tree *) cmd);
-		exit_failure(tree, NULL, envp);
-	}
+	input_cpy = NULL;
 	i = 0;
-	while (i < opt_num)
+	while (i < cmd->num_opt)
 	{
-		cmd->opt[i] = malloc(ft_strlen(*input) + 1);
-		if (cmd->opt == NULL)
+		if (redir_check(*input) == 0)
 		{
-			clear_tree((t_tree *) cmd);
-			exit_failure(tree, NULL, envp);
+			cmd->opt[i] = malloc(ft_strlen(*input) + 1);
+			if (cmd->opt[i] == NULL)
+				clean_cmd((t_tree *) cmd, tree, envp);
+			ft_strlcpy(cmd->opt[i++], *input, ft_strlen(*input) + 1);
 		}
-		ft_strlcpy(cmd->opt[i++], *input, ft_strlen(*input) + 1);
-		input++;
+		else
+			input_cpy = ignore_redir(&input, input_cpy);
+		if (*input != NULL)
+			input++;
 	}
 	cmd->opt[i] = NULL;
+	if (input_cpy != NULL)
+		return (input_cpy);
 	return (input);
 }
 
@@ -48,8 +47,12 @@ t_tree	*cmd_node(t_tree *tree, char **input, t_envp *envp)
 	cmd->type = CMD;
 	cmd->cmd = (char *) safe_alloc(ft_strlen(*input) + 1, 1, tree, envp);
 	ft_strlcpy(cmd->cmd, *input, ft_strlen(*input) + 1);
+	cmd->num_opt = count_opt(input);
+	cmd->opt = malloc((cmd->num_opt + 1) * sizeof(char *));
+	if (cmd->opt == NULL)
+		clean_cmd((t_tree *) cmd, tree, envp);
 	input = get_opt(cmd, tree, input, envp);
-	if (ft_strncmp(*input, "||", lencmp(*input, "||")) == 0)
+	if (*input != NULL && ft_strncmp(*input, "||", lencmp(*input, "||")) == 0)
 		input++;
 	if (tree != NULL)
 	{
@@ -79,6 +82,7 @@ t_tree	*delim_node(t_tree *tree, char **input, t_envp *envp)
 	delim->right = tree;
 	if (*input != NULL)
 		input++;
+	input = ignore_opt(input);
 	tree = token_dist((t_tree *) delim, envp, input);
 	return (tree);
 }
@@ -112,8 +116,6 @@ t_tree	*redir_node(t_tree *tree, char **input, int mode, t_envp *envp)
 	redir = (t_redir *) safe_alloc(sizeof(*redir), 1, tree, envp);
 	redir->type = REDIR;
 	redir->file = NULL;
-	if (mode == (O_WRONLY | O_CREAT))
-		check_outfile(*input, mode, tree, envp);
 	if (*input != NULL)
 	{
 		redir->file = malloc(ft_strlen(*input) + 1);
@@ -123,10 +125,14 @@ t_tree	*redir_node(t_tree *tree, char **input, int mode, t_envp *envp)
 			exit_failure(tree, NULL, envp);
 		}
 		ft_strlcpy(redir->file, *input, ft_strlen(*input) + 1);
+		if (mode == (O_WRONLY | O_CREAT))
+			check_outfile(redir, mode);
 		input++;
 	}
+	if (tree != NULL)
+		input = ignore_opt(input);
 	redir->mode = mode;
-	redir->right = tree;
-	tree = token_dist((t_tree *) redir, envp, input);
+	tree = org_redir_read(redir, tree);
+	tree = token_dist(tree, envp, input);
 	return (tree);
 }

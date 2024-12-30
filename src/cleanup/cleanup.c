@@ -6,11 +6,17 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/21 15:34:59 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/30 21:08:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+
+void	clean_cmd(t_tree *cmd, t_tree *tree, t_envp *envp)
+{
+	clear_tree(cmd);
+	exit_failure(tree, NULL, envp);
+}
 
 void	clear_envp(t_envp *envp)
 {
