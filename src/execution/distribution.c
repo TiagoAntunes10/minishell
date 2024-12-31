@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/28 19:37:17 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:12:31 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,11 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 			exit_failure(tree, NULL, envp);
 		else if (id == 0)
 			exec_tree(tree, fd, envp);
-		while (envp->child_proc > 0)
+		if (waitpid(id, &status, 0) != -1)
 		{
-			wait(&status);
-			envp->child_proc--;
+			if (WIFEXITED(status))
+				g_exit_code = WEXITSTATUS(status);
+			signal_parent();
 		}
 	}
 	else
@@ -92,9 +93,6 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 		exec_tree(tree, fd, envp);
 		exit_success(envp->root, fd, envp);
 	}
-	if (WIFEXITED(status))
-		g_exit_code = WEXITSTATUS(status);
-	signal_parent();
 }
 
 void	execution(t_tree *tree, int fd, t_envp *envp)
@@ -119,4 +117,9 @@ void	execution(t_tree *tree, int fd, t_envp *envp)
 	}
 	else
 		child_exec(tree, fd, envp);
+	while (envp->child_proc > 0)
+	{
+		wait(0);
+		envp->child_proc--;
+	}
 }
