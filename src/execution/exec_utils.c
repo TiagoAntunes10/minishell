@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/27 10:42:58 by tialbert         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:09:47 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 {
 	int		inp_pipe[2];
-	int		id;
+	pid_t	id;
 	t_pipe	*pipe_node;
-	int		status;
+	// int		status;
 
 	pipe_node = (t_pipe *) tree;
 	if (pipe(inp_pipe) == -1)
@@ -31,21 +31,10 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (id == 0)
 		child_pipe(pipe_node, envp, inp_pipe);
-	waitpid(id, &status, WNOHANG);
-//	envp->child_proc--;
+	// waitpid(0, &status, 0);
 	if (fd == 1 || fd == -1)
 		pipe_in_pipe(inp_pipe, fd, envp);
-	id = fork();
-	envp->child_proc++;
-	if (id == -1)
-		exit_failure(envp->root, inp_pipe, envp);
-	else if (id == 0)
-		execution(pipe_node->right, 0, envp);
-	while (envp->child_proc)
-	{
-		wait(0);
-		envp->child_proc--;
-	}
+	execution(pipe_node->right, 0, envp);
 	exit_success(envp->root, 0, envp);
 }
 
