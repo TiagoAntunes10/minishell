@@ -33,12 +33,14 @@ int		ft_export(t_cmd *cmd, t_envp *envp);
 int		ft_cd(t_cmd *cmd, t_envp *envp);
 int		ft_env(t_cmd *cmd, t_envp *envp);
 int		ft_echo(t_cmd *cmd, t_envp *envp);
-int		ft_pwd(void);
+int		ft_pwd(t_cmd *cmd, t_envp *envp);
 void	ft_exit(t_tree *tree, t_envp *envp);
 
 //useful functions
 
 size_t	ft_strcspn(const char *str, const char *reject);
 int		export_env(char *var, t_envp *envp);
+int		is_bt(t_cmd *cmd, t_envp *envp);
+int		bt_exec(t_tree *tree, t_envp *envp, int bt);
 
 #endif
