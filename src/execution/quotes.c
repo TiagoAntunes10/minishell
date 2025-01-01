@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 10:42:51 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 17:34:29 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:07:26 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,8 @@ static char	**split_arg(char *str, t_envp *envp)
 	return (arr);
 }
 
-char	*remove_quotes(char *origin, t_envp *envp, int here_doc)
+char	*clean_str(char *origin, t_envp *envp, int here_doc)
 {
-	char			*str;
 	char			**origin_split;
 	char			**split_cpy;
 
@@ -101,13 +100,7 @@ char	*remove_quotes(char *origin, t_envp *envp, int here_doc)
 	while (*split_cpy != NULL)
 	{
 		check_dolla(split_cpy, envp, here_doc);
-		if ((**split_cpy == '\'' || **split_cpy == '"') && here_doc == 0)
-		{
-			str = ft_substr(*split_cpy, 1, ft_strlen(*split_cpy) - 2);
-			free(*split_cpy);
-			*split_cpy = ft_substr(str, 0, ft_strlen(str));
-			free(str);
-		}
+		remove_quotes(split_cpy, here_doc);
 		split_cpy++;
 	}
 	free(origin);

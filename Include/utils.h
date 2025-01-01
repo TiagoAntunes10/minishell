@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:11:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 23:02:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:06:31 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char			*conc_str(char **str_arr, t_envp *envp);
 char			**str_divide(char *str, t_envp *envp, int pos);
 int				is_valid_identifier(char *keyvalue);
 int				redir_check(char *input);
+void			remove_quotes(char **arr, int here_doc);
 
 #endif

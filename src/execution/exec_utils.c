@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/31 17:09:47 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:14:33 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	int		inp_pipe[2];
 	pid_t	id;
 	t_pipe	*pipe_node;
-	// int		status;
 
 	(void)fd;
 	pipe_node = (t_pipe *) tree;
@@ -31,11 +30,12 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	if (id == -1)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (id == 0)
-		child_pipe(pipe_node, envp, inp_pipe);
-	// waitpid(0, &status, 0);
-	if (fd == 1 || fd == -1)
-		pipe_in_pipe(inp_pipe, fd, envp);
-	execution(pipe_node->right, 0, envp);
+	{
+		if (fd >= 1 || fd == -1)
+			pipe_in_pipe(inp_pipe, fd, envp);
+		execution(pipe_node->right, inp_pipe[1], envp);
+	}
+	child_pipe(pipe_node, envp, inp_pipe);
 	exit_success(envp->root, 0, envp);
 }
 
@@ -50,7 +50,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 	}
 	end_heredoc(envp, inp_pipe, 0);
 	line = readline(">");
-	line = remove_quotes(line, envp, 1);
+	line = clean_str(line, envp, 1);
 	while (1)
 	{
 		if (!line)
@@ -62,7 +62,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 			exit_failure(envp->root, inp_pipe, envp);
 		free(line);
 		line = readline(">");
-		line = remove_quotes(line, envp, 1);
+		line = clean_str(line, envp, 1);
 	}
 	free(line);
 	printf(HEREDOC_EOF" (wanted '%s')\n", delim);
@@ -74,6 +74,8 @@ void	exec_delim(t_tree *tree, t_envp *envp)
 	int		inp_pipe[2];
 
 	delim = (t_delim *) tree;
+	quotes_pairs(delim->delim, envp, 0);
+	remove_quotes(&(delim->delim), 0);
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
 	signal_heredoc();
@@ -91,6 +93,8 @@ void	exec_redir(t_tree *tree, t_envp *envp)
 	t_redir	*redir;
 
 	redir = (t_redir *) tree;
+	quotes_pairs(redir->file, envp, 0);
+	remove_quotes(&(redir->file), 0);
 	if (redir->mode == O_RDONLY)
 		redir_read(redir, envp);
 	else
