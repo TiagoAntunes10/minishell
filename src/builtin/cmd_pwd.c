@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 20:51:45 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/15 17:55:59 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:41:52 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@ int	ft_pwd(t_cmd *cmd, t_envp *envp)
 {
 	char	*cwd;
 
-	((void)cmd, (void)envp);
+	(void)cmd;
 	cwd = getcwd(NULL, 4096);
+	if (!cwd && search_envp(envp, "PWD"))
+	{
+		printf("%s\n", search_envp(envp, "PWD")->value);
+		return (stat_ret(NULL, 0));
+	}
 	if (printf("%s\n", cwd) < 0)
 	{
 		free(cwd);

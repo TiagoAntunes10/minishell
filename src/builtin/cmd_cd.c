@@ -19,16 +19,14 @@ static int	ft_changedir(char *path, t_envp *envp)
 	char	*buffer;
 
 	oldvalue = getcwd(NULL, 4096);
-	if (!oldvalue)
-		return (-1);
 	if (chdir(path) == -1)
-		return (free(oldvalue), -1);
+		return (ft_free(oldvalue), -1);
 	buffer = ft_strjoin("OLDPWD=", oldvalue);
 	if (!buffer)
-		return (free(oldvalue), -1);
+		return (ft_free(oldvalue), -1);
 	export_env(buffer, envp);
-	free(buffer);
-	free(oldvalue);
+	ft_free(buffer);
+	ft_free(oldvalue);
 	newvalue = getcwd(NULL, 4096);
 	if (!newvalue)
 		return (-1);
@@ -36,8 +34,8 @@ static int	ft_changedir(char *path, t_envp *envp)
 	if (!buffer)
 		return (free(newvalue), -1);
 	export_env(buffer, envp);
-	free(buffer);
-	free(newvalue);
+	ft_free(buffer);
+	ft_free(newvalue);
 	return (EXIT_SUCCESS);
 }
 

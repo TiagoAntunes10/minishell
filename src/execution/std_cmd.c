@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 23:10:45 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:13:15 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,11 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	{
 		stat_ret("syntax error near unexpected token ';'\n", 2);
 		exit_failure(envp->root, NULL, envp);
+	}
+	if (cmd->cmd[0] == '\0')
+	{
+		stat_ret(NULL, 0);
+		exit_success(envp->root, -1, envp);
 	}
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
