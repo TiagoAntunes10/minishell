@@ -6,7 +6,7 @@
 /*   By: tialbert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 14:45:09 by tialbert          #+#    #+#             */
-/*   Updated: 2023/09/11 17:49:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:22:37 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static char	*ft_join(char const *s1, char const *s2, char *str)
 		s1++;
 		i++;
 	}
+	if (s2 == NULL)
+		return (str);
 	while (*s2 != '\0')
 	{
 		str[i] = *s2;

@@ -50,7 +50,7 @@
 
 //PWD ERRORS
 
-# define PWD_ERR_ARG "pwd: Too many arguments\n"
+# define PWD_NO_SET "pwd: PWD not set\n"
 # define PWD_NO_PRNT "pwd: could not print current directory\n"
 
 //ENV ERRORS
