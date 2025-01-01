@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 00:13:03 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/31 00:47:56 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:24:41 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt)
 	i = 0;
 	if (quotes_pairs(cmd->cmd, envp, is_bt) == -1)
 		return (-1);
-	cmd->cmd = remove_quotes(cmd->cmd, envp, 0);
+	cmd->cmd = clean_str(cmd->cmd, envp, 0);
 	while (cmd->opt[i] != NULL)
 	{
 		if (quotes_pairs(cmd->opt[i], envp, is_bt) == -1)
 			return (-1);
-		cmd->opt[i] = remove_quotes(cmd->opt[i], envp, 0);
+		cmd->opt[i] = clean_str(cmd->opt[i], envp, 0);
 		i++;
 	}
 	return (0);
