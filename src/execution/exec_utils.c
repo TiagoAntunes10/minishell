@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/01 14:20:09 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:14:33 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 	}
 	end_heredoc(envp, inp_pipe, 0);
 	line = readline(">");
-	line = remove_quotes(line, envp, 1);
+	line = clean_str(line, envp, 1);
 	while (1)
 	{
 		if (!line)
@@ -61,7 +61,7 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 			exit_failure(envp->root, inp_pipe, envp);
 		free(line);
 		line = readline(">");
-		line = remove_quotes(line, envp, 1);
+		line = clean_str(line, envp, 1);
 	}
 	free(line);
 	printf(HEREDOC_EOF" (wanted '%s')\n", delim);
@@ -73,6 +73,8 @@ void	exec_delim(t_tree *tree, t_envp *envp)
 	int		inp_pipe[2];
 
 	delim = (t_delim *) tree;
+	quotes_pairs(delim->delim, envp, 0);
+	remove_quotes(&(delim->delim), 0);
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
 	signal_heredoc();
@@ -90,6 +92,8 @@ void	exec_redir(t_tree *tree, t_envp *envp)
 	t_redir	*redir;
 
 	redir = (t_redir *) tree;
+	quotes_pairs(redir->file, envp, 0);
+	remove_quotes(&(redir->file), 0);
 	if (redir->mode == O_RDONLY)
 		redir_read(redir, envp);
 	else

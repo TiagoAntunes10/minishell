@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/01 14:26:59 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 15:46:56 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,15 @@ static void	input_reader(t_envp *envp)
 		execution(tree, -1, envp);
 		if (waitpid(0, &status, 0) != -1)
 		{
+			envp->child_proc--;
 			if (WIFEXITED(status))
 				g_exit_code = WEXITSTATUS(status);
 			signal_parent();
+		}
+		while (envp->child_proc > 1)
+		{
+			wait(0);
+			envp->child_proc--;
 		}
 		clear_tree(tree);
 		prompt = get_prompt();
