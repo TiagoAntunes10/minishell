@@ -21,6 +21,7 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	pid_t	id;
 	t_pipe	*pipe_node;
 
+	(void)fd;
 	pipe_node = (t_pipe *) tree;
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);

@@ -12,7 +12,7 @@
 
 #include "../Include/minishell.h"
 
-int	g_exit_code = 0;
+int	g_exit_code;
 
 static char	*get_prompt(void)
 {
