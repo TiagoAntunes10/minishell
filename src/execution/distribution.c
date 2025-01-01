@@ -6,29 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/01 17:19:42 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:27:36 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-
-int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt)
-{
-	int		i;
-
-	i = 0;
-	if (quotes_pairs(cmd->cmd, envp, is_bt) == -1)
-		return (-1);
-	cmd->cmd = clean_str(cmd->cmd, envp, 0);
-	while (cmd->opt[i] != NULL)
-	{
-		if (quotes_pairs(cmd->opt[i], envp, is_bt) == -1)
-			return (-1);
-		cmd->opt[i] = clean_str(cmd->opt[i], envp, 0);
-		i++;
-	}
-	return (0);
-}
 
 /*static int	cmd_dist(t_tree *tree, t_envp *envp)
 {
