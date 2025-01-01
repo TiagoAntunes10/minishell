@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/31 17:09:47 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/01 14:20:09 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	int		inp_pipe[2];
 	pid_t	id;
 	t_pipe	*pipe_node;
-	// int		status;
 
 	pipe_node = (t_pipe *) tree;
 	if (pipe(inp_pipe) == -1)
@@ -30,11 +29,12 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	if (id == -1)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (id == 0)
-		child_pipe(pipe_node, envp, inp_pipe);
-	// waitpid(0, &status, 0);
-	if (fd == 1 || fd == -1)
-		pipe_in_pipe(inp_pipe, fd, envp);
-	execution(pipe_node->right, 0, envp);
+	{
+		if (fd >= 1 || fd == -1)
+			pipe_in_pipe(inp_pipe, fd, envp);
+		execution(pipe_node->right, inp_pipe[1], envp);
+	}
+	child_pipe(pipe_node, envp, inp_pipe);
 	exit_success(envp->root, 0, envp);
 }
 
