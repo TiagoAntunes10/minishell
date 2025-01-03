@@ -94,6 +94,11 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 		stat_ret("syntax error near unexpected token ';'\n", 2);
 		exit_failure(envp->root, NULL, envp);
 	}
+	if (cmd->cmd[0] == '\0')
+	{
+		stat_ret(NULL, 0);
+		exit_success(envp->root, -1, envp);
+	}
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
 	if (cmd_path == NULL)
