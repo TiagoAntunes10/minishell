@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/01 17:27:36 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:07:26 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,24 @@ static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 
 static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 {
-	int	id;
+	// int	id;
 
 	if (fd == -1)
 	{
 		signal_decider(tree);
-		id = fork();
-		envp->child_proc++;
-		if (id == -1)
-			exit_failure(tree, NULL, envp);
-		else if (id == 0)
-			exec_tree(tree, fd, envp);
+		// id = fork();
+		// envp->child_proc++;
+		// if (id == -1)
+		// 	exit_failure(tree, NULL, envp);
+		// else if (id == 0)
+		exec_tree(tree, fd, envp);
 	}
 	else
 	{
 		exec_tree(tree, fd, envp);
 		if (fd > 1)
 			close(fd);
-		exit_success(envp->root, fd, envp);
+		// exit_success(envp->root, fd, envp);
 	}
 }
 

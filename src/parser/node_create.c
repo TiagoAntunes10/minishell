@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 23:06:50 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:08:32 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,18 @@ t_tree	*delim_node(t_tree *tree, char **input, t_envp *envp)
 t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 {
 	t_pipe	*pipe;
+	t_pipe	*tree_pipe;
 
 	pipe = (t_pipe *) safe_alloc(sizeof(*pipe), 1, tree, envp);
 	pipe->type = PIPE;
-	pipe->left = tree;
+	if (tree != NULL && tree->type == PIPE)
+	{
+		tree_pipe = (t_pipe *) tree;
+		pipe->left = tree_pipe->right;
+		tree_pipe->right = (t_tree *) pipe;
+	}
+	else
+		pipe->left = tree;
 	pipe->right = NULL;
 	input++;
 	if (*input == NULL || **input == '|')
@@ -104,7 +112,10 @@ t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 		g_exit_code = 2;
 		return (NULL);
 	}
-	tree = token_dist((t_tree *) pipe, envp, input);
+	if (tree != NULL && tree->type == PIPE)
+		tree = token_dist(tree, envp, input);
+	else
+		tree = token_dist((t_tree *) pipe, envp, input);
 	return (tree);
 }
 
