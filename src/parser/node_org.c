@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 22:42:20 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:08:14 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	check_outfile(t_redir *redir, int mode)
 t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 {
 	t_redir	*tree_node;
+	t_pipe	*tree_pipe;
 
 	if (tree != NULL)
 	{
@@ -43,9 +44,25 @@ t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 				tree_node->right = (t_tree *) redir;
 				return ((t_tree *) tree_node);
 			}
+			redir->right = tree;
+			return ((t_tree *) redir);
 		}
+		else if (tree->type == PIPE && (redir->mode == (O_WRONLY | O_CREAT)
+			|| redir->mode == (O_WRONLY | O_CREAT | O_APPEND)))
+		{
+			tree_pipe = (t_pipe *) tree;
+			while (tree_pipe->right->type != CMD)
+				tree_pipe = (t_pipe *) tree_pipe->right;
+			redir->right = tree_pipe->right;
+			tree_pipe->right = (t_tree *) redir;
+		}
+		else
+		{
+			redir->right = tree;
+			tree = (t_tree *) redir;
+		}
+		return (tree);
 	}
-	redir->right = tree;
 	return ((t_tree *) redir);
 }
 
@@ -54,8 +71,10 @@ static t_tree	*org_pipe(t_tree *tree, t_tree *cmd)
 	t_pipe	*pipe;
 
 	pipe = (t_pipe *) tree;
+	while (pipe->right != NULL)
+		pipe = (t_pipe *) pipe->right;
 	pipe->right = cmd;
-	return ((t_tree *) pipe);
+	return (tree);
 }
 
 static t_tree	*org_redir(t_tree *tree, t_tree *cmd)
