@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 10:42:51 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/01 17:07:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:50:09 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	quotes_pairs(char *str, t_envp *envp, int is_bt)
 
 	sin_quote = 0;
 	dou_quote = 0;
+	if (!str)
+		return (-1);
 	while (*str != 0)
 	{
 		if (*str == '"')
