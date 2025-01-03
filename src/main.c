@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/03 14:51:15 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:57:33 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	clean_fd(t_envp *envp)
 	close(envp->fd_out);
 }
 
-static char	*get_prompt(void)
+static char	*get_prompt(t_envp *envp)
 {
 	char	*prompt;
 	char	*pwd;
@@ -95,9 +95,9 @@ static void	input_reader(t_envp *envp)
 			wait(0);
 			envp->child_proc--;
 		}
-		clear_tree(tree);
 		reset_std(envp);
-		prompt = get_prompt();
+		clear_tree(tree);
+		prompt = get_prompt(envp);
 		input = readline(prompt);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/03 15:07:34 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:56:39 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	if (fd >= 1 || fd == -1)
 		pipe_in_pipe(inp_pipe, fd, envp);
 	execution(pipe_node->right, inp_pipe[1], envp);
+	close(0);
 	// exit_success(envp->root, 0, envp);
 }
 
