@@ -16,7 +16,7 @@ void	redir_read(t_redir *redir, t_envp *envp)
 {
 	int	redir_fd;
 
-	if (redir->file == NULL)
+	if (!is_redir_valid(redir->file))
 		exit_failure(envp->root, NULL, envp);
 	if (access(redir->file, F_OK | R_OK) == -1)
 		exit_failure(envp->root, NULL, envp);
@@ -37,11 +37,8 @@ void	redir_write(t_redir *redir, t_envp *envp)
 {
 	int	redir_fd;
 
-	if (redir->file == NULL)
-	{
-		stat_ret(RED REDIR_ERR RST, 2);
+	if (!is_redir_valid(redir->file))
 		exit_failure(envp->root, NULL, envp);
-	}
 	redir_fd = open(redir->file, redir->mode, 0755);
 	if (redir_fd == -1)
 		exit_failure(envp->root, NULL, envp);

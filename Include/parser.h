@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:48:30 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 23:07:03 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:52:30 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ unsigned int	check_quotes(char **str, int len);
 unsigned int	mod_strlen(char *str);
 char			**split_input(char *str, t_envp *envp);
 void			check_outfile(t_redir *redir, int mode);
+int				is_redir_valid(char *file);
 
 #endif

@@ -88,5 +88,5 @@
 //REDIR ERRORS
 
 # define REDIR_ERR "minishell: syntax error near unexpected token `newline'\n"
-
+# define REDIR_TOK "minishell: syntax error near unexpected token `" 
 #endif
