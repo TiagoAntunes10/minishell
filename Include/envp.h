@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 15:58:51 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/26 18:03:11 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/02 22:21:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef struct s_envp
 	char			*value;
 	char			**input_arr;
 	int				child_proc;
+	int				fd_in;
+	int				fd_out;
+	int				id;
 	struct s_envp	*next;
 	struct s_tree	*root;
 }				t_envp;

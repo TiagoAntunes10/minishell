@@ -6,13 +6,37 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/01 15:46:56 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:51:15 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/minishell.h"
 
 int	g_exit_code;
+
+void	std_dup(t_envp *envp)
+{
+	envp->fd_in = dup(STDIN_FILENO);
+	if (envp->fd_in == -1)
+		exit_failure(NULL, NULL, envp);
+	envp->fd_out = dup(STDOUT_FILENO);
+	if (envp->fd_out == -1)
+		exit_failure(NULL, NULL, envp);
+}
+
+void	reset_std(t_envp *envp)
+{
+	if (dup2(envp->fd_in, 0) == -1)
+		exit_failure(NULL, NULL, envp);
+	if (dup2(envp->fd_out, 1) == -1)
+		exit_failure(NULL, NULL, envp);
+}
+
+void	clean_fd(t_envp *envp)
+{
+	close(envp->fd_in);
+	close(envp->fd_out);
+}
 
 static char	*get_prompt(void)
 {
@@ -56,19 +80,21 @@ static void	input_reader(t_envp *envp)
 		free(input);
 		free(prompt);
 		execution(tree, -1, envp);
-		if (waitpid(0, &status, 0) != -1)
+		if (waitpid(envp->id, &status, 0) != -1)
 		{
 			envp->child_proc--;
 			if (WIFEXITED(status))
 				g_exit_code = WEXITSTATUS(status);
 			signal_parent();
+			envp->id = 0;
 		}
-		while (envp->child_proc > 1)
+		while (envp->child_proc)
 		{
 			wait(0);
 			envp->child_proc--;
 		}
 		clear_tree(tree);
+		reset_std(envp);
 		prompt = get_prompt();
 		input = readline(prompt);
 	}
@@ -80,10 +106,12 @@ int	main(int argc, char **argv, char **env)
 
 	((void)argc, (void)argv);
 	envp_lst = arr_to_lst(env);
+	std_dup(envp_lst);
 	signal_parent();
 	update_shlvl(envp_lst);
 	input_reader(envp_lst);
 	rl_clear_history();
+	clean_fd(envp_lst);
 	clear_envp(envp_lst);
 	printf("exit\n");
 	return (g_exit_code);
