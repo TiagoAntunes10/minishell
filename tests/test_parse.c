@@ -25,7 +25,7 @@ static char	**test_delim(t_tree *tree, char **input, t_envp *envp)
 	input = test_tree(delim->right, input, envp);
 	assert(ft_strncmp(*input, "<<", ft_strlen(*input)) == 0);
 	input++;
-	assert(ft_strncmp(*input, delim->delim, ft_strlen(delim->delim)) == 0);
+	assert(ft_strncmp(*input, delim->delim, lencmp(delim->delim, *input)) == 0);
 	input++;
 	return (input);
 }
@@ -46,7 +46,7 @@ static char	**test_redir(t_tree *tree, char **input, t_envp *envp)
 	if (redir->file == NULL)
 		assert(redir->file == *input);
 	else
-		assert(ft_strncmp(*input, redir->file, ft_strlen(redir->file)) == 0);
+			assert(ft_strncmp(*input, redir->file, lencmp(redir->file, *input)) == 0);
 	input++;
 	return (input);
 }
@@ -60,7 +60,7 @@ static char	**test_cmd(t_tree *tree, char **input, t_envp *envp)
 
 	cmd = (t_cmd *) tree;
 	arr = split_input(*input, envp);
-	assert(ft_strncmp(arr[0], cmd->cmd, ft_strlen(cmd->cmd)) == 0);
+	assert(ft_strncmp(arr[0], cmd->cmd, lencmp(cmd->cmd, arr[0])) == 0);
 	input++;
 	arr_size = 0;
 	while (arr[arr_size] != NULL)
@@ -68,7 +68,7 @@ static char	**test_cmd(t_tree *tree, char **input, t_envp *envp)
 	i = 0;
 	while (i < arr_size)
 	{
-		assert(ft_strncmp(arr[i], cmd->opt[i], ft_strlen(cmd->opt[i])) == 0);
+		assert(ft_strncmp(arr[i], cmd->opt[i], lencmp(cmd->opt[i], arr[i])) == 0);
 		i++;
 	}
 	clear_arr(arr);
@@ -174,6 +174,20 @@ int	main(int argc, char **argv, char **env)
 	tree_cpy = tree;
 	char	*input11[3] = {"cat", "<", "infile"};
 	test_tree(tree_cpy, input11, envp);
+	clear_tree(tree);
+
+	// Test "echo hi | >out echo bye >out2" input
+	tree = tokenisation("echo hi | >out echo bye >hello", envp);
+	tree_cpy = tree;
+	char	*input12[7] = {"echo hi", "|", "echo bye", ">", "hello", ">", "out"};
+	test_tree(tree_cpy, input12, envp);
+	clear_tree(tree);
+
+	// Test "echo hi | echo bye >out >out2" input
+	tree = tokenisation("echo hi | echo bye >out >out2", envp);
+	tree_cpy = tree;
+	char	*input13[7] = {"echo hi", "|", "echo bye", ">", "out2", ">", "out"};
+	test_tree(tree_cpy, input13, envp);
 	clear_tree(tree);
 
 	clear_envp(envp);

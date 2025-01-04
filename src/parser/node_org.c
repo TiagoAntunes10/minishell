@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/03 15:08:14 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/04 15:43:30 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,23 @@ t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 			|| redir->mode == (O_WRONLY | O_CREAT | O_APPEND)))
 		{
 			tree_pipe = (t_pipe *) tree;
-			while (tree_pipe->right->type != CMD)
+			while (tree_pipe->right != NULL && tree_pipe->right->type == PIPE)
 				tree_pipe = (t_pipe *) tree_pipe->right;
-			redir->right = tree_pipe->right;
-			tree_pipe->right = (t_tree *) redir;
+			if (tree_pipe->right != NULL && tree_pipe->right->type == REDIR)
+			{
+				tree_node = (t_redir *) tree_pipe->right;
+				while (tree_node->right != NULL && tree_node->right->type == REDIR)
+					tree_node = (t_redir *) tree_node->right;
+				redir->right = tree_node->right;
+				tree_node->right = (t_tree *) redir;
+			}
+			else if (tree_pipe->right != NULL && tree_pipe->right->type == CMD)
+			{
+				redir->right = tree_pipe->right;
+				tree_pipe->right = (t_tree *) redir;
+			}
+			else
+				tree_pipe->right = (t_tree *) redir;
 		}
 		else
 		{
@@ -66,34 +79,41 @@ t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 	return ((t_tree *) redir);
 }
 
-static t_tree	*org_pipe(t_tree *tree, t_tree *cmd)
+static void	org_pipe(t_tree *tree, t_tree *cmd)
 {
 	t_pipe	*pipe;
 
 	pipe = (t_pipe *) tree;
-	while (pipe->right != NULL)
-		pipe = (t_pipe *) pipe->right;
+	if (pipe->right != NULL)
+		return (org_tree((t_tree *) pipe->right, cmd));
 	pipe->right = cmd;
-	return (tree);
 }
 
-static t_tree	*org_redir(t_tree *tree, t_tree *cmd)
+static void	org_redir(t_tree *tree, t_tree *cmd)
 {
 	t_redir	*redir;
+	t_delim	*delim;
 
-	redir = (t_redir *) tree;
-	redir->right = cmd;
-	return ((t_tree *) redir);
+	if (tree->type == REDIR)
+	{
+		redir = (t_redir *) tree;
+		if (redir->right != NULL)
+			return (org_tree((t_tree *) redir->right, cmd));
+		redir->right = cmd;
+	}
+	else if (tree->type == DELIM)
+	{
+		delim = (t_delim *) tree;
+		if (delim->right != NULL)
+			return (org_tree((t_tree *) delim->right, cmd));
+		delim->right = cmd;
+	}
 }
 
-// TODO: Not sure if it should return NULL
-t_tree	*org_tree(t_tree *tree, t_tree *cmd)
+void	org_tree(t_tree *tree, t_tree *cmd)
 {
-	if (tree == NULL)
-		return ((t_tree *) cmd);
-	else if (tree->type == PIPE)
+	if (tree->type == PIPE)
 		return (org_pipe(tree, cmd));
-	else if (tree->type == REDIR)
+	else if (tree->type == REDIR || tree->type == DELIM)
 		return (org_redir(tree, cmd));
-	return (NULL);
 }

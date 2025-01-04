@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/03 15:08:32 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:44:46 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_tree	*cmd_node(t_tree *tree, char **input, t_envp *envp)
 		input++;
 	if (tree != NULL)
 	{
-		tree = org_tree(tree, (t_tree *) cmd);
+		org_tree(tree, (t_tree *) cmd);
 		tree = token_dist(tree, envp, input);
 		return (tree);
 	}
@@ -97,6 +97,8 @@ t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 	if (tree != NULL && tree->type == PIPE)
 	{
 		tree_pipe = (t_pipe *) tree;
+		while (tree_pipe->right != NULL && tree_pipe->right->type == PIPE)
+			tree_pipe = (t_pipe *) tree_pipe->right;
 		pipe->left = tree_pipe->right;
 		tree_pipe->right = (t_tree *) pipe;
 	}
@@ -117,6 +119,40 @@ t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 	else
 		tree = token_dist((t_tree *) pipe, envp, input);
 	return (tree);
+}
+
+int	check_cmd(t_tree *tree)
+{
+	t_pipe	*pipe;
+	t_redir	*redir;
+	t_delim	*delim;
+
+	if (tree == NULL)
+		return (0);
+	else if (tree->type == CMD)
+		return (1);
+	else if (tree->type == PIPE)
+	{
+		pipe = (t_pipe *) tree;
+		while (pipe->right != NULL && pipe->right->type == PIPE)
+			pipe = (t_pipe *) pipe->right;
+		return (check_cmd(pipe->right));
+	}
+	else if (tree->type == REDIR)
+	{
+		redir = (t_redir *) tree;
+		while (redir->right != NULL && redir->right->type == REDIR)
+			redir = (t_redir *) redir->right;
+		return (check_cmd(redir->right));
+	}
+	else if (tree->type == DELIM)
+	{
+		delim = (t_delim *) tree;
+		while (delim->right != NULL && delim->right->type == DELIM)
+			delim = (t_delim *) delim->right;
+		return (check_cmd(delim->right));
+	}
+	return (0);
 }
 
 t_tree	*redir_node(t_tree *tree, char **input, int mode, t_envp *envp)
@@ -140,7 +176,7 @@ t_tree	*redir_node(t_tree *tree, char **input, int mode, t_envp *envp)
 			check_outfile(redir, mode);
 		input++;
 	}
-	if (tree != NULL)
+	if (check_cmd(tree) == 1)
 		input = ignore_opt(input);
 	redir->mode = mode;
 	tree = org_redir_read(redir, tree);

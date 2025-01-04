@@ -12,7 +12,8 @@ TEST_PARSE = ./
 TEST_EXEC = ./
 TEST_EXP = ./
 
-ENVP_SOURCE = envp_split.c envp_utils.c envp_search.c env_shlvl.c
+ENVP_SOURCE = envp_split.c envp_utils.c envp_search.c 
+# env_shlvl.c
 
 EXEC_SOURCE = exec_utils.c distribution.c std_cmd.c pipe_utils.c \
 			  redir_utils.c quotes.c bt_logic.c expander.c \

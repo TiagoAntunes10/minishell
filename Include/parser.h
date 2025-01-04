@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:48:30 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 23:07:03 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/04 15:04:25 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_tree			*cmd_node(t_tree *tree, char **input, t_envp *envp);
 t_tree			*delim_node(t_tree *tree, char **input, t_envp *envp);
 t_tree			*pipe_node(t_tree *tree, char **input, t_envp *envp);
 t_tree			*redir_node(t_tree *tree, char **input, int mode, t_envp *envp);
-t_tree			*org_tree(t_tree *tree, t_tree *cmd);
+void			org_tree(t_tree *tree, t_tree *cmd);
 t_tree			*org_redir_read(t_redir *redir, t_tree *tree);
 
 /* ************************************************************************** */
