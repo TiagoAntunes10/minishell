@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:01:08 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/25 00:02:12 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:40:11 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,40 +21,35 @@
 
 static void	ft_delnode(t_envp *node)
 {
+	if (!node || node == 0)
+		return ;
 	if (node->key)
 		free(node->key);
 	if (node->value)
 		free(node->value);
-	if (node->input_arr)
-		clear_arr(node->input_arr);
 	if (node)
 		free(node);
 }
 
 static void	unset_env(char *key, t_envp **head)
 {
-	t_envp	*prev;
-	t_envp	*temp;
+	t_envp	*to_clone;
+	t_envp	*rem;
 
-	prev = NULL;
-	temp = *head;
-	if (!prev && !ft_strncmp(temp->key, key, ft_strlen(key)))
+	rem = search_envp(*head, key);
+	to_clone = rem->next;
+	if (to_clone->next == NULL)
 	{
-		*head = temp->next;
-		ft_delnode(temp);
-		return ;
+		export_env("backups", rem);
+		rem->next = search_envp(rem, "backups");
 	}
-	while (temp)
-	{
-		if (!ft_strncmp(temp->key, key, ft_strlen(key)))
-		{
-			prev->next = temp->next;
-			ft_delnode(temp);
-			break ;
-		}
-		prev = temp;
-		temp = temp->next;
-	}
+	else
+		rem->next = to_clone->next;
+	ft_free(rem->key);
+	ft_free(rem->value);
+	rem->key = ft_strdup(to_clone->key);
+	rem->value = ft_strdup(to_clone->value);
+	ft_delnode(to_clone);
 }
 
 int	ft_unset(t_cmd *cmd, t_envp *envp)
@@ -66,7 +61,7 @@ int	ft_unset(t_cmd *cmd, t_envp *envp)
 		return (stat_ret(NULL, 0));
 	while (cmd->opt[++i])
 	{
-		if (!search_envp(envp, cmd->opt[i]))
+		if (search_envp(envp, cmd->opt[i]) == NULL)
 			continue ;
 		unset_env(cmd->opt[i], &envp);
 	}
