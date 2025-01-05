@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:12:05 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 17:13:12 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/04 10:24:22 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	redir_write(t_redir *redir, t_envp *envp)
 	}
 	redir_fd = open(redir->file, redir->mode, 0755);
 	if (redir_fd == -1)
+	{
+		ft_putstr_fd(redir->file, 2);
 		exit_failure(envp->root, NULL, envp);
+	}
 	if (dup2(redir_fd, 1) == -1)
 	{
 		close(redir_fd);

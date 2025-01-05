@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/03 15:09:09 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/05 22:57:39 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,7 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
 	if (cmd_path == NULL)
-		exec_error(envp, NULL, envp_arr, cmd->cmd);
-	envp->id = fork();
-	envp->child_proc++;
-	if (envp->id == -1)
-		exit_failure(envp->root, NULL, envp);
-	else if (envp->id == 0)
-	{
-		if (execve(cmd_path, cmd->opt, envp_arr) == -1)
-			exec_error(envp, cmd_path, envp_arr, cmd->cmd);
-	}
-	if (cmd_path)
-		free(cmd_path);
-	clear_arr(envp_arr);
+		return (exec_error(envp, NULL, envp_arr, cmd->cmd));
+	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
+		exec_error(envp, cmd_path, envp_arr, cmd->cmd);
 }
