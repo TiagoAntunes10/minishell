@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:21:01 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/10 15:31:40 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/06 11:21:02 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ void	ft_exit(t_tree *tree, t_envp *envp)
 	else if (cmd->opt[1] && !arg_isnum(cmd->opt[1]))
 	{
 		stat_ret(RED EX_ALPHA_ERR RST, 2);
-		exit_failure((t_tree *)cmd, NULL, envp);
+		exit_failure(envp->root, NULL, envp);
 	}
 	else if (cmd->opt[1] && arg_isnum(cmd->opt[1]))
 		g_exit_code = ft_atol(cmd->opt[1]) % 256;
-	printf("exit\n");
-	exit_success((t_tree *)cmd, -1, envp);
+	if (tree == envp->root)
+		printf("exit\n");
+	exit_success(envp->root, -1, envp);
 }
