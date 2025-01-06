@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 00:08:27 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:00:50 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 			return ((t_tree *) tree_node);
 		}
 	}
-	else if (tree->type == PIPE && (redir->mode == (O_WRONLY | O_CREAT)
-			|| redir->mode == (O_WRONLY | O_CREAT | O_APPEND)))
+	else if (tree->type == PIPE)
 		tree_leafs_redir(tree, redir);
 	else
 	{

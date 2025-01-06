@@ -190,5 +190,26 @@ int	main(int argc, char **argv, char **env)
 	test_tree(tree_cpy, input13, envp);
 	clear_tree(tree);
 
+	// Test "cat Makefile | cat << del" input
+	tree = tokenisation("cat Makefile | cat << del", envp);
+	tree_cpy = tree;
+	char	*input14[5] = {"cat Makefile", "|", "cat", "<<", "del"};
+	test_tree(tree_cpy, input14, envp);
+	clear_tree(tree);
+
+	// Test "cat Makefile | cat << del | wc -l" input
+	tree = tokenisation("cat Makefile | cat << del | wc -l", envp);
+	tree_cpy = tree;
+	char	*input15[7] = {"cat Makefile", "|", "cat", "<<", "del", "|", "wc -l"};
+	test_tree(tree_cpy, input15, envp);
+	clear_tree(tree);
+
+	// Test "cat < 5 < 10" input
+	tree = tokenisation("cat < 5 < 10", envp);
+	tree_cpy = tree;
+	char	*input16[5] = {"cat", "<", "10", "<", "5"};
+	test_tree(tree_cpy, input16, envp);
+	clear_tree(tree);
+
 	clear_envp(envp);
 }

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 00:04:54 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:10:29 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ t_tree	*delim_node(t_tree *tree, char **input, t_envp *envp)
 		exit_failure(tree, NULL, envp);
 	}
 	ft_strlcpy(delim->delim, *input, ft_strlen(*input) + 1);
-	delim->right = tree;
 	if (*input != NULL)
 		input++;
-	input = ignore_opt(input);
-	tree = token_dist((t_tree *) delim, envp, input);
+	if (check_cmd(tree) == 1)
+		input = ignore_opt(input);
+	tree = org_delim(delim, tree);
+	tree = token_dist(tree, envp, input);
 	return (tree);
 }
 

@@ -26,7 +26,8 @@ EXP_SOURCE = expander.c quotes.c
 
 SOURCE_UTILS = tree_utils.c lencmp.c conc_str.c redir_check.c \
 			   end_heredoc.c remove_quotes.c stat_ret.c ft_stpcpy.c \
-			   ft_strcspn.c export_identifiers.c
+			   ft_strcspn.c export_identifiers.c parser_utils.c \
+			   ft_freematrix.c delim_parser_utils.c
 
 SOURCE_PARSE = test_parse.c
 

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:48:30 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 00:11:16 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:01:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int				count_words(char *str);
 unsigned int	check_quotes(char **str, int len);
 unsigned int	mod_strlen(char *str);
 char			**split_input(char *str, t_envp *envp);
+t_tree			*org_delim(t_delim *delim, t_tree *tree);
 void			check_outfile(t_redir *redir, int mode);
 void			tree_leafs_pipe(t_tree *tree, t_pipe *pipe);
 int				check_cmd(t_tree *tree);

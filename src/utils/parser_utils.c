@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 23:49:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 00:04:19 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:01:56 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	tree_leafs_redir(t_tree *tree, t_redir *redir)
 		redir->right = tree_redir->right;
 		tree_redir->right = (t_tree *) redir;
 	}
-	if (tree_pipe->right != NULL && tree_pipe->right->type == CMD)
+	else if (tree_pipe->right != NULL && tree_pipe->right->type == CMD)
 	{
 		redir->right = tree_pipe->right;
 		tree_pipe->right = (t_tree *) redir;
