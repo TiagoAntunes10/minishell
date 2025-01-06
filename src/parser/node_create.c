@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/04 17:44:46 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 00:04:54 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,11 @@ t_tree	*delim_node(t_tree *tree, char **input, t_envp *envp)
 t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 {
 	t_pipe	*pipe;
-	t_pipe	*tree_pipe;
 
 	pipe = (t_pipe *) safe_alloc(sizeof(*pipe), 1, tree, envp);
 	pipe->type = PIPE;
 	if (tree != NULL && tree->type == PIPE)
-	{
-		tree_pipe = (t_pipe *) tree;
-		while (tree_pipe->right != NULL && tree_pipe->right->type == PIPE)
-			tree_pipe = (t_pipe *) tree_pipe->right;
-		pipe->left = tree_pipe->right;
-		tree_pipe->right = (t_tree *) pipe;
-	}
+		tree_leafs_pipe(tree, pipe);
 	else
 		pipe->left = tree;
 	pipe->right = NULL;
@@ -119,40 +112,6 @@ t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 	else
 		tree = token_dist((t_tree *) pipe, envp, input);
 	return (tree);
-}
-
-int	check_cmd(t_tree *tree)
-{
-	t_pipe	*pipe;
-	t_redir	*redir;
-	t_delim	*delim;
-
-	if (tree == NULL)
-		return (0);
-	else if (tree->type == CMD)
-		return (1);
-	else if (tree->type == PIPE)
-	{
-		pipe = (t_pipe *) tree;
-		while (pipe->right != NULL && pipe->right->type == PIPE)
-			pipe = (t_pipe *) pipe->right;
-		return (check_cmd(pipe->right));
-	}
-	else if (tree->type == REDIR)
-	{
-		redir = (t_redir *) tree;
-		while (redir->right != NULL && redir->right->type == REDIR)
-			redir = (t_redir *) redir->right;
-		return (check_cmd(redir->right));
-	}
-	else if (tree->type == DELIM)
-	{
-		delim = (t_delim *) tree;
-		while (delim->right != NULL && delim->right->type == DELIM)
-			delim = (t_delim *) delim->right;
-		return (check_cmd(delim->right));
-	}
-	return (0);
 }
 
 t_tree	*redir_node(t_tree *tree, char **input, int mode, t_envp *envp)

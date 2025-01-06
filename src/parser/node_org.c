@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/04 15:43:30 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 00:08:27 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,52 +31,28 @@ void	check_outfile(t_redir *redir, int mode)
 t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 {
 	t_redir	*tree_node;
-	t_pipe	*tree_pipe;
 
-	if (tree != NULL)
+	if (tree == NULL)
+		return ((t_tree *) redir);
+	if (tree->type == REDIR)
 	{
-		if (tree->type == REDIR)
+		tree_node = (t_redir *) tree;
+		if (tree_node->mode == O_RDONLY && redir->mode == O_RDONLY)
 		{
-			tree_node = (t_redir *) tree;
-			if (tree_node->mode == O_RDONLY && redir->mode == O_RDONLY)
-			{
-				redir->right = tree_node->right;
-				tree_node->right = (t_tree *) redir;
-				return ((t_tree *) tree_node);
-			}
-			redir->right = tree;
-			return ((t_tree *) redir);
+			redir->right = tree_node->right;
+			tree_node->right = (t_tree *) redir;
+			return ((t_tree *) tree_node);
 		}
-		else if (tree->type == PIPE && (redir->mode == (O_WRONLY | O_CREAT)
-			|| redir->mode == (O_WRONLY | O_CREAT | O_APPEND)))
-		{
-			tree_pipe = (t_pipe *) tree;
-			while (tree_pipe->right != NULL && tree_pipe->right->type == PIPE)
-				tree_pipe = (t_pipe *) tree_pipe->right;
-			if (tree_pipe->right != NULL && tree_pipe->right->type == REDIR)
-			{
-				tree_node = (t_redir *) tree_pipe->right;
-				while (tree_node->right != NULL && tree_node->right->type == REDIR)
-					tree_node = (t_redir *) tree_node->right;
-				redir->right = tree_node->right;
-				tree_node->right = (t_tree *) redir;
-			}
-			else if (tree_pipe->right != NULL && tree_pipe->right->type == CMD)
-			{
-				redir->right = tree_pipe->right;
-				tree_pipe->right = (t_tree *) redir;
-			}
-			else
-				tree_pipe->right = (t_tree *) redir;
-		}
-		else
-		{
-			redir->right = tree;
-			tree = (t_tree *) redir;
-		}
-		return (tree);
 	}
-	return ((t_tree *) redir);
+	else if (tree->type == PIPE && (redir->mode == (O_WRONLY | O_CREAT)
+			|| redir->mode == (O_WRONLY | O_CREAT | O_APPEND)))
+		tree_leafs_redir(tree, redir);
+	else
+	{
+		redir->right = tree;
+		tree = (t_tree *) redir;
+	}
+	return (tree);
 }
 
 static void	org_pipe(t_tree *tree, t_tree *cmd)
