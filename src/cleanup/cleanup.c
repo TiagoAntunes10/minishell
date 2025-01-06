@@ -22,6 +22,8 @@ void	clear_envp(t_envp *envp)
 {
 	t_envp	*envp_cpy;
 
+	if (!envp || envp == 0)
+		return ;
 	if (envp->fd_in != 0)
 		close(envp->fd_in);
 	if (envp->fd_out != 0)
@@ -35,7 +37,7 @@ void	clear_envp(t_envp *envp)
 		if (envp->input_arr != NULL)
 			clear_arr(envp->input_arr);
 		envp_cpy = envp->next;
-		free(envp);
+		ft_free(envp);
 		envp = envp_cpy;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 00:13:03 by rapcampo          #+#    #+#             */
-/*   Updated: 2025/01/01 17:24:41 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:25:46 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,35 @@ int	get_full_str(t_cmd *cmd, t_envp *envp, int is_bt)
 		i++;
 	}
 	return (0);
+}
+
+//NOTE: this function explicity only compares up to the size of the invalid
+//tokens in order to prevent cases where multiple of the same input
+//or erraneous input is given! PLEASE DO BE AWARE
+
+int	is_redir_valid(char *file)
+{
+	char	**invalid;
+	int		i;
+
+	i = -1;
+	invalid = (char *[]){"<<", ">>", "<", ">", "|", "||", NULL};
+	if (file == 0 || *file == '\n' || *file == '\0')
+	{
+		stat_ret(RED REDIR_ERR RST, 2);
+		return (0);
+	}
+	while (invalid[++i])
+	{
+		if (!ft_strncmp(file, invalid[i], ft_strlen(invalid[i])))
+		{
+			ft_putstr_fd(RED REDIR_TOK, 2);
+			stat_ret(invalid[i], 2);
+			ft_putstr_fd("\'\n"RST, 2);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 int	is_bt(t_cmd *cmd, t_envp *envp)
