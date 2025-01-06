@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 16:10:29 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:58:24 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 	input++;
 	if (*input == NULL || **input == '|')
 	{
-		free(pipe);
+		if (tree != NULL && tree->type != PIPE)
+			free(pipe);
 		clear_tree(tree);
 		ft_putstr_fd(RED PIPE_ERR RST, 2);
 		g_exit_code = 2;

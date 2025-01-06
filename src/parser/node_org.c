@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 12:00:50 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:50:21 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,9 @@ t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 	if (tree->type == REDIR)
 	{
 		tree_node = (t_redir *) tree;
-		if (tree_node->mode == O_RDONLY && redir->mode == O_RDONLY)
-		{
-			redir->right = tree_node->right;
-			tree_node->right = (t_tree *) redir;
-			return ((t_tree *) tree_node);
-		}
+		redir->right = tree_node->right;
+		tree_node->right = (t_tree *) redir;
+		return ((t_tree *) tree_node);
 	}
 	else if (tree->type == PIPE)
 		tree_leafs_redir(tree, redir);

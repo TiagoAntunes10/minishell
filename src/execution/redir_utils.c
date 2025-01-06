@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:12:05 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/04 10:24:22 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 21:03:51 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@ void	redir_read(t_redir *redir, t_envp *envp)
 	if (!is_redir_valid(redir->file))
 		exit_failure(envp->root, NULL, envp);
 	if (access(redir->file, F_OK | R_OK) == -1)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(redir->file, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n" RST, STDERR_FILENO);
+		g_exit_code = 1;
 		exit_failure(envp->root, NULL, envp);
+	}
 	redir_fd = open(redir->file, redir->mode);
 	if (redir_fd == -1)
 		exit_failure(envp->root, NULL, envp);

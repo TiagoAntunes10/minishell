@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/05 23:37:21 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:15:50 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	pipe_node = (t_pipe *) tree;
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
+	signal_child();
 	envp->id = fork();
 	envp->child_proc++;
 	if (envp->id == -1)
@@ -39,6 +40,8 @@ static void	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
 	if (!is_redir_valid(delim))
 		exit_failure(envp->root, inp_pipe, envp);
 	end_heredoc(envp, inp_pipe, 0);
+	if (dup2(envp->fd_in, 0) == -1 || dup2(envp->fd_out, 1) == -1)
+		exit_failure(envp->root, inp_pipe, envp);
 	line = readline(">");
 	line = clean_str(line, envp, 1);
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/02 22:08:54 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/06 21:03:15 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,12 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 	int		i;
 	t_cmd	*cmd;
 
-	cmd = (t_cmd *)tree;
-	if (errno && !(errno == ENOENT && g_exit_code == 127))
-		perror(cmd->cmd);
+	if (tree->type == CMD)
+	{
+		cmd = (t_cmd *)tree;
+		if (errno && !(errno == ENOENT && g_exit_code == 127))
+			perror(cmd->cmd);
+	}
 	if (tree != NULL)
 		clear_tree(tree);
 	if (envp != NULL)
