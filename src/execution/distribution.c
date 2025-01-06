@@ -95,7 +95,10 @@ static void	cmd_tree_dist(t_tree *tree, int fd, t_envp *envp)
 		return ;
 	}
 	else if (ft_strncmp(cmd->cmd, "exit", lencmp(cmd->cmd, "exit")) == 0)
+	{
 		ft_exit((t_tree *)cmd, envp);
+		return ;
+	}
 	child_exec(tree, fd, envp);
 }
 
