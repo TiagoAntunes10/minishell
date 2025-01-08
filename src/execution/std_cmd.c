@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-#include <sys/stat.h>
 
 static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 {
@@ -102,8 +101,8 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 		stat_ret(NULL, 0);
 		exit_success(envp->root, -1, envp);
 	}
-	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
+	envp_arr = lst_to_arr(envp);
 	if (cmd_path == NULL)
 		return (exec_error(envp, NULL, envp_arr, cmd->cmd));
 	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
