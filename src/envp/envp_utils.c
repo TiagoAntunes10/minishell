@@ -100,21 +100,21 @@ char	**lst_to_arr(t_envp *envp)
 
 	arr = (char **) safe_alloc(lst_len(envp) + 1, sizeof(char *), NULL, envp);
 	i = 0;
-	envp_cpy = envp;
-	while (envp != NULL)
+	envp_cpy = envp->next;
+	while (envp_cpy != NULL)
 	{
-		size = ft_strlen(envp->key) + ft_strlen(envp->value) + 2;
+		size = ft_strlen(envp_cpy->key) + ft_strlen(envp_cpy->value) + 2;
 		arr[i] = malloc(size);
 		bzero(arr[i], size);
 		if (arr[i] == NULL)
 		{
 			clear_arr(arr);
-			exit_failure(NULL, NULL, envp_cpy);
+			exit_failure(NULL, NULL, envp);
 		}
-		ft_strlcat(arr[i], envp->key, ft_strlen(envp->key) + 1);
-		ft_strlcat(arr[i], "=", ft_strlen(envp->key) + 2);
-		ft_strlcat(arr[i++], envp->value, size);
-		envp = envp->next;
+		ft_strlcat(arr[i], envp_cpy->key, ft_strlen(envp_cpy->key) + 1);
+		ft_strlcat(arr[i], "=", ft_strlen(envp_cpy->key) + 2);
+		ft_strlcat(arr[i++], envp_cpy->value, size);
+		envp_cpy = envp_cpy->next;
 	}
 	return (arr);
 }
