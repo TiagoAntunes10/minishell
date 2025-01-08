@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+#include <sys/stat.h>
 
 static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 {
@@ -41,10 +42,11 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 
 static char	*find_path(char *cmd, t_envp *envp)
 {
-	char	*cmd_path;
-	char	**envp_path;
+	char		*cmd_path;
+	char		**envp_path;
+	struct stat	stats;
 
-	if (access(cmd, F_OK) == -1)
+	if (stat(cmd, &stats) == -1)
 	{
 		if (!search_envp(envp, "PATH"))
 			exit_failure(envp->root, NULL, envp);
@@ -53,10 +55,11 @@ static char	*find_path(char *cmd, t_envp *envp)
 	}
 	else
 	{
-		if (access(cmd, X_OK) == -1)
+		if (S_ISDIR(stats.st_mode))
 		{
-			if (errno == EACCES)
-				g_exit_code = 126;
+			ft_putstr_fd(RED ERR_IS_DIR, 2);
+			ft_putstr_fd(cmd, 2);
+			stat_ret(": Is a directory\n"RST, 126);
 			exit_failure(envp->root, NULL, envp);
 		}
 		cmd_path = ft_substr(cmd, 0, ft_strlen(cmd));
