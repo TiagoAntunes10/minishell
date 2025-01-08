@@ -18,7 +18,7 @@ t_envp	*search_envp(t_envp *head, char *var)
 
 	if (!head)
 		return (NULL);
-	curr = head;
+	curr = head->next;
 	while (curr)
 	{
 		if (ft_strncmp(curr->key, var, ft_strlen(var)) == 0)

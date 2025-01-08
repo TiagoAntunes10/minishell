@@ -42,5 +42,8 @@ size_t	ft_strcspn(const char *str, const char *reject);
 int		export_env(char *var, t_envp *envp);
 int		is_bt(t_cmd *cmd, t_envp *envp);
 int		bt_exec(t_tree *tree, t_envp *envp, int bt);
+int		extract_appendage(char *var, t_envp *envp, int a_flag);
+void	to_append_or_not_to_append(char *value, t_envp *node, int a_flag);
+int		node_check(char *key, char *value, t_envp *envp, int a_flag);
 
 #endif

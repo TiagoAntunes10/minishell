@@ -44,7 +44,7 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 	if (bt > 0)
 		bt_exec(tree, envp, bt);
 	else
-		std_cmd((t_cmd *)tree, envp);
+		std_cmd((t_cmd *)tree, envp->next);
 }
 
 static void	exec_tree(t_tree *tree, int fd, t_envp *envp)

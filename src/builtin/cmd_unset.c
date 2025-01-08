@@ -30,7 +30,7 @@ static void	ft_delnode(t_envp *node)
 	if (node)
 		free(node);
 }
-
+/*
 static int	is_value_node(t_envp *node)
 {
 	if (node && (node->id || node->fd_in || node->fd_out))
@@ -60,24 +60,27 @@ static void	clone_node(t_envp *prev, t_envp *rem)
 	rem->value = ft_strdup(to_clone->value);
 	ft_delnode(to_clone);
 }
-
+*/
 static void	unset_env(char *key, t_envp **head)
 {
 	t_envp	*prev;
 	t_envp	*temp;
 
-	prev = NULL;
-	temp = *head;
-	if (!prev && !ft_strncmp(temp->key, key, ft_strlen(key)))
+	//prev = NULL;
+	prev = *head;
+	temp = (*head)->next;
+/*	if (!prev && !ft_strncmp(temp->key, key, ft_strlen(key)))
 	{
 		clone_node(NULL, temp);
 		return ;
-	}
+	}*/
 	while (temp)
 	{
 		if (!ft_strncmp(temp->key, key, ft_strlen(key)))
 		{
-			clone_node(prev, temp);
+			prev->next = temp->next;
+			ft_delnode(temp);
+		//	clone_node(prev, temp);
 			return ;
 		}
 		prev = temp;

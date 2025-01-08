@@ -23,7 +23,7 @@ static void	tree_leafs_delim(t_tree *tree, t_delim *delim)
 		org_delim(delim, pipe->right);
 	else if (pipe->right != NULL && pipe->right->type == DELIM)
 		org_delim(delim, pipe->right);
-	else 
+	else
 	{
 		delim->right = pipe->right;
 		pipe->right = (t_tree *) delim;
@@ -33,7 +33,7 @@ static void	tree_leafs_delim(t_tree *tree, t_delim *delim)
 static void	order_delim(t_tree *tree, t_delim *delim)
 {
 	t_redir	*redir;
-	
+
 	redir = (t_redir *) tree;
 	while (redir->right != NULL && redir->right->type == REDIR)
 		redir = (t_redir *) redir->right;

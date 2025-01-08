@@ -18,7 +18,7 @@ int	ft_env(t_cmd *cmd, t_envp *envp)
 
 	if (cmd->opt[1])
 		return (stat_ret(RED ENV_NOFILE RST, 127));
-	head = envp;
+	head = envp->next;
 	while (head)
 	{
 		if (ft_strncmp(head->value, "", 1))
