@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/05 23:37:52 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/09 21:48:19 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,10 @@
 
 int	g_exit_code;
 
-static void	proc_wait(t_envp *envp)
+static void	dup_std(t_envp *envp)
 {
-	int	status;
-
-	if (waitpid(envp->id, &status, 0) != -1)
-	{
-		if (WIFEXITED(status))
-			g_exit_code = WEXITSTATUS(status);
-		signal_parent();
-		envp->child_proc--;
-		envp->id = 0;
-	}
-	while (envp->child_proc)
-	{
-		wait(0);
-		envp->child_proc--;
-	}
+	envp->fd_in = dup(STDIN_FILENO);
+	envp->fd_out = dup(STDOUT_FILENO);
 }
 
 static char	*get_prompt(t_envp *envp)
@@ -76,7 +63,6 @@ static void	input_reader(t_envp *envp)
 		ft_free(input);
 		ft_free(prompt);
 		execution(tree, -1, envp);
-		proc_wait(envp);
 		clear_tree(tree);
 		prompt = get_prompt(envp);
 		input = readline(prompt);
@@ -89,6 +75,7 @@ int	main(int argc, char **argv, char **env)
 
 	((void)argc, (void)argv);
 	envp_lst = arr_to_lst(env);
+	dup_std(envp_lst);
 	signal_parent();
 	update_shlvl(envp_lst);
 	input_reader(envp_lst);

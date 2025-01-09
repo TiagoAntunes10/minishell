@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:18:54 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/01 17:05:43 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/09 22:25:06 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void	exec_redir(t_tree *tree, t_envp *envp);
 void	redir_read(t_redir *redir, t_envp *envp);
 void	redir_write(t_redir *redir, t_envp *envp);
 void	std_cmd(t_cmd *cmd, t_envp *envp);
+int		count_child(int start, int ope);
+void	child_wait(t_envp *envp);
+void	exec_wait(pid_t id);
 
 /* ************************************************************************** */
 /*                            EXPANDER                                        */

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/05 22:57:39 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/09 22:30:08 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 {
 	char	**envp_arr;
 	char	*cmd_path;
+	pid_t	id;
 
 	if (*(cmd->cmd) == ';' && ft_strlen(cmd->cmd) == 1)
 	{
@@ -103,6 +104,17 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	cmd_path = find_path(cmd->cmd, envp);
 	if (cmd_path == NULL)
 		return (exec_error(envp, NULL, envp_arr, cmd->cmd));
-	if (execve(cmd_path, cmd->opt, envp_arr) == -1)
-		exec_error(envp, cmd_path, envp_arr, cmd->cmd);
+	id = fork();
+	if (id == -1)
+		exit_failure(envp->root, NULL, envp);
+	else if (id == 0)
+	{
+		if (execve(cmd_path, cmd->opt, envp_arr) == -1)
+			exec_error(envp, cmd_path, envp_arr, cmd->cmd);
+	}
+	close(0);
+	exec_wait(id);
+	if (cmd_path)
+		free(cmd_path);
+	clear_arr(envp_arr);
 }

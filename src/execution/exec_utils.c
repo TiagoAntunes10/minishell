@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 18:15:50 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/09 21:48:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 		exit_failure(envp->root, NULL, envp);
 	signal_child();
 	envp->id = fork();
-	envp->child_proc++;
 	if (envp->id == -1)
 		exit_failure(envp->root, inp_pipe, envp);
 	else if (envp->id == 0)
 	{
 		pipe_in_pipe(inp_pipe, fd, envp);
-		execution(pipe_node->right, inp_pipe[1], envp);
+		execution(pipe_node->right, 0, envp);
 	}
 	child_pipe(pipe_node, envp, inp_pipe);
 }

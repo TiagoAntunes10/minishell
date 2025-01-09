@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 21:03:15 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/09 22:16:52 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char	**clear_arr(char **arr)
 	return (NULL);
 }
 
-//TODO: Maybe this function does not need to close fds
 void	exit_success(t_tree *tree, int fd, t_envp *envp)
 {
 	if (tree != NULL)

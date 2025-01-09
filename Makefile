@@ -15,7 +15,7 @@ BUILTIN_SOURCE = cmd_cd.c cmd_echo.c cmd_env.c cmd_export.c cmd_pwd.c \
 CLEANUP_SOURCE = cleanup.c tree_cleanup.c
 ENVP_SOURCE = envp_search.c envp_split.c envp_utils.c env_shlvl.c
 EXEC_SOURCE = distribution.c exec_utils.c pipe_utils.c redir_utils.c \
-			  std_cmd.c expander.c quotes.c bt_logic.c
+			  std_cmd.c expander.c quotes.c bt_logic.c waiters.c
 MEM_SOURCE = safe_alloc.c
 PARSER_SOURCE = node_create.c node_org.c tokeniser.c tokeniser_utils.c
 SIG_SOURCE = handlers.c signal_sorting.c

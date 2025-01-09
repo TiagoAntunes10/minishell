@@ -6,33 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 14:43:53 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/09 22:37:46 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-
-/*static int	cmd_dist(t_tree *tree, t_envp *envp)
-{
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *) tree;
-	if (get_full_str(cmd, envp, 1) == -1)
-		return (1);
-	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
-		return (ft_echo(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)
-		return (ft_pwd(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "export", lencmp(cmd->cmd, "export")) == 0)
-		return (ft_export(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "unset", lencmp(cmd->cmd, "unset")) == 0)
-		return (ft_unset(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "env", lencmp(cmd->cmd, "env")) == 0)
-		return (ft_env(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "cd", lencmp(cmd->cmd, "cd")) == 0)
-		return (ft_cd(cmd, envp), 1);
-	return (0);
-}*/
 
 static void	child_thrower(t_tree *tree, t_envp *envp)
 {
@@ -63,31 +41,24 @@ static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 
 static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 {
-	int	status;
-
 	if (fd == -1)
 	{
 		signal_decider(tree);
-		signal_child();
 		envp->id = fork();
-		envp->child_proc++;
 		if (envp->id == -1)
 			exit_failure(tree, NULL, envp);
 		else if (envp->id == 0)
+		{
 			exec_tree(tree, fd, envp);
-		waitpid(envp->id, &status, 0);
+			exit_success(envp->root, fd, envp);
+		}
+		child_wait(envp);
 	}
 	else
 	{
 		exec_tree(tree, fd, envp);
-		if (waitpid(envp->id, &status, 0) != -1)
-		{
-			if (WIFEXITED(status))
-				g_exit_code = WEXITSTATUS(status);
-			signal_parent();
-			envp->child_proc--;
-			envp->id = 0;
-		}
+		if (envp->id != 0)
+			child_wait(envp);
 		exit_success(envp->root, fd, envp);
 	}
 }

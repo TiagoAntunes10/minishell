@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 15:57:26 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/03 17:13:33 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/09 21:49:01 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static t_envp	*create_lst(char *envp)
 	envp_lst->next = NULL;
 	envp_lst->root = NULL;
 	envp_lst->input_arr = NULL;
-	envp_lst->child_proc = 0;
 	envp_lst->fd_in = 0;
 	envp_lst->fd_out = 0;
 	envp_lst->id = -1;
@@ -57,7 +56,6 @@ static void	add_envp(char *envp, t_envp *envp_lst)
 	envp_node->next = NULL;
 	envp_node->root = NULL;
 	envp_node->input_arr = NULL;
-	envp_node->child_proc = 0;
 	envp_node->fd_in = 0;
 	envp_node->fd_out = 0;
 	envp_node->id = -1;
