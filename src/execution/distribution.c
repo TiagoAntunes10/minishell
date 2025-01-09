@@ -25,7 +25,7 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 		std_cmd((t_cmd *)tree, envp);
 }
 
-static void	exec_tree(t_tree *tree,int fd, t_envp *envp)
+static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
 {
 	if (tree == NULL)
 		return ;

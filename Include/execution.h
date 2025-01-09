@@ -45,5 +45,7 @@ int		bt_exec(t_tree *tree, t_envp *envp, int bt);
 int		extract_appendage(char *var, t_envp *envp, int a_flag);
 void	to_append_or_not_to_append(char *value, t_envp *node, int a_flag);
 int		node_check(char *key, char *value, t_envp *envp, int a_flag);
+char	*relative_path(char *cmd, t_envp *envp);
+int		is_exec_dir(char *path, char *cmd);
 
 #endif

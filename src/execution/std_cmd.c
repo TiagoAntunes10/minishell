@@ -19,6 +19,8 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 	int		i;
 
 	i = 0;
+	if (cmd[0] == 0)
+		return (NULL);
 	while (envp_path[i] != NULL)
 	{
 		size = ft_strlen(cmd) + ft_strlen(envp_path[i]) + 2;
@@ -43,27 +45,20 @@ static char	*find_path(char *cmd, t_envp *envp)
 {
 	char		*cmd_path;
 	char		**envp_path;
-	struct stat	stats;
 
-	if (stat(cmd, &stats) == -1)
+	if (cmd[0] == '.' && cmd[1] == '/')
+		cmd_path = relative_path(cmd, envp);
+	else
 	{
 		if (!search_envp(envp, "PATH"))
 			exit_failure(envp->root, NULL, envp);
 		envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
 		cmd_path = search_path(cmd, envp_path, envp);
 	}
-	else
+	if (cmd_path != NULL && is_exec_dir(cmd_path, cmd))
 	{
-		if (S_ISDIR(stats.st_mode))
-		{
-			ft_putstr_fd(RED ERR_IS_DIR, 2);
-			ft_putstr_fd(cmd, 2);
-			stat_ret(": Is a directory\n"RST, 126);
-			exit_failure(envp->root, NULL, envp);
-		}
-		cmd_path = ft_substr(cmd, 0, ft_strlen(cmd));
-		if (cmd_path == NULL)
-			exit_failure(envp->root, NULL, envp);
+		ft_free(cmd_path);
+		exit_failure(envp->root, NULL, envp);
 	}
 	return (cmd_path);
 }

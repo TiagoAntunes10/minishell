@@ -12,23 +12,16 @@
 
 #include "../../Include/minishell.h"
 
-static t_envp	*create_lst(char *envp)
+static t_envp	*create_lst(void)
 {
 	t_envp	*envp_lst;
-//	char	**key_value;
 	int		size;
 
-	(void)envp;
 	size = 0;
-//	key_value = envp_split(envp, NULL);
 	envp_lst = (t_envp *) safe_alloc(sizeof(*envp_lst), 1, NULL, NULL);
-//	size = ft_strlen(key_value[0]) + 1;
 	envp_lst->key = (char *) safe_alloc(size, 1, NULL, envp_lst);
-//	ft_strlcat(envp_lst->key, key_value[0], size);
-//	size = ft_strlen(key_value[1]) + 1;
 	size = ft_strlen("datanode") + 1;
 	envp_lst->value = (char *) safe_alloc(size, 1, NULL, envp_lst);
-//	ft_strlcat(envp_lst->value, key_value[1], size);
 	ft_strlcat(envp_lst->value, "datanode", size);
 	envp_lst->next = NULL;
 	envp_lst->root = NULL;
@@ -37,7 +30,6 @@ static t_envp	*create_lst(char *envp)
 	envp_lst->fd_in = 0;
 	envp_lst->fd_out = 0;
 	envp_lst->id = -1;
-//	clear_arr(key_value);
 	return (envp_lst);
 }
 
@@ -72,7 +64,7 @@ t_envp	*arr_to_lst(char **envp)
 {
 	t_envp	*envp_lst;
 
-	envp_lst = create_lst(*envp);
+	envp_lst = create_lst();
 	while (*(envp) != NULL)
 		add_envp(*envp++, envp_lst);
 	return (envp_lst);
