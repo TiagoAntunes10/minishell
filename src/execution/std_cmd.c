@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/09 22:30:08 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 09:42:24 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 		if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 			exec_error(envp, cmd_path, envp_arr, cmd->cmd);
 	}
-	close(0);
+	if (envp->r_pipe != -1)
+		close(envp->r_pipe);
+	if (envp->w_pipe != -1)
+		close(envp->w_pipe);
 	exec_wait(id);
 	if (cmd_path)
 		free(cmd_path);
