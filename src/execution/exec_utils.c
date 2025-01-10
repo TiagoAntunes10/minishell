@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/09 21:48:07 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:26:20 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	t_pipe	*pipe_node;
 
 	pipe_node = (t_pipe *) tree;
+	if (pipe_node->left == NULL || pipe_node->right == NULL)
+	{
+		ft_putstr_fd(RED PIPE_ERR RST, 2);
+		g_exit_code = 2;
+		exit_failure(envp->root, NULL, envp);
+	}
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
 	signal_child();

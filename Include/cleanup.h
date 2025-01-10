@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:51:07 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 21:08:17 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:21:44 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	clear_tree(t_tree *tree);
 void	exit_success(t_tree *tree, int fd, t_envp *envp);
 void	exit_failure(t_tree *tree, int *fd, t_envp *envp);
 void	end_heredoc(t_envp *envp, int *inp_pipe, int endflag);
+void	clear_std_cmd(t_envp *envp, char *cmd_path, char **envp_arr);
 
 #endif

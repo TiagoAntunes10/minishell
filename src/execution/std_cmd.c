@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 09:42:24 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:22:05 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,20 @@ static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 	exit_failure(envp_lst->root, NULL, envp_lst);
 }
 
+static void	std_cmd_error(t_envp *envp, char *msg, int fd)
+{
+	if (fd == 2)
+	{
+		stat_ret(msg, fd);
+		exit_failure(envp->root, NULL, envp);
+	}
+	else if (fd == 0)
+	{
+		stat_ret(msg, fd);
+		exit_success(envp->root, -1, envp);
+	}
+}
+
 void	std_cmd(t_cmd *cmd, t_envp *envp)
 {
 	char	**envp_arr;
@@ -87,15 +101,9 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	pid_t	id;
 
 	if (*(cmd->cmd) == ';' && ft_strlen(cmd->cmd) == 1)
-	{
-		stat_ret("syntax error near unexpected token ';'\n", 2);
-		exit_failure(envp->root, NULL, envp);
-	}
+		std_cmd_error(envp, "syntax error near unexpected token ';'\n", 2);
 	if (cmd->cmd[0] == '\0')
-	{
-		stat_ret(NULL, 0);
-		exit_success(envp->root, -1, envp);
-	}
+		std_cmd_error(envp, NULL, 0);
 	cmd_path = find_path(cmd->cmd, envp);
 	envp_arr = lst_to_arr(envp);
 	if (cmd_path == NULL)
@@ -108,12 +116,6 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 		if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 			exec_error(envp, cmd_path, envp_arr, cmd->cmd);
 	}
-	if (envp->r_pipe != -1)
-		close(envp->r_pipe);
-	if (envp->w_pipe != -1)
-		close(envp->w_pipe);
+	clear_std_cmd(envp, cmd_path, envp_arr);
 	exec_wait(id);
-	if (cmd_path)
-		free(cmd_path);
-	clear_arr(envp_arr);
 }

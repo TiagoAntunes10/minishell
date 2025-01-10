@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/09 22:16:52 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:26:56 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	clear_envp(t_envp *envp)
 
 	if (!envp || envp == 0)
 		return ;
+	if (envp->r_pipe != -1)
+		close(envp->r_pipe);
+	if (envp->w_pipe != -1)
+		close(envp->w_pipe);
 	if (envp->fd_in != 0)
 		close(envp->fd_in);
 	if (envp->fd_out != 0)
