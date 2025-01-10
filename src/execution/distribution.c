@@ -6,33 +6,11 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 14:43:53 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/08 20:27:44 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
-
-/*static int	cmd_dist(t_tree *tree, t_envp *envp)
-{
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *) tree;
-	if (get_full_str(cmd, envp, 1) == -1)
-		return (1);
-	if (ft_strncmp(cmd->cmd, "echo", lencmp(cmd->cmd, "echo")) == 0)
-		return (ft_echo(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "pwd", lencmp(cmd->cmd, "pwd")) == 0)
-		return (ft_pwd(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "export", lencmp(cmd->cmd, "export")) == 0)
-		return (ft_export(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "unset", lencmp(cmd->cmd, "unset")) == 0)
-		return (ft_unset(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "env", lencmp(cmd->cmd, "env")) == 0)
-		return (ft_env(cmd, envp), 1);
-	else if (ft_strncmp(cmd->cmd, "cd", lencmp(cmd->cmd, "cd")) == 0)
-		return (ft_cd(cmd, envp), 1);
-	return (0);
-}*/
 
 static void	child_thrower(t_tree *tree, t_envp *envp)
 {
@@ -107,7 +85,10 @@ static void	cmd_tree_dist(t_tree *tree, int fd, t_envp *envp)
 		return ;
 	}
 	else if (ft_strncmp(cmd->cmd, "exit", lencmp(cmd->cmd, "exit")) == 0)
+	{
 		ft_exit((t_tree *)cmd, envp);
+		return ;
+	}
 	child_exec(tree, fd, envp);
 }
 
