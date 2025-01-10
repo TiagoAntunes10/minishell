@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 17:23:17 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:06:30 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 	if (tree->type == REDIR)
 	{
 		tree_node = (t_redir *) tree;
+		while (tree_node->right != NULL && tree_node->right->type == REDIR)
+			tree_node = (t_redir *) tree_node->right;
 		redir->right = tree_node->right;
 		tree_node->right = (t_tree *) redir;
-		return ((t_tree *) tree_node);
 	}
 	else if (tree->type == PIPE)
 		tree_leafs_redir(tree, redir);
