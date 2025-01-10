@@ -53,6 +53,13 @@ t_tree	*token_dist(t_tree *tree, t_envp *envp, char **input)
 {
 	if (*input == NULL)
 		return (tree);
+	if (to_skip_or_not_to_skip(input, envp))
+	{
+		stat_ret(NULL, 0);
+		input++;
+	}
+	if (*input == NULL)
+		return (tree);
 	if (**input == '<' && ft_strlen(*input) == 1)
 		return (redir_node(tree, input, O_RDONLY, envp));
 	else if (ft_strncmp(*input, "<<", ft_strlen(*input)) == 0)

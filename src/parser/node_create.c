@@ -105,8 +105,7 @@ t_tree	*pipe_node(t_tree *tree, char **input, t_envp *envp)
 		if (tree != NULL && tree->type != PIPE)
 			free(pipe);
 		clear_tree(tree);
-		ft_putstr_fd(RED PIPE_ERR RST, 2);
-		g_exit_code = 2;
+		stat_ret(RED PIPE_ERR RST, 2);
 		return (NULL);
 	}
 	if (tree != NULL && tree->type == PIPE)
