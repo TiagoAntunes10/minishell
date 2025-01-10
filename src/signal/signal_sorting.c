@@ -18,6 +18,12 @@ void	signal_parent(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
+void	signal_grand(void)
+{
+	signal(SIGINT, handle_grandchild);
+	signal(SIGQUIT, handle_grandchild);
+}
+
 void	signal_child(void)
 {
 	signal(SIGINT, handle_child);

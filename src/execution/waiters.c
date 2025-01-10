@@ -33,6 +33,5 @@ void	exec_wait(pid_t id)
 	{
 		if (WIFEXITED(status))
 			g_exit_code = WEXITSTATUS(status);
-		signal_parent();
 	}
 }

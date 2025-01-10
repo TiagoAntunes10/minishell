@@ -47,7 +47,7 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 {
 	if (fd == -1)
 	{
-		signal_decider(tree);
+		signal_ignore();
 		envp->id = fork();
 		if (envp->id == -1)
 			exit_failure(tree, NULL, envp);
@@ -60,6 +60,7 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 	}
 	else
 	{
+		signal_grand();
 		exec_tree(tree, fd, envp);
 		if (envp->id != 0)
 			child_wait(envp);
