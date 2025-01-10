@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:12:05 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 15:05:02 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:30:53 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	redir_read(t_redir *redir, t_envp *envp)
 		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 		ft_putstr_fd(redir->file, STDERR_FILENO);
 		stat_ret(": No such file or directory\n"RST, 1);
-		exit_failure(envp->root, NULL, envp);
+		if (envp->w_pipe == -1)
+			exit_failure(envp->root, NULL, envp);
+		return ;
 	}
 	redir_fd = open(redir->file, redir->mode);
 	if (redir_fd == -1)
@@ -49,8 +51,10 @@ void	redir_write(t_redir *redir, t_envp *envp)
 	{
 		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 		ft_putstr_fd(redir->file, STDERR_FILENO);
-		stat_ret(": No such file or directory\n"RST, 1);
-		exit_failure(envp->root, NULL, envp);
+		stat_ret("r No such file or directory\n"RST, 1);
+		if (envp->r_pipe == -1)
+			exit_failure(envp->root, NULL, envp);
+		return ;
 	}
 	if (dup2(redir_fd, 1) == -1)
 	{
