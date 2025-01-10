@@ -17,7 +17,7 @@
 //TODO: extra arguments should not contain any alpha characters
 //TODO: should stay within 255, for that bash calculates the exit_status % 256
 
-static int	ft_atol(char *nptr)
+static long ft_atol(char *nptr)
 {
 	int		i;
 	int		neg;
