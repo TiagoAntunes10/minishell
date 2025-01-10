@@ -27,5 +27,4 @@ char			**str_divide(char *str, t_envp *envp, int pos);
 int				is_valid_identifier(char *keyvalue);
 int				redir_check(char *input);
 void			remove_quotes(char **arr, int here_doc);
-
 #endif

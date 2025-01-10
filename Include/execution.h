@@ -47,5 +47,6 @@ void	to_append_or_not_to_append(char *value, t_envp *node, int a_flag);
 int		node_check(char *key, char *value, t_envp *envp, int a_flag);
 char	*relative_path(char *cmd, t_envp *envp);
 int		is_exec_dir(char *path, char *cmd);
+int		to_skip_or_not_to_skip(char **input, t_envp *envp);
 
 #endif

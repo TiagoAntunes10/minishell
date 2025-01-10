@@ -38,7 +38,7 @@ int	to_skip_or_not_to_skip(char **input, t_envp *envp)
 	else if (!ft_strncmp(*input, "$?", lencmp(*input, "$?")))
 		return (0);
 	else if (**input == '$' && (!search_envp(envp, *input + 1)
-		|| ft_isspace(search_envp(envp, *input + 1)->value)))
+			|| ft_isspace(search_envp(envp, *input + 1)->value)))
 		return (1);
 	return (0);
 }

@@ -46,6 +46,5 @@ void			tree_leafs_pipe(t_tree *tree, t_pipe *pipe);
 int				check_cmd(t_tree *tree);
 void			tree_leafs_redir(t_tree *tree, t_redir *redir);
 int				is_redir_valid(char *file);
-int			to_skip_or_not_to_skip(char **input, t_envp *envp);
 
 #endif
