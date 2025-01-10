@@ -6,16 +6,19 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 20:50:21 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:23:17 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-void	check_outfile(t_redir *redir, int mode)
+void	check_outfile(t_redir *redir, int mode, t_envp *envp)
 {
 	int	redir_fd;
 
+	if (quotes_pairs(redir->file, envp, 1) == -1)
+		return ;
+	remove_quotes(&(redir->file), 0, envp);
 	if (access(redir->file, F_OK) == 0)
 	{
 		if (unlink(redir->file) == -1)

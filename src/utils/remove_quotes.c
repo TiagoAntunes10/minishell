@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 16:54:09 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 16:00:37 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:00:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static void	str_cleaner(char **arr, int quotes, t_envp *envp)
 {
-	char	*str_arr[2];
+	char	*str_arr[3];
 	char	*arr_cpy;
 
 	arr_cpy = *arr;
+	str_arr[2] = NULL;
 	while (*arr_cpy != 0)
 	{
 		if ((*arr_cpy == '"' && quotes == 2)
@@ -29,6 +30,7 @@ static void	str_cleaner(char **arr, int quotes, t_envp *envp)
 			*arr = conc_str(str_arr, envp);
 			free(str_arr[0]);
 			free(str_arr[1]);
+			arr_cpy = *arr;
 		}
 		arr_cpy++;
 	}
@@ -53,6 +55,7 @@ void	remove_quotes(char **arr, int here_doc, t_envp *envp)
 			*arr = ft_substr(str, 0, ft_strlen(str));
 			free(str);
 		}
-		str_cleaner(arr, quotes, envp);
+		if (*arr != NULL)
+			str_cleaner(arr, quotes, envp);
 	}
 }

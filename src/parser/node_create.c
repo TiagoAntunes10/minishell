@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 18:58:24 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:08:38 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_tree	*redir_node(t_tree *tree, char **input, int mode, t_envp *envp)
 		}
 		ft_strlcpy(redir->file, *input, ft_strlen(*input) + 1);
 		if (mode == (O_WRONLY | O_CREAT))
-			check_outfile(redir, mode);
+			check_outfile(redir, mode, envp);
 		input++;
 	}
 	if (check_cmd(tree) == 1)
