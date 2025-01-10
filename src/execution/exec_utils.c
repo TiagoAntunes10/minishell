@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 14:26:20 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:33:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	exec_delim(t_tree *tree, t_envp *envp)
 
 	delim = (t_delim *) tree;
 	quotes_pairs(delim->delim, envp, 0);
-	remove_quotes(&(delim->delim), 0);
+	remove_quotes(&(delim->delim), 0, envp);
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
 	signal_heredoc();
@@ -95,7 +95,7 @@ void	exec_redir(t_tree *tree, t_envp *envp)
 	if (is_redir_valid(redir->file) == 0)
 		exit_failure(envp->root, NULL, envp);
 	quotes_pairs(redir->file, envp, 0);
-	remove_quotes(&(redir->file), 0);
+	remove_quotes(&(redir->file), 0, envp);
 	if (redir->mode == O_RDONLY)
 		redir_read(redir, envp);
 	else

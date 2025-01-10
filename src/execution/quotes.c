@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 10:42:51 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 12:16:52 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:33:55 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*clean_str(char *origin, t_envp *envp, int here_doc)
 	while (*split_cpy != NULL)
 	{
 		check_dolla(split_cpy, envp, here_doc);
-		remove_quotes(split_cpy, here_doc);
+		remove_quotes(split_cpy, here_doc, envp);
 		split_cpy++;
 	}
 	free(origin);
