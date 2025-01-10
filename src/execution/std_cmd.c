@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/08 20:31:47 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/10 00:55:17 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 	int		size;
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (cmd[0] == 0)
 		return (NULL);
-	while (envp_path[i] != NULL)
+	while (envp_path[++i] != NULL)
 	{
 		size = ft_strlen(cmd) + ft_strlen(envp_path[i]) + 2;
 		cmd_path = (char *) safe_alloc(size, 1, envp->root, envp);
@@ -33,10 +33,8 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			break ;
 		free(cmd_path);
-		i++;
+		cmd_path = NULL;
 	}
-	if (envp_path[i] == NULL)
-		return (clear_arr(envp_path), NULL);
 	clear_arr(envp_path);
 	return (cmd_path);
 }
@@ -48,6 +46,8 @@ static char	*find_path(char *cmd, t_envp *envp)
 
 	if (cmd[0] == '.' && cmd[1] == '/')
 		cmd_path = relative_path(cmd, envp);
+	else if (cmd[0] == '/')
+		cmd_path = ft_strdup(cmd);
 	else
 	{
 		if (!search_envp(envp, "PATH"))
@@ -55,7 +55,7 @@ static char	*find_path(char *cmd, t_envp *envp)
 		envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
 		cmd_path = search_path(cmd, envp_path, envp);
 	}
-	if (cmd_path != NULL && is_exec_dir(cmd_path, cmd))
+	if (is_exec_dir(cmd_path, cmd))
 	{
 		ft_free(cmd_path);
 		exit_failure(envp->root, NULL, envp);
@@ -70,8 +70,7 @@ static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 	{
 		ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": command not found\n" RST, STDERR_FILENO);
-		g_exit_code = 127;
+		stat_ret(": command not found\n" RST, 127);
 	}
 	else
 		g_exit_code = 126;

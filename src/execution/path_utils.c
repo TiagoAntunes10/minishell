@@ -39,8 +39,15 @@ int	is_exec_dir(char *path, char *cmd)
 {
 	struct stat	stats;
 
+	if (path == NULL)
+		return (0);
 	if (stat(path, &stats) == -1)
+	{
+		ft_putstr_fd(RED ERR_IS_DIR, 2);
+		ft_putstr_fd(cmd, 2);
+		stat_ret(": no such file or directory\n"RST, 127);
 		return (1);
+	}
 	if (S_ISDIR(stats.st_mode))
 	{
 		ft_putstr_fd(RED ERR_IS_DIR, 2);
@@ -48,7 +55,5 @@ int	is_exec_dir(char *path, char *cmd)
 		stat_ret(": Is a directory\n"RST, 126);
 		return (1);
 	}
-	else if (S_ISREG(stats.st_mode))
-		return (0);
 	return (0);
 }
