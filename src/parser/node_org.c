@@ -6,29 +6,36 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 18:06:30 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/10 22:57:13 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-void	check_outfile(t_redir *redir, int mode, t_envp *envp)
+void	check_outfile(t_redir *redir, int mode, t_envp *envp, t_tree *tree)
 {
-	int	redir_fd;
+	int		redir_fd;
+	t_redir	*redir_node;
 
+	redir_node = NULL;
 	if (quotes_pairs(redir->file, envp, 1) == -1)
 		return ;
 	remove_quotes(&(redir->file), 0, envp);
-	if (access(redir->file, F_OK) == 0)
+	if (tree->type == REDIR)
+		redir_node = (t_redir *) tree;
+	if (redir_node != NULL && access(redir_node->file, F_OK | R_OK) != -1)
 	{
-		if (unlink(redir->file) == -1)
+		if (access(redir->file, F_OK) == 0)
+		{
+			if (unlink(redir->file) == -1)
+				return ;
+		}
+		redir_fd = open(redir->file, mode, 0755);
+		if (redir_fd == -1)
 			return ;
+		write(redir_fd, "\0", 1);
+		close(redir_fd);
 	}
-	redir_fd = open(redir->file, mode, 0755);
-	if (redir_fd == -1)
-		return ;
-	write(redir_fd, "\0", 1);
-	close(redir_fd);
 }
 
 t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
