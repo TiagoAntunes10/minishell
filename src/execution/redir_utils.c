@@ -20,10 +20,9 @@ void	redir_read(t_redir *redir, t_envp *envp)
 		exit_failure(envp->root, NULL, envp);
 	if (access(redir->file, F_OK | R_OK) == -1)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 		ft_putstr_fd(redir->file, STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n" RST, STDERR_FILENO);
-		g_exit_code = 1;
+		stat_ret(": No such file or directory\n"RST, 1);
 		exit_failure(envp->root, NULL, envp);
 	}
 	redir_fd = open(redir->file, redir->mode);
@@ -48,7 +47,9 @@ void	redir_write(t_redir *redir, t_envp *envp)
 	redir_fd = open(redir->file, redir->mode, 0755);
 	if (redir_fd == -1)
 	{
-		ft_putstr_fd(redir->file, 2);
+		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
+		ft_putstr_fd(redir->file, STDERR_FILENO);
+		stat_ret(": No such file or directory\n"RST, 1);
 		exit_failure(envp->root, NULL, envp);
 	}
 	if (dup2(redir_fd, 1) == -1)
