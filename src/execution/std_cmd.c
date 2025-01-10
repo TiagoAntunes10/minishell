@@ -18,8 +18,10 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 	int		size;
 	int		i;
 
-	i = 0;
-	while (envp_path[i] != NULL)
+	i = -1;
+	if (cmd[0] == 0)
+		return (NULL);
+	while (envp_path[++i] != NULL)
 	{
 		size = ft_strlen(cmd) + ft_strlen(envp_path[i]) + 2;
 		cmd_path = (char *) safe_alloc(size, 1, envp->root, envp);
@@ -31,37 +33,32 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			break ;
 		free(cmd_path);
-		i++;
+		cmd_path = NULL;
 	}
-	if (envp_path[i] == NULL)
-		return (clear_arr(envp_path), NULL);
 	clear_arr(envp_path);
 	return (cmd_path);
 }
 
 static char	*find_path(char *cmd, t_envp *envp)
 {
-	char	*cmd_path;
-	char	**envp_path;
+	char		*cmd_path;
+	char		**envp_path;
 
-	if (access(cmd, F_OK) == -1)
+	if (cmd[0] == '.' && cmd[1] == '/')
+		cmd_path = relative_path(cmd, envp);
+	else if (cmd[0] == '/')
+		cmd_path = ft_strdup(cmd);
+	else
 	{
 		if (!search_envp(envp, "PATH"))
 			exit_failure(envp->root, NULL, envp);
 		envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
 		cmd_path = search_path(cmd, envp_path, envp);
 	}
-	else
+	if (is_exec_dir(cmd_path, cmd))
 	{
-		if (access(cmd, X_OK) == -1)
-		{
-			if (errno == EACCES)
-				g_exit_code = 126;
-			exit_failure(envp->root, NULL, envp);
-		}
-		cmd_path = ft_substr(cmd, 0, ft_strlen(cmd));
-		if (cmd_path == NULL)
-			exit_failure(envp->root, NULL, envp);
+		ft_free(cmd_path);
+		exit_failure(envp->root, NULL, envp);
 	}
 	return (cmd_path);
 }
@@ -73,8 +70,7 @@ static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 	{
 		ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": command not found\n" RST, STDERR_FILENO);
-		g_exit_code = 127;
+		stat_ret(": command not found\n" RST, 127);
 	}
 	else
 		g_exit_code = 126;
@@ -100,8 +96,8 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 		stat_ret(NULL, 0);
 		exit_success(envp->root, -1, envp);
 	}
-	envp_arr = lst_to_arr(envp);
 	cmd_path = find_path(cmd->cmd, envp);
+	envp_arr = lst_to_arr(envp);
 	if (cmd_path == NULL)
 		return (exec_error(envp, NULL, envp_arr, cmd->cmd));
 	id = fork();
