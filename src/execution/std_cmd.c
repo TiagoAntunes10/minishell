@@ -66,7 +66,7 @@ static char	*find_path(char *cmd, t_envp *envp)
 static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 		char *cmd)
 {
-	if (errno == ENOENT)
+	if (errno == ENOENT || errno == ENOEXEC)
 	{
 		ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
