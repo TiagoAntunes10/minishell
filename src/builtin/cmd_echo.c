@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 21:06:26 by rapcampo          #+#    #+#             */
-/*   Updated: 2025/01/01 21:49:24 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:57:24 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	ft_echo(t_cmd *cmd, t_envp *envp)
 	i--;
 	while (cmd->opt[++i])
 	{
-		ft_putstr_fd(cmd->opt[i], STDOUT_FILENO);
+		if (ft_putstr_fd(cmd->opt[i], STDOUT_FILENO) == -1)
+			exit_failure(envp->root, NULL, envp);
 		if (cmd->opt[i] && cmd->opt[i + 1])
 			ft_putchar_fd(32, STDOUT_FILENO);
 	}

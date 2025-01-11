@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 00:13:03 by rapcampo          #+#    #+#             */
-/*   Updated: 2025/01/11 12:25:04 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:00:11 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ int	bt_exec(t_tree *tree, t_envp *envp, int bt)
 		ft_unset, ft_env, ft_cd, NULL};
 	cmd = (t_cmd *)tree;
 	if (bt < 6 && bt >= 0)
-		return (bt_func[bt](cmd, envp));
+		bt_func[bt](cmd, envp);
 	return (0);
 }

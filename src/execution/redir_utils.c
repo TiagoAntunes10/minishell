@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:12:05 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 18:55:06 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:49:31 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	redir_read(t_redir *redir, t_envp *envp)
 		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 		ft_putstr_fd(redir->file, STDERR_FILENO);
 		stat_ret(": No such file or directory\n"RST, 1);
-		if (envp->w_pipe == -1)
+		if (envp->w_pipe == -1 && envp->r_pipe == -1)
 			exit_failure(envp->root, NULL, envp);
 		redir_fd = open("/dev/null", redir->mode);
 	}
@@ -53,7 +53,7 @@ void	redir_write(t_redir *redir, t_envp *envp)
 		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 		ft_putstr_fd(redir->file, STDERR_FILENO);
 		stat_ret("r No such file or directory\n"RST, 1);
-		if (envp->r_pipe == -1)
+		if (envp->w_pipe == -1 && envp->r_pipe == -1)
 			exit_failure(envp->root, NULL, envp);
 		return ;
 	}
