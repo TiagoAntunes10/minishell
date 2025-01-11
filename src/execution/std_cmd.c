@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 14:22:05 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:03:56 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ static char	*find_path(char *cmd, t_envp *envp)
 		cmd_path = ft_strdup(cmd);
 	else
 	{
-		if (!search_envp(envp, "PATH"))
-			exit_failure(envp->root, NULL, envp);
-		envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
-		cmd_path = search_path(cmd, envp_path, envp);
+		cmd_path = NULL;
+		if (search_envp(envp, "PATH"))
+		{
+			envp_path = ft_split(search_envp(envp, "PATH")->value, ':');
+			cmd_path = search_path(cmd, envp_path, envp);
+		}
 	}
-	if (is_exec_dir(cmd_path, cmd))
+	if (cmd_path != NULL && is_exec_dir(cmd_path, cmd))
 	{
 		ft_free(cmd_path);
 		exit_failure(envp->root, NULL, envp);
@@ -66,7 +68,7 @@ static char	*find_path(char *cmd, t_envp *envp)
 static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 		char *cmd)
 {
-	if (errno == ENOENT || errno == ENOEXEC)
+	if (errno == ENOENT || errno == ENOEXEC || cmd_path == NULL)
 	{
 		ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);

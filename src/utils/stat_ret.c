@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 13:50:36 by rapcampo          #+#    #+#             */
-/*   Updated: 2025/01/10 14:28:04 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/11 11:33:40 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_isspace(char *str)
 
 	i = -1;
 	while (str[++i])
-		if (str[i] != ' ' || (str[i] < 9 && str[i] > 13))
+		if (str[i] != ' ' && (str[i] < 9 || str[i] > 13))
 			return (0);
 	return (1);
 }
