@@ -53,7 +53,7 @@ void	redir_write(t_redir *redir, t_envp *envp)
 		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 		ft_putstr_fd(redir->file, STDERR_FILENO);
 		stat_ret("r No such file or directory\n"RST, 1);
-		if (envp->w_pipe == -1 && envp->r_pipe == -1)
+		if (envp->r_pipe == -1)
 			exit_failure(envp->root, NULL, envp);
 		return ;
 	}
@@ -63,6 +63,7 @@ void	redir_write(t_redir *redir, t_envp *envp)
 		exit_failure(envp->root, NULL, envp);
 	}
 	close(redir_fd);
+	envp->w_pipe = -1;
 	execution(redir->right, 1, envp);
 	close(1);
 }

@@ -21,7 +21,7 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 	bt = is_bt(cmd, envp);
 	if (bt >= 0 && bt < 6)
 	{
-		if (isatty(envp->w_pipe) == 1)
+		if (envp->w_pipe == -1 || isatty(envp->w_pipe) == 1)
 			bt_exec(tree, envp, bt);
 	}
 	else
