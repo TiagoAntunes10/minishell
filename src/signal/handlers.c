@@ -27,6 +27,12 @@ void	handle_parent(int signum)
 	g_exit_code = 130;
 }
 
+void	handle_grandchild(int signum)
+{
+	ft_putstr_fd("", 2);
+	g_exit_code = 128 + signum;
+}
+
 void	handle_child(int signum)
 {
 	if (signum == SIGINT)

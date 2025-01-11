@@ -26,7 +26,7 @@ void	exec_pipe(t_tree *tree, int fd, t_envp *envp)
 	}
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
-	signal_child();
+	signal_ignore();
 	envp->id = fork();
 	if (envp->id == -1)
 		exit_failure(envp->root, inp_pipe, envp);

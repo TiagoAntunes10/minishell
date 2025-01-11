@@ -108,6 +108,8 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 	envp_arr = lst_to_arr(envp);
 	if (cmd_path == NULL)
 		return (exec_error(envp, NULL, envp_arr, cmd->cmd));
+	if (envp->id == 0)
+		signal_decider((t_tree *)cmd);
 	id = fork();
 	if (id == -1)
 		exit_failure(envp->root, NULL, envp);
