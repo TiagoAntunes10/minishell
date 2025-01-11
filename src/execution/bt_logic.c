@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 00:13:03 by rapcampo          #+#    #+#             */
-/*   Updated: 2025/01/03 16:25:46 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:25:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	is_bt(t_cmd *cmd, t_envp *envp)
 	while (bts[++i])
 		if (ft_strncmp(cmd->cmd, bts[i], lencmp(cmd->cmd, bts[i])) == 0)
 			return (i);
-	return (0);
+	return (i);
 }
 
 int	bt_exec(t_tree *tree, t_envp *envp, int bt)
@@ -81,7 +81,7 @@ int	bt_exec(t_tree *tree, t_envp *envp, int bt)
 	bt_func = (int (*[])(t_cmd *, t_envp *)){ft_echo, ft_pwd, ft_export,
 		ft_unset, ft_env, ft_cd, NULL};
 	cmd = (t_cmd *)tree;
-	if (bt)
+	if (bt < 6 && bt >= 0)
 		return (bt_func[bt](cmd, envp));
 	return (0);
 }

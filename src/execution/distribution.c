@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 11:13:48 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:28:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 
 	cmd = (t_cmd *)tree;
 	bt = is_bt(cmd, envp);
-	if (bt > 0)
+	if (bt >= 0 && bt < 6)
 		bt_exec(tree, envp, bt);
 	else
 		std_cmd((t_cmd *)tree, envp);
@@ -77,7 +77,7 @@ static void	cmd_tree_dist(t_tree *tree, int fd, t_envp *envp)
 	if (get_full_str(cmd, envp, 1) == -1)
 		return ;
 	bt = is_bt(cmd, envp);
-	if (bt > 0 && fd == -1)
+	if (bt >= 0 && bt < 6 && fd == -1)
 	{
 		bt_exec(tree, envp, bt);
 		return ;
