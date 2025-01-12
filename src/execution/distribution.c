@@ -6,12 +6,13 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/11 16:57:08 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:54:34 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
+// TODO: Solve SIGPIPE signal error
 static void	child_thrower(t_tree *tree, t_envp *envp)
 {
 	int		bt;
@@ -21,8 +22,8 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 	bt = is_bt(cmd, envp);
 	if (bt >= 0 && bt < 6)
 	{
-		if (envp->w_pipe == -1 || isatty(envp->w_pipe) == 1)
-			bt_exec(tree, envp, bt);
+		// if (envp->w_pipe == -1)
+		bt_exec(tree, envp, bt);
 	}
 	else
 		std_cmd((t_cmd *)tree, envp);
