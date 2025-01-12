@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 22:57:13 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/12 15:15:10 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,20 @@ void	check_outfile(t_redir *redir, int mode, t_envp *envp, t_tree *tree)
 	if (quotes_pairs(redir->file, envp, 1) == -1)
 		return ;
 	remove_quotes(&(redir->file), 0, envp);
-	if (tree->type == REDIR)
+	if (tree != NULL && tree->type == REDIR)
 		redir_node = (t_redir *) tree;
-	if (redir_node != NULL && access(redir_node->file, F_OK | R_OK) != -1)
+	if (redir_node != NULL && access(redir_node->file, F_OK | R_OK) == -1)
+		return ;
+	if (access(redir->file, F_OK) == 0)
 	{
-		if (access(redir->file, F_OK) == 0)
-		{
-			if (unlink(redir->file) == -1)
-				return ;
-		}
-		redir_fd = open(redir->file, mode, 0755);
-		if (redir_fd == -1)
+		if (unlink(redir->file) == -1)
 			return ;
-		write(redir_fd, "\0", 1);
-		close(redir_fd);
 	}
+	redir_fd = open(redir->file, mode, 0755);
+	if (redir_fd == -1)
+		return ;
+	write(redir_fd, "\0", 1);
+	close(redir_fd);
 }
 
 t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
