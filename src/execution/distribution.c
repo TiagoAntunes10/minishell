@@ -21,10 +21,7 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 	cmd = (t_cmd *)tree;
 	bt = is_bt(cmd, envp);
 	if (bt >= 0 && bt < 6)
-	{
-		// if (envp->w_pipe == -1)
 		bt_exec(tree, envp, bt);
-	}
 	else
 		std_cmd((t_cmd *)tree, envp);
 	if (envp->r_pipe != -1)

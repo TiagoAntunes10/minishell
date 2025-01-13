@@ -25,12 +25,12 @@ static int	is_nflag_valid(char *opt_str)
 	return (1);
 }
 
-static void	putchar_check(char c, int fd, t_envp *envp)
+static void	putchar_check(char c, int fd)
 {
 	if (ft_putchar_fd(c, fd) == -1)
-		exit_failure(envp->root, NULL, envp);
-
+		stat_ret(NULL, 141);
 }
+
 int	ft_echo(t_cmd *cmd, t_envp *envp)
 {
 	int	i;
@@ -48,11 +48,11 @@ int	ft_echo(t_cmd *cmd, t_envp *envp)
 	while (cmd->opt[++i])
 	{
 		if (ft_putstr_fd(cmd->opt[i], STDOUT_FILENO) == -1)
-			exit_failure(envp->root, NULL, envp);
+			return (stat_ret(NULL, 141));
 		if (cmd->opt[i] && cmd->opt[i + 1])
-			putchar_check(32, STDOUT_FILENO, envp);
+			putchar_check(32, STDOUT_FILENO);
 	}
 	if (!nflag)
-		putchar_check(10, STDOUT_FILENO, envp);
+		putchar_check(10, STDOUT_FILENO);
 	return (stat_ret(NULL, 0));
 }

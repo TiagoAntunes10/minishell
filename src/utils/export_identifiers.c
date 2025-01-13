@@ -77,3 +77,13 @@ int	extract_appendage(char *var, t_envp *envp, int to_extract)
 	}
 	return (0);
 }
+
+int	not_an_update(t_envp *envp, char *key, int delim, char *var)
+{
+	if (search_envp(envp, key) && var[delim] != '=')
+	{
+		free(key);
+		return (1);
+	}
+	return (0);
+}
