@@ -28,7 +28,7 @@ int	ft_pwd(t_cmd *cmd, t_envp *envp)
 	if (printf("%s\n", cwd) < 0)
 	{
 		free(cwd);
-		return (stat_ret(RED PWD_NO_PRNT RST, 1));
+		return (stat_ret(NULL, 1));
 	}
 	if (cwd)
 		free(cwd);

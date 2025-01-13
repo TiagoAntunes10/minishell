@@ -37,6 +37,7 @@
 # define PRP "\e[1;35m"
 # define CYN "\e[1;36m"
 # define WHT "\e[1;37m"
+# define CLR "\e[0;39m"
 
 //CD ERRORS
 
@@ -64,8 +65,9 @@
 
 //PROMPT
 
-# define UPPER_PROMPT "╭─"
-# define LOWER_PROMPT "╰─\e[1;35mMinishell \e[1;33m$->\e[0m"
+# define UPPER_PROMPT "╭─ \e[4;36m"
+# define LP_L "\001╰─\002 \001\e[1;35m\002Minishell"
+# define LP_R "\001\e[1;33m\002 $-> \001\e[0m\002 \b"
 
 //HEREDOC ERRORS
 

@@ -20,12 +20,14 @@ void	signal_parent(void)
 
 void	signal_grand(void)
 {
+	signal(SIGPIPE, SIG_IGN);
 	signal(SIGINT, handle_grandchild);
 	signal(SIGQUIT, handle_grandchild);
 }
 
 void	signal_child(void)
 {
+	signal(SIGPIPE, SIG_IGN);
 	signal(SIGINT, handle_child);
 	signal(SIGQUIT, handle_child);
 }

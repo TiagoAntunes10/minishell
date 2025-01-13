@@ -48,5 +48,6 @@ int		node_check(char *key, char *value, t_envp *envp, int a_flag);
 char	*relative_path(char *cmd, t_envp *envp);
 int		is_exec_dir(char *path, char *cmd);
 int		to_skip_or_not_to_skip(char **input, t_envp *envp);
+int		not_an_update(t_envp *envp, char *key, int delim, char *var);
 
 #endif

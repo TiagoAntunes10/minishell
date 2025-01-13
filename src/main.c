@@ -20,24 +20,37 @@ static void	dup_std(t_envp *envp)
 	envp->fd_out = dup(STDOUT_FILENO);
 }
 
+static char	*prompt_joiner(char *pwd, char *down)
+{
+	char	*temp;
+	char	*pt;
+	char	*final_ups;
+
+	temp = ft_strjoin(UPPER_PROMPT, pwd);
+	final_ups = ft_strjoin(temp, "\001\e[0;39m\002\n");
+	if (!final_ups)
+		return (ft_strdup(LP_L LP_R));
+	pt = ft_strjoin(final_ups, down);
+	if (!pt)
+		return (ft_strdup(LP_L LP_R));
+	ft_free(temp);
+	ft_free(final_ups);
+	return (pt);
+}
+
 static char	*get_prompt(t_envp *envp)
 {
 	char	*prompt;
 	char	*pwd;
-	char	*tmp;
+	char	*down;
 
+	down = LP_L LP_R;
 	pwd = getcwd(NULL, 4096);
 	if (!pwd && search_envp(envp, "PWD"))
 		pwd = ft_strdup(search_envp(envp, "PWD")->value);
 	else if (!pwd && !search_envp(envp, "PWD"))
-		return (ft_strdup(LOWER_PROMPT));
-	tmp = ft_calloc(1,
-			(ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2));
-	if (!tmp)
-		return (NULL);
-	ft_strlcpy(tmp, pwd, ft_strlen(pwd) + ft_strlen(LOWER_PROMPT) + 2);
-	prompt = ft_strjoin(tmp, "\n"LOWER_PROMPT);
-	ft_free(tmp);
+		return (ft_strdup(LP_L LP_R));
+	prompt = prompt_joiner(pwd, down);
 	ft_free(pwd);
 	return (prompt);
 }
