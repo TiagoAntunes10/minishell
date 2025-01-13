@@ -21,13 +21,15 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 	cmd = (t_cmd *)tree;
 	bt = is_bt(cmd, envp);
 	if (bt >= 0 && bt < 6)
+	{
 		bt_exec(tree, envp, bt);
+		if (envp->r_pipe != -1)
+			close(envp->r_pipe);
+		if (envp->w_pipe != -1)
+			close(envp->w_pipe);
+	}
 	else
 		std_cmd((t_cmd *)tree, envp);
-	if (envp->r_pipe != -1)
-		close(envp->r_pipe);
-	if (envp->w_pipe != -1)
-		close(envp->w_pipe);
 }
 
 static void	exec_tree(t_tree *tree, int fd, t_envp *envp)
