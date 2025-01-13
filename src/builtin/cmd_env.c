@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:58:19 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/11/18 17:19:35 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:56:36 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	ft_env(t_cmd *cmd, t_envp *envp)
 	while (head)
 	{
 		if (ft_strncmp(head->value, "", 1))
-			printf("%s=%s\n", head->key, head->value);
+		{
+			if (printf("%s=%s\n", head->key, head->value) == -1)
+				exit_failure(envp->root, NULL, envp);
+		}
 		head = head->next;
 	}
 	return (stat_ret(NULL, 0));

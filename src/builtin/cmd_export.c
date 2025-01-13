@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 00:34:49 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/23 13:30:19 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:59:19 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,15 @@ static	void	export_print(t_envp *envp)
 	while (head)
 	{
 		if (!ft_strncmp(head->value, "", 1))
-			printf("%s %s\n", dec, head->key);
+		{
+			if (printf("%s %s\n", dec, head->key) == -1)
+				return ;
+		}
 		else
-			printf("%s %s=\"%s\"\n", dec, head->key, head->value);
+		{
+			if (printf("%s %s=\"%s\"\n", dec, head->key, head->value) == -1)
+				return ;
+		}
 		head = head->next;
 	}
 }

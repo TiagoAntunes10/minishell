@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 21:06:26 by rapcampo          #+#    #+#             */
-/*   Updated: 2025/01/01 21:49:24 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:41:51 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ static int	is_nflag_valid(char *opt_str)
 	return (1);
 }
 
+static void	putchar_check(char c, int fd, t_envp *envp)
+{
+	if (ft_putchar_fd(c, fd) == -1)
+		exit_failure(envp->root, NULL, envp);
+
+}
 int	ft_echo(t_cmd *cmd, t_envp *envp)
 {
 	int	i;
@@ -41,11 +47,12 @@ int	ft_echo(t_cmd *cmd, t_envp *envp)
 	i--;
 	while (cmd->opt[++i])
 	{
-		ft_putstr_fd(cmd->opt[i], STDOUT_FILENO);
+		if (ft_putstr_fd(cmd->opt[i], STDOUT_FILENO) == -1)
+			exit_failure(envp->root, NULL, envp);
 		if (cmd->opt[i] && cmd->opt[i + 1])
-			ft_putchar_fd(32, STDOUT_FILENO);
+			putchar_check(32, STDOUT_FILENO, envp);
 	}
 	if (!nflag)
-		ft_putchar_fd(10, STDOUT_FILENO);
+		putchar_check(10, STDOUT_FILENO, envp);
 	return (stat_ret(NULL, 0));
 }

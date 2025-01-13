@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 21:07:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/10 15:33:55 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:49:03 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,19 @@ void	exec_delim(t_tree *tree, t_envp *envp)
 	remove_quotes(&(delim->delim), 0, envp);
 	if (pipe(inp_pipe) == -1)
 		exit_failure(envp->root, NULL, envp);
+	if (isatty(1) != 1 || envp->w_pipe == 1)
+		envp->w_pipe = dup(1);
 	signal_heredoc();
 	read_here_doc(delim->delim, inp_pipe, envp);
 	if (dup2(inp_pipe[0], 0) == -1)
 		exit_failure(envp->root, inp_pipe, envp);
+	if (envp->w_pipe != -1)
+	{
+		if (dup2(envp->w_pipe, 1) == -1)
+			exit_failure(envp->root, inp_pipe, envp);
+		close(envp->w_pipe);
+		envp->w_pipe = 1;
+	}
 	close(inp_pipe[1]);
 	close(inp_pipe[0]);
 	execution(delim->right, 0, envp);
