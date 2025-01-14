@@ -6,13 +6,12 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/12 20:54:34 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:43:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-// TODO: Solve SIGPIPE signal error
 static void	child_thrower(t_tree *tree, t_envp *envp)
 {
 	int		bt;
@@ -56,6 +55,7 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 			exit_failure(tree, NULL, envp);
 		else if (envp->id == 0)
 		{
+			signal_decider(tree);
 			exec_tree(tree, fd, envp);
 			if (envp->id != 0)
 				child_wait(envp);
@@ -90,7 +90,13 @@ static void	cmd_tree_dist(t_tree *tree, int fd, t_envp *envp)
 	else if (ft_strncmp(cmd->cmd, "exit", lencmp(cmd->cmd, "exit")) == 0)
 	{
 		ft_exit((t_tree *)cmd, envp);
-		return ;
+		if (envp->r_pipe != -1)
+			close(envp->r_pipe);
+		if (envp->w_pipe != -1)
+			close(envp->w_pipe);
+		if (envp->id != 0)
+			child_wait(envp);
+		exit_success(envp->root, -1, envp);
 	}
 	child_exec(tree, fd, envp);
 }

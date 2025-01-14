@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 21:28:42 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/11 15:23:51 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:10:38 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 		exit_failure(envp->root, NULL, envp);
 	else if (id == 0)
 	{
+		signal_decider((t_tree *)cmd);
 		if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 			exec_error(envp, cmd_path, envp_arr, cmd->cmd);
 	}
