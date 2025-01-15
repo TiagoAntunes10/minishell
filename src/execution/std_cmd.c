@@ -107,21 +107,19 @@ void	std_cmd(t_cmd *cmd, t_envp *envp)
 		std_cmd_error(envp, "syntax error near unexpected token ';'\n", 2);
 	if (cmd->cmd[0] == '\0')
 		std_cmd_error(envp, NULL, 0);
-	cmd_path = find_path(cmd->cmd, envp);
-	envp_arr = lst_to_arr(envp);
-	if (cmd_path == NULL)
-		return (exec_error(envp, NULL, envp_arr, cmd->cmd));
 	if (envp->id == 0)
 		signal_decider((t_tree *)cmd);
 	id = fork();
 	if (id == -1)
 		exit_failure(envp->root, NULL, envp);
-	else if (id == 0)
+	if (id == 0)
 	{
-		signal_decider((t_tree *)cmd);
+		cmd_path = find_path(cmd->cmd, envp);
+		envp_arr = lst_to_arr(envp);
+		if (cmd_path == NULL)
+			return (exec_error(envp, NULL, envp_arr, cmd->cmd));
 		if (execve(cmd_path, cmd->opt, envp_arr) == -1)
 			exec_error(envp, cmd_path, envp_arr, cmd->cmd);
 	}
-	clear_std_cmd(envp, cmd_path, envp_arr);
 	exec_wait(id);
 }
