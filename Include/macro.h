@@ -94,4 +94,7 @@
 
 //EXEC ERRORS
 # define ERR_IS_DIR "minishell: "
+# define REL_PATH_ERR "minishell: .: filename argument required\n"
+# define REL_USAGE ".: usage: . filename [arguments]\n"
+
 #endif

@@ -30,7 +30,7 @@ static char	*search_path(char *cmd, char **envp_path, t_envp *envp)
 		ft_strlcat(cmd_path, envp_path[i], ft_strlen(envp_path[i]) + 1);
 		ft_strlcat(cmd_path, "/", ft_strlen(envp_path[i]) + 2);
 		ft_strlcat(cmd_path, cmd, size + 1);
-		if (access(cmd_path, F_OK | X_OK) == 0)
+		if (access(cmd_path, F_OK) == 0)
 			break ;
 		free(cmd_path);
 		cmd_path = NULL;
@@ -44,7 +44,7 @@ static char	*find_path(char *cmd, t_envp *envp)
 	char		*cmd_path;
 	char		**envp_path;
 
-	if (cmd[0] == '.' && cmd[1] == '/')
+	if (cmd[0] == '.')
 		cmd_path = relative_path(cmd, envp);
 	else if (cmd[0] == '/')
 		cmd_path = ft_strdup(cmd);
@@ -68,7 +68,8 @@ static char	*find_path(char *cmd, t_envp *envp)
 static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 		char *cmd)
 {
-	if ((errno == ENOENT || errno == ENOEXEC) && (errno != EACCES))
+	if ((errno == ENOENT || errno == ENOEXEC || cmd_path == NULL)
+		&& (errno != EACCES))
 	{
 		ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
@@ -82,9 +83,9 @@ static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 	exit_failure(envp_lst->root, NULL, envp_lst);
 }
 
-static void	std_cmd_error(t_envp *envp, char *msg, int fd)
+void	std_cmd_error(t_envp *envp, char *msg, int fd)
 {
-	if (fd == 2)
+	if (fd != 0)
 	{
 		stat_ret(msg, fd);
 		exit_failure(envp->root, NULL, envp);
