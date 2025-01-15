@@ -17,13 +17,14 @@ char	*relative_path(char *cmd, t_envp *envp)
 	char	*cwd;
 	char	*cmd_path;
 
+	is_odd_case(envp, cmd);
 	cwd = getcwd(NULL, 4096);
 	if (cwd == NULL)
 	{
 		if (search_envp(envp, "PWD"))
-			cwd = search_envp(envp, "PWD")->value;
+			cwd = ft_strdup(search_envp(envp, "PWD")->value);
 		else
-			return (ft_strdup(cmd + 2));
+			cwd = ft_strdup("");
 	}
 	cmd_path = ft_strjoin(cwd, cmd + 1);
 	if (!cmd_path)
@@ -32,7 +33,12 @@ char	*relative_path(char *cmd, t_envp *envp)
 		exit_failure(envp->root, NULL, envp);
 	}
 	free(cwd);
-	return (cmd_path);
+	if (access(cmd_path, F_OK) == 0)
+		return (cmd_path);
+	free(cmd_path);
+	if (access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
+	return (ft_strdup(cmd + 2));
 }
 
 int	is_exec_dir(char *path, char *cmd)
@@ -55,5 +61,20 @@ int	is_exec_dir(char *path, char *cmd)
 		stat_ret(": Is a directory\n"RST, 126);
 		return (1);
 	}
-	return (0);
+	else if (S_ISREG(stats.st_mode))
+		return (0);
+	return (1);
+}
+
+void	is_odd_case(t_envp *envp, char *cmd)
+{
+	if (ft_strncmp(cmd, ".", ft_strlen(cmd)) == 0)
+		std_cmd_error(envp, RED REL_PATH_ERR REL_USAGE RST, 2);
+	else if (ft_strncmp(cmd, "..", ft_strlen(cmd)) == 0)
+	{
+		if (search_envp(envp, "PATH"))
+			std_cmd_error(envp, RED"..: command not found\n"RST, 127);
+		else
+			std_cmd_error(envp, RED"..: Is a directory\n"RST, 126);
+	}
 }

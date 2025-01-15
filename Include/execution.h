@@ -49,5 +49,7 @@ char	*relative_path(char *cmd, t_envp *envp);
 int		is_exec_dir(char *path, char *cmd);
 int		to_skip_or_not_to_skip(char **input, t_envp *envp);
 int		not_an_update(t_envp *envp, char *key, int delim, char *var);
+void	is_odd_case(t_envp *envp, char *cmd);
+void	std_cmd_error(t_envp *envp, char *msg, int fd);
 
 #endif
