@@ -61,7 +61,7 @@ int	is_exec_dir(char *path, char *cmd)
 		stat_ret(": Is a directory\n"RST, 126);
 		return (1);
 	}
-	else if (S_ISREG(stats.st_mode) || S_ISLNK(stats.st_mode))
+	else if (S_ISREG(stats.st_mode))
 		return (0);
 	return (1);
 }
