@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 19:03:38 by rapcampo          #+#    #+#             */
-/*   Updated: 2024/12/16 20:53:04 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:41:34 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	signal_parent(void)
 
 void	signal_grand(void)
 {
-	signal(SIGPIPE, SIG_IGN);
+	// signal(SIGPIPE, SIG_IGN);
 	signal(SIGINT, handle_grandchild);
 	signal(SIGQUIT, handle_grandchild);
 }
 
 void	signal_child(void)
 {
-	signal(SIGPIPE, SIG_IGN);
+	// signal(SIGPIPE, SIG_IGN);
 	signal(SIGINT, handle_child);
 	signal(SIGQUIT, handle_child);
 }
