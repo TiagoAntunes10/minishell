@@ -12,6 +12,22 @@
 
 #include "../../Include/minishell.h"
 
+static void	case_print(char *file)
+{
+	if (access(file, F_OK) == -1)
+	{
+		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
+		ft_putstr_fd(file, STDERR_FILENO);
+		stat_ret(": No such file or directory\n"RST, 1);
+	}
+	else if (access(file, R_OK | W_OK) == -1)
+	{
+		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
+		ft_putstr_fd(file, STDERR_FILENO);
+		stat_ret(": permission denied\n"RST, 1);
+	}
+}
+
 void	redir_read(t_redir *redir, t_envp *envp)
 {
 	int	redir_fd;
@@ -20,9 +36,7 @@ void	redir_read(t_redir *redir, t_envp *envp)
 		exit_failure(envp->root, NULL, envp);
 	if (access(redir->file, F_OK | R_OK) == -1)
 	{
-		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
-		ft_putstr_fd(redir->file, STDERR_FILENO);
-		stat_ret(": No such file or directory\n"RST, 1);
+		case_print(redir->file);
 		if (envp->w_pipe == -1 && envp->r_pipe == -1)
 			exit_failure(envp->root, NULL, envp);
 		redir_fd = open("/dev/null", redir->mode);
@@ -50,9 +64,7 @@ void	redir_write(t_redir *redir, t_envp *envp)
 	redir_fd = open(redir->file, redir->mode, 0755);
 	if (redir_fd == -1)
 	{
-		ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
-		ft_putstr_fd(redir->file, STDERR_FILENO);
-		stat_ret("r No such file or directory\n"RST, 1);
+		case_print(redir->file);
 		if (envp->r_pipe == -1)
 			exit_failure(envp->root, NULL, envp);
 		return ;

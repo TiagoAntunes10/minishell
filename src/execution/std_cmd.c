@@ -75,6 +75,11 @@ static void	exec_error(t_envp *envp_lst, char *cmd_path, char **envp_arr,
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		stat_ret(": command not found\n" RST, 127);
 	}
+	else if (errno == EACCES)
+	{
+		ft_putstr_fd(cmd, 2);
+		stat_ret(": permission denied\n", 126);
+	}
 	else
 		g_exit_code = 126;
 	if (cmd_path)
