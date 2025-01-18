@@ -79,7 +79,7 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 	{
 		cmd = (t_cmd *)tree;
 		if (errno && !(errno == ENOENT && g_exit_code == 127)
-			&& errno != ENOEXEC)
+			&& errno != ENOEXEC && errno != EACCES)
 			perror(cmd->cmd);
 	}
 	if (tree != NULL)
