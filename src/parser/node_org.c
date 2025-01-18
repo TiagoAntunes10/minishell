@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:41 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/12 15:15:10 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:30:47 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ t_tree	*org_redir_read(t_redir *redir, t_tree *tree)
 		redir->right = tree_node->right;
 		tree_node->right = (t_tree *) redir;
 	}
+	else if (tree->type == DELIM)
+		delim_redir_switch(redir, tree);
 	else if (tree->type == PIPE)
 		tree_leafs_redir(tree, redir);
 	else

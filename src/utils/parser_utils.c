@@ -6,11 +6,22 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 23:49:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/06 18:01:56 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:29:45 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
+
+void	delim_redir_switch(t_redir *redir, t_tree *tree)
+{
+	t_delim	*delim_tree;
+
+	delim_tree = (t_delim *) tree;
+	while (delim_tree->right != NULL && delim_tree->right->type == DELIM)
+		delim_tree = (t_delim *) delim_tree->right;
+	redir->right = delim_tree->right;
+	delim_tree->right = (t_tree *) redir;
+}
 
 void	tree_leafs_pipe(t_tree *tree, t_pipe *pipe)
 {
