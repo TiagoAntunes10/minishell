@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:36:59 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/14 22:43:04 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:40:10 by rapcampo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 	bt = is_bt(cmd, envp);
 	if (bt >= 0 && bt < 6)
 	{
-		signal(SIGPIPE, SIG_IGN);
+		if (envp->w_pipe != -1)
+			signal(SIGPIPE, SIG_IGN);
 		bt_exec(tree, envp, bt);
 		signal(SIGPIPE, SIG_DFL);
 	}
@@ -59,8 +60,8 @@ static void	child_exec(t_tree *tree, int fd, t_envp *envp)
 		{
 			signal_decider(tree);
 			exec_tree(tree, fd, envp);
-			if (envp->id != 0)
-				child_wait(envp);
+			// if (envp->id != 0)
+			// 	child_wait(envp);
 			exit_success(envp->root, fd, envp);
 		}
 		child_wait(envp);
