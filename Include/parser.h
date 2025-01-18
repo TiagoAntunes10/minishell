@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:48:30 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/17 22:30:12 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/18 23:43:02 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int				check_cmd(t_tree *tree);
 void			tree_leafs_redir(t_tree *tree, t_redir *redir);
 int				is_redir_valid(char *file);
 void			delim_redir_switch(t_redir *redir, t_tree *tree);
+int				receive_here_doc(t_delim *delim, t_tree *tree, t_envp *envp);
 
 #endif

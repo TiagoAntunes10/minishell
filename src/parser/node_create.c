@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:20:52 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/18 21:53:11 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/18 23:43:08 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,39 +64,9 @@ t_tree	*cmd_node(t_tree *tree, char **input, t_envp *envp)
 	return (tree);
 }
 
-static int	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
-{
-	char	*line;
-
-	if (!is_redir_valid(delim))
-		return (-1);
-	// end_heredoc(envp, inp_pipe, 0);
-	// if (dup2(envp->fd_in, 0) == -1 || dup2(envp->fd_out, 1) == -1)
-	// 	exit_failure(envp->root, inp_pipe, envp);
-	line = readline(">");
-	line = clean_str(line, envp, 1);
-	while (1)
-	{
-		if (!line)
-			break ;
-		if (ft_strncmp(delim, line, ft_strlen(line)) == 0)
-			return (free(line), 0);
-		if (write(inp_pipe[1], line, ft_strlen(line)) == -1
-			|| write(inp_pipe[1], "\n", 1) == -1)
-			exit_failure(envp->root, inp_pipe, envp);
-		free(line);
-		line = readline(">");
-		line = clean_str(line, envp, 1);
-	}
-	free(line);
-	printf(HEREDOC_EOF" (wanted '%s')\n", delim);
-	return (-1);
-}
-
 t_tree	*delim_node(t_tree *tree, char **input, t_envp *envp)
 {
 	t_delim	*delim;
-	int		inp_pipe[2];
 
 	input++;
 	delim = (t_delim *) safe_alloc(sizeof(*delim), 1, tree, envp);
@@ -110,24 +80,8 @@ t_tree	*delim_node(t_tree *tree, char **input, t_envp *envp)
 	}
 	bzero(delim->delim, ft_strlen(*input) + 1);
 	ft_strlcpy(delim->delim, *input, ft_strlen(*input) + 1);
-	if (delim->delim[0] != 0)
-	{
-		quotes_pairs(delim->delim, envp, 0);
-		remove_quotes(&(delim->delim), 0, envp);
-		if (pipe(inp_pipe) == -1)
-			exit_failure(envp->root, NULL, envp);
-		delim->fd = inp_pipe[0];
-		if (read_here_doc(delim->delim, inp_pipe, envp) == -1)
-		{
-			close(delim->fd);
-			free(delim->delim);
-			free(delim);
-			close(inp_pipe[1]);
-			clear_tree(tree);
-			return (NULL);
-		}
-		close(inp_pipe[1]);
-	}
+	if (receive_here_doc(delim, tree, envp) == -1)
+		return (NULL);
 	if (*input != NULL)
 		input++;
 	if (check_cmd(tree) == 1)
