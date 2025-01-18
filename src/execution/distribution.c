@@ -21,7 +21,9 @@ static void	child_thrower(t_tree *tree, t_envp *envp)
 	bt = is_bt(cmd, envp);
 	if (bt >= 0 && bt < 6)
 	{
+		signal(SIGPIPE, SIG_IGN);
 		bt_exec(tree, envp, bt);
+		signal(SIGPIPE, SIG_DFL);
 	}
 	else
 		std_cmd((t_cmd *)tree, envp);
