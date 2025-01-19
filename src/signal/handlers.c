@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:27:18 by rapcampo          #+#    #+#             */
-/*   Updated: 2025/01/18 23:47:42 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:53:09 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	handle_heredoc(int signum)
 	if (signum != SIGINT)
 		return ;
 	stat_ret("\n", 130);
-	end_heredoc(NULL, NULL, 0);
+	end_heredoc(NULL, -1, NULL, NULL);
 }
 
 void	signal_decider(t_tree *tree)

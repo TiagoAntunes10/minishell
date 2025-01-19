@@ -6,62 +6,35 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:58:10 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/18 23:46:53 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:06:07 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/minishell.h"
 
-static int	read_here_doc(char *delim, int *inp_pipe, t_envp *envp)
-{
-	char	*line;
-
-	if (!is_redir_valid(delim))
-		return (-1);
-	end_heredoc(envp, inp_pipe, 0);
-	line = readline(">");
-	line = clean_str(line, envp, 1);
-	while (1)
-	{
-		if (!line)
-			break ;
-		if (ft_strncmp(delim, line, ft_strlen(line)) == 0)
-			return (free(line), 0);
-		if (write(inp_pipe[1], line, ft_strlen(line)) == -1
-			|| write(inp_pipe[1], "\n", 1) == -1)
-			exit_failure(envp->root, inp_pipe, envp);
-		free(line);
-		line = readline(">");
-		line = clean_str(line, envp, 1);
-	}
-	free(line);
-	printf(HEREDOC_EOF" (wanted '%s')\n", delim);
-	return (-1);
-}
-
 int	receive_here_doc(t_delim *delim, t_tree *tree, t_envp *envp)
 {
-	int	inp_pipe[2];
+	int		inp_pipe[2];
 
-	signal_heredoc();
-	if (delim->delim[0] != 0)
+	signal_ignore();
+	if (pipe(inp_pipe) == -1)
+		exit_failure(envp->root, NULL, envp);
+	envp->id = fork();
+	if (envp->id == -1)
 	{
-		quotes_pairs(delim->delim, envp, 0);
-		remove_quotes(&(delim->delim), 0, envp);
-		if (pipe(inp_pipe) == -1)
-			exit_failure(envp->root, NULL, envp);
-		delim->fd = inp_pipe[0];
-		if (read_here_doc(delim->delim, inp_pipe, envp) == -1)
-		{
-			close(delim->fd);
-			free(delim->delim);
-			free(delim);
-			close(inp_pipe[1]);
-			clear_tree(tree);
-			return (-1);
-		}
+		close(inp_pipe[0]);
 		close(inp_pipe[1]);
+		free(delim->delim);
+		free(delim);
+		clear_tree(tree);
+		return (-1);
 	}
+	if (envp->id == 0 && delim->delim[0] != 0)
+		prep_heredoc(delim, tree, inp_pipe, envp);
+	delim->fd = inp_pipe[0];
+	close(inp_pipe[1]);
+	if (heredoc_wait(envp, delim, tree) == -1)
+		return (-1);
 	return (0);
 }
 

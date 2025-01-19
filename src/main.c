@@ -6,7 +6,7 @@
 /*   By: rapcampo <rapcampo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 10:50:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/09 21:48:19 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:06:47 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ static void	input_reader(t_envp *envp)
 			return ;
 		}
 		add_history(input);
-		tree = tokenisation(input, envp);
-		save_root(envp, tree);
-		ft_free(input);
 		ft_free(prompt);
+		tree = tokenisation(input, envp);
+		ft_free(input);
+		save_root(envp, tree);
 		execution(tree, -1, envp);
 		clear_tree(tree);
 		prompt = get_prompt(envp);
