@@ -12,6 +12,32 @@
 
 #include "../../Include/minishell.h"
 
+int	receive_here_doc(t_delim *delim, t_tree *tree, t_envp *envp)
+{
+	int		inp_pipe[2];
+
+	signal_ignore();
+	if (pipe(inp_pipe) == -1)
+		exit_failure(envp->root, NULL, envp);
+	envp->id = fork();
+	if (envp->id == -1)
+	{
+		close(inp_pipe[0]);
+		close(inp_pipe[1]);
+		free(delim->delim);
+		free(delim);
+		clear_tree(tree);
+		return (-1);
+	}
+	if (envp->id == 0 && delim->delim[0] != 0)
+		prep_heredoc(delim, tree, inp_pipe, envp);
+	delim->fd = inp_pipe[0];
+	close(inp_pipe[1]);
+	if (heredoc_wait(envp, delim, tree) == -1)
+		return (-1);
+	return (0);
+}
+
 static void	tree_leafs_delim(t_tree *tree, t_delim *delim)
 {
 	t_pipe	*pipe;

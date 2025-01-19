@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:15:44 by tialbert          #+#    #+#             */
-/*   Updated: 2024/12/30 21:10:09 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/18 21:10:04 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_pipe
 typedef struct s_delim
 {
 	int				type;
+	int				fd;
 	char			*delim;
 	struct s_tree	*right;
 }				t_delim;
