@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:58:10 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/17 22:32:01 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:12:27 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,21 @@ static void	tree_leafs_delim(t_tree *tree, t_delim *delim)
 	}
 }
 
-// static void	order_delim(t_tree *tree, t_delim *delim)
-// {
-// 	t_redir	*redir;
+static void	order_delim(t_tree *tree, t_delim *delim)
+{
+	t_redir	*redir;
 
-// 	redir = (t_redir *) tree;
-// 	while (redir->right != NULL && redir->right->type == REDIR)
-// 		redir = (t_redir *) redir->right;
-// 	if (delim->right != NULL && delim->right->type == DELIM)
-// 		org_delim(delim, delim->right);
-// 	else
-// 	{
-// 		delim->right = redir->right;
-// 		redir->right = (t_tree *) delim;
-// 	}
-// }
-	// else if (tree->type == REDIR)
-	// 	order_delim(tree, delim);
+	redir = (t_redir *) tree;
+	while (redir->right != NULL && redir->right->type == REDIR)
+		redir = (t_redir *) redir->right;
+	if (delim->right != NULL && delim->right->type == DELIM)
+		org_delim(delim, delim->right);
+	else
+	{
+		delim->right = redir->right;
+		redir->right = (t_tree *) delim;
+	}
+}
 
 t_tree	*org_delim(t_delim *delim, t_tree *tree)
 {
@@ -54,6 +52,8 @@ t_tree	*org_delim(t_delim *delim, t_tree *tree)
 
 	if (tree == NULL)
 		return ((t_tree *) delim);
+	else if (tree->type == REDIR)
+		order_delim(tree, delim);
 	else if (tree->type == PIPE)
 		tree_leafs_delim(tree, delim);
 	else if (tree->type == DELIM)

@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 23:49:12 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/17 22:29:45 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:13:17 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,14 @@ int	check_cmd(t_tree *tree)
 void	tree_leafs_redir(t_tree *tree, t_redir *redir)
 {
 	t_pipe	*tree_pipe;
-	t_redir	*tree_redir;
 
 	tree_pipe = (t_pipe *) tree;
 	while (tree_pipe->right != NULL && tree_pipe->right->type == PIPE)
 		tree_pipe = (t_pipe *) tree_pipe->right;
 	if (tree_pipe->right != NULL && tree_pipe->right->type == REDIR)
-	{
-		tree_redir = (t_redir *) tree_pipe->right;
-		while (tree_redir->right != NULL && tree_redir->right->type == REDIR)
-			tree_redir = (t_redir *) tree_redir->right;
-		redir->right = tree_redir->right;
-		tree_redir->right = (t_tree *) redir;
-	}
+		org_redir_read(redir, tree_pipe->right);
+	else if (tree_pipe->right != NULL && tree_pipe->right->type == DELIM)
+		org_redir_read(redir, tree_pipe->right);
 	else if (tree_pipe->right != NULL && tree_pipe->right->type == CMD)
 	{
 		redir->right = tree_pipe->right;
