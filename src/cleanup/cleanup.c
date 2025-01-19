@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:35:03 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/18 21:47:26 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:19:36 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,5 @@ void	exit_failure(t_tree *tree, int *fd, t_envp *envp)
 		while (i < 2)
 			close(fd[i++]);
 	}
-	if (g_exit_code == 0)
-		g_exit_code = 1;
 	exit(g_exit_code);
 }

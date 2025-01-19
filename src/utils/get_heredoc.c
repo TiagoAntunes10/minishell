@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:05:25 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/19 17:07:15 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:21:10 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	read_here_doc(t_delim *delim, int inp_pipe,
 	}
 	free(line);
 	printf(HEREDOC_EOF" (wanted '%s')\n", delim->delim);
+	g_exit_code = 0;
 	return (-1);
 }
 
