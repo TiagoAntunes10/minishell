@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:05:25 by tialbert          #+#    #+#             */
-/*   Updated: 2025/01/19 19:21:10 by tialbert         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:39:48 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	read_here_doc(t_delim *delim, int inp_pipe,
 	{
 		if (!line)
 			break ;
-		if (ft_strncmp(delim->delim, line, ft_strlen(line)) == 0)
+		if (ft_strncmp(delim->delim, line, lencmp(line, delim->delim)) == 0)
 			return (free(line), 0);
 		if (write(inp_pipe, line, ft_strlen(line)) == -1
 			|| write(inp_pipe, "\n", 1) == -1)

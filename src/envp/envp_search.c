@@ -6,7 +6,7 @@
 /*   By: tialbert <tialbert@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:45:27 by tialbert          #+#    #+#             */
-/*   Updated: 2024/11/28 01:55:03 by rapcampo         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:40:09 by tialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_envp	*search_envp(t_envp *head, char *var)
 	curr = head->next;
 	while (curr)
 	{
-		if (ft_strncmp(curr->key, var, ft_strlen(var)) == 0)
+		if (ft_strncmp(curr->key, var, lencmp(var, curr->key)) == 0)
 			return (curr);
 		curr = curr->next;
 	}
